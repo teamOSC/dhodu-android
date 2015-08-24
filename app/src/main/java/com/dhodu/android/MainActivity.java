@@ -6,15 +6,24 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "MainActivity";
 
     DrawerLayout drawerLayout;
     NavigationView leftNavView, rightNavView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,5 +69,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fetchOrderHistory() {
+        ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
+        query.whereEqualTo("customer", ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    Log.d(TAG, "" + list.size());
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

@@ -24,6 +24,7 @@ import java.net.URL;
  */
 public class LoginFragment extends Fragment {
 
+    EditText phone;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -82,7 +83,7 @@ public class LoginFragment extends Fragment {
     private void proceed() {
         //TODO: check for OTP
         FragmentTransaction transaction = LoginActivity.fragmentManager.beginTransaction();
-        LoginDetailFragment loginDetailFragment = new LoginDetailFragment();
+        LoginDetailFragment loginDetailFragment = LoginDetailFragment.newInstance(phone.getText().toString(), "otp goes here");
         transaction.replace(R.id.login_container, loginDetailFragment).commit();
     }
 }
