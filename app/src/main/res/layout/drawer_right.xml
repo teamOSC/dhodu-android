@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <VideoView
-        android:background="@color/dhodu_primary_dark"
+    <View
+        android:background="@drawable/app_background_dark"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
