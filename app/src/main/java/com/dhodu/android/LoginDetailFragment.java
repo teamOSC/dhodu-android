@@ -1,11 +1,17 @@
 package com.dhodu.android;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 
 /**
@@ -16,6 +22,15 @@ public class LoginDetailFragment extends Fragment {
 
     public LoginDetailFragment() {
         // Required empty public constructor
+    }
+
+    public static LoginDetailFragment newInstance(String phone, String otp) {
+        LoginDetailFragment f = new LoginDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("phone", phone);
+        args.putString("otp", otp);
+        f.setArguments(args);
+        return f;
     }
 
 
@@ -29,5 +44,21 @@ public class LoginDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Button submit = (Button) view.findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseUser.logInInBackground(getArguments().getString("phone"), getArguments().getString("otp"), new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if (e == null) {
+                            //TODO: set user details
+                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            getActivity().finish();
+                        }
+                    }
+                });
+            }
+        });
     }
 }
