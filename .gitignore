@@ -3,6 +3,6 @@
 .DS_Store
 /build
 /captures
-Dhodu.iml
+*.iml
 .idea
 
