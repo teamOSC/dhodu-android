@@ -9,12 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.List;
 
@@ -23,22 +25,51 @@ public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     NavigationView leftNavView, rightNavView;
+    SlidingUpPanelLayout slideUpLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        ParseUser parseUser = ParseUser.getCurrentUser();
-//        if ((parseUser == null)) {
-//            Intent i = new Intent(this, LoginActivity.class);
-//            startActivity(i);
-//            finish();
-//        }
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        if ((parseUser == null)) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            finish();
+        }
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         leftNavView = (NavigationView) findViewById(R.id.nav_drawer_left);
         rightNavView = (NavigationView) findViewById(R.id.nav_drawer_right);
+        slideUpLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+
+        slideUpLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View view, float v) {
+
+            }
+
+            @Override
+            public void onPanelCollapsed(View view) {
+                //Stop the camera view here
+            }
+
+            @Override
+            public void onPanelExpanded(View view) {
+                //Initialise the camera view here
+            }
+
+            @Override
+            public void onPanelAnchored(View view) {
+
+            }
+
+            @Override
+            public void onPanelHidden(View view) {
+
+            }
+        });
 
         drawerLayout.setBackgroundResource(R.drawable.app_background_doodle);
 
