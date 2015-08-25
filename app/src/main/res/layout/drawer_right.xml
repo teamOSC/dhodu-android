@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:background="@drawable/app_background_dark"
+    <ListView
+        android:id="@+id/list_order_history"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

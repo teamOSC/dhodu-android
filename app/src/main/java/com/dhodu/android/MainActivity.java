@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     SurfaceHolder surfaceHolder;
     Camera camera;
     FrameLayout cameraContainer;
+    ListView orderListView;
 
 
 
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
 
         hangerPulldown = (ImageView) findViewById(R.id.hanger_pulldown);
+
+        orderListView = (ListView) findViewById(R.id.list_order_history);
 
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         surfaceHolder = surfaceView.getHolder();
