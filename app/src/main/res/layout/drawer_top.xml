@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <View
+        android:background="@drawable/app_background_light"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/camera_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <SurfaceView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/surface_view">
+        </SurfaceView>
+        <View
+            android:alpha="0.6"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/app_background_dark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
 
     <ImageView
         android:src="@drawable/hanger_dark"
@@ -11,13 +36,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/hanger_pulldown"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <SurfaceView
-        android:background="@color/dhodu_primary_dark"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/surfaceView"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

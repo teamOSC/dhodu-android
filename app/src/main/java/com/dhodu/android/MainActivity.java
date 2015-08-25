@@ -1,6 +1,8 @@
 package com.dhodu.android;
 
 import android.content.Intent;
+import android.graphics.PixelFormat;
+import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,7 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -18,6 +24,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,23 +33,54 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView leftNavView, rightNavView;
     SlidingUpPanelLayout slideUpLayout;
+    ImageView hangerPulldown;
+    SurfaceView surfaceView;
+    SurfaceHolder surfaceHolder;
+    Camera camera;
+    FrameLayout cameraContainer;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ParseUser parseUser = ParseUser.getCurrentUser();
-        if ((parseUser == null)) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
-        }
+//        ParseUser parseUser = ParseUser.getCurrentUser();
+//        if ((parseUser == null)) {
+//            Intent i = new Intent(this, LoginActivity.class);
+//            startActivity(i);
+//            finish();
+//        }
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         leftNavView = (NavigationView) findViewById(R.id.nav_drawer_left);
         rightNavView = (NavigationView) findViewById(R.id.nav_drawer_right);
         slideUpLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+
+        cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
+
+        hangerPulldown = (ImageView) findViewById(R.id.hanger_pulldown);
+
+        surfaceView = (SurfaceView) findViewById(R.id.surface_view);
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
+            }
+        });
+
+        cameraContainer.setVisibility(View.GONE);
 
         slideUpLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -52,12 +90,33 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPanelCollapsed(View view) {
+                hangerPulldown.setVisibility(View.VISIBLE);
                 //Stop the camera view here
+                try {
+                    camera.stopPreview();
+                    camera.release();
+                } catch (Exception e) {
+                    Log.e(TAG, "onPanelCollapsed ", e);
+                }
+                cameraContainer.setVisibility(View.GONE);
             }
 
             @Override
             public void onPanelExpanded(View view) {
+                hangerPulldown.setVisibility(View.GONE);
                 //Initialise the camera view here
+                cameraContainer.setVisibility(View.VISIBLE);
+                try {
+                    camera = Camera.open();
+                    Camera.Parameters params = camera.getParameters();
+                    camera.setDisplayOrientation(90);
+                    camera.setParameters(params);
+
+                    camera.setPreviewDisplay(surfaceHolder);
+                } catch (Exception e) {
+                    Log.e(TAG, "onPanelExpanded ", e);
+                }
+                camera.startPreview();
             }
 
             @Override
