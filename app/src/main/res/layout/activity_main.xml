@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
-        sothree:umanoPanelHeight="68dp"
+        sothree:umanoPanelHeight="85dp"
         sothree:umanoShadowHeight="4dp">
 
         <include

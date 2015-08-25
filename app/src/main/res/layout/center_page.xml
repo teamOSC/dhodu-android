@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+
+    <Button
+        android:layout_marginBottom="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Center Page"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+        android:padding="20dp"
+        android:width="300dp"
+        android:backgroundTint="@color/dhodu_primary_dark"
+        android:fontFamily="sans-serif-thin"
+        android:text="ESTIMATE"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal|bottom" />
+</FrameLayout>
