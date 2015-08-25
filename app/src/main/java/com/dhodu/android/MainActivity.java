@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     SurfaceHolder surfaceHolder;
     Camera camera;
     FrameLayout cameraContainer;
-    ListView orderListView;
+    RecyclerView orderListView;
 
 
 
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         hangerPulldown = (ImageView) findViewById(R.id.hanger_pulldown);
 
-        orderListView = (ListView) findViewById(R.id.list_order_history);
+        orderListView = (RecyclerView) findViewById(R.id.list_order_history);
 
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         surfaceHolder = surfaceView.getHolder();
