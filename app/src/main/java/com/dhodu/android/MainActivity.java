@@ -1,7 +1,5 @@
 package com.dhodu.android;
 
-import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +24,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     Camera camera;
     FrameLayout cameraContainer;
     RecyclerView orderListView;
-
 
 
     @Override
