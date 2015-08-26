@@ -5,14 +5,28 @@
     android:orientation="vertical"
     tools:context="com.dhodu.android.LoginFragment">
 
-    <EditText
-        android:id="@+id/phone"
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Mobile number"
-        android:imeOptions="actionDone"
-        android:inputType="phone" />
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Mobile number"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:inputType="phone" />
+        <Button
+            android:id="@+id/button_done"
+            android:text="DONE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
 
     <EditText
         android:id="@+id/password"

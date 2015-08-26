@@ -6,11 +6,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,8 +37,10 @@ import java.util.List;
  */
 public class LoginFragment extends Fragment {
 
+    public static final String TAG = "LoginFragment";
     EditText phone;
     EditText password;
+    Button buttonDone;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -56,30 +60,45 @@ public class LoginFragment extends Fragment {
 
         phone = (EditText) view.findViewById(R.id.phone);
         password = (EditText) view.findViewById(R.id.password);
+        buttonDone = (Button) view.findViewById(R.id.button_done);
+
+        buttonDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                phoneSubmit();
+            }
+        });
+
+        phone.setImeOptions(EditorInfo.IME_ACTION_DONE);
         phone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_SEND) {
-                    ParseQuery<ParseUser> query = ParseUser.getQuery();
-                    query.whereEqualTo("username", phone.getText().toString().trim());
-                    query.findInBackground(new FindCallback<ParseUser>() {
-                        @Override
-                        public void done(List<ParseUser> objects, ParseException e) {
-                            if (e == null) {
-                                if (objects.size() > 0) {
-                                    showPasswordField();
-                                } else {
-                                    showOTPField();
-                                }
-                            } else {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    Log.d(TAG, "onEditorAction");
+                    phoneSubmit();
 
                     return true;
                 }
                 return false;
+            }
+        });
+    }
+
+    private void phoneSubmit() {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("username", phone.getText().toString().trim());
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e == null) {
+                    if (objects.size() > 0) {
+                        showPasswordField();
+                    } else {
+                        showOTPField();
+                    }
+                } else {
+                    e.printStackTrace();
+                }
             }
         });
     }
