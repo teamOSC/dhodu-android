@@ -24,11 +24,10 @@ public class LoginDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static LoginDetailFragment newInstance(String phone, String otp) {
+    public static LoginDetailFragment newInstance(String phone) {
         LoginDetailFragment f = new LoginDetailFragment();
         Bundle args = new Bundle();
         args.putString("phone", phone);
-        args.putString("otp", otp);
         f.setArguments(args);
         return f;
     }
@@ -48,7 +47,7 @@ public class LoginDetailFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseUser.logInInBackground(getArguments().getString("phone"), getArguments().getString("otp"), new LogInCallback() {
+                ParseUser.logInInBackground(getArguments().getString("phone"), "sdd", new LogInCallback() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
                         if (e == null) {

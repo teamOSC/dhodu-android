@@ -1,6 +1,8 @@
 package com.dhodu.android;
 
 
+import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,10 +15,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 
 /**
@@ -25,6 +36,7 @@ import java.net.URL;
 public class LoginFragment extends Fragment {
 
     EditText phone;
+    EditText password;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -42,36 +54,28 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final EditText phone = (EditText) view.findViewById(R.id.phone);
+        phone = (EditText) view.findViewById(R.id.phone);
+        password = (EditText) view.findViewById(R.id.password);
         phone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEND) {
-                    try {
-                        URL obj = new URL("http://shubhams.url?q=" + phone.getText().toString());
-                        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-                        con.setRequestMethod("GET");
-                        int responseCode = con.getResponseCode();
-                        if (responseCode == HttpURLConnection.HTTP_OK) {
-                            BufferedReader in = new BufferedReader(new InputStreamReader(
-                                    con.getInputStream()));
-                            String inputLine;
-                            StringBuffer response = new StringBuffer();
-
-                            while ((inputLine = in.readLine()) != null) {
-                                response.append(inputLine);
+                    ParseQuery<ParseUser> query = ParseUser.getQuery();
+                    query.whereEqualTo("username", phone.getText().toString().trim());
+                    query.findInBackground(new FindCallback<ParseUser>() {
+                        @Override
+                        public void done(List<ParseUser> objects, ParseException e) {
+                            if (e == null) {
+                                if (objects.size() > 0) {
+                                    showPasswordField();
+                                } else {
+                                    showOTPField();
+                                }
+                            } else {
+                                e.printStackTrace();
                             }
-                            in.close();
-                            if (response.equals("success")) {
-                                proceed();
-                            }
-                        } else {
-                            Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                         }
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
+                    });
 
                     return true;
                 }
@@ -80,10 +84,85 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    private void showOTPField() {
+        password.setVisibility(View.VISIBLE);
+        SMSReceiver smsReceiver = new SMSReceiver() {
+            @Override
+            protected void smsReceived(String code) {
+                password.setText(code);
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+        intentFilter.setPriority(999);
+        getActivity().registerReceiver(smsReceiver, intentFilter);
+        new AsyncTask<String, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(String... strings) {
+                URL obj = null;
+                try {
+                    obj = new URL("http://128.199.128.227:9865/api/v1/otp?username=" + strings[0]);
+                    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                    con.setRequestMethod("GET");
+                    int responseCode = con.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        BufferedReader in = new BufferedReader(new InputStreamReader(
+                                con.getInputStream()));
+                        String inputLine;
+                        StringBuffer response = new StringBuffer();
+
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        in.close();
+                        JSONObject jsonResponse = new JSONObject(response.toString());
+                        if (!jsonResponse.getString("status").equals("success")) {
+                            Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+        }.execute(phone.getText().toString());
+
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("OTP");
+                query.whereEqualTo("username", phone.getText().toString());
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    public void done(List<ParseObject> scoreList, ParseException e) {
+                        if (e == null) {
+                            proceed();
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                return false;
+            }
+        });
+
+    }
+
+    private void showPasswordField() {
+        password.setVisibility(View.VISIBLE);
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                return false;
+            }
+        });
+    }
+
     private void proceed() {
-        //TODO: check for OTP
         FragmentTransaction transaction = LoginActivity.fragmentManager.beginTransaction();
-        LoginDetailFragment loginDetailFragment = LoginDetailFragment.newInstance(phone.getText().toString(), "otp goes here");
+        LoginDetailFragment loginDetailFragment = LoginDetailFragment.newInstance(phone.getText().toString());
         transaction.replace(R.id.login_container, loginDetailFragment).commit();
     }
 }

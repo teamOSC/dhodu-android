@@ -2,6 +2,7 @@ package com.dhodu.android;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             fragmentManager = getSupportFragmentManager();
-            android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
 
             LoginFragment newFragment = new LoginFragment();
             transaction.add(R.id.login_container, newFragment, "LoginFragment").commit();

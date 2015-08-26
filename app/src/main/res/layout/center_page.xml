@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <Button
-        android:layout_marginBottom="30dp"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-        android:padding="20dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="30dp"
         android:width="300dp"
         android:backgroundTint="@color/dhodu_primary_dark"
         android:fontFamily="sans-serif-thin"
+        android:padding="20dp"
         android:text="ESTIMATE"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
 </FrameLayout>

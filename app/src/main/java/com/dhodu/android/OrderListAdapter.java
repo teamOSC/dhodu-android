@@ -3,12 +3,11 @@ package com.dhodu.android;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 
 /**
  * Created by championswimmer on 26/8/15.
  */
-public class OrderListAdapter extends BaseAdapter{
+public class OrderListAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return 0;
