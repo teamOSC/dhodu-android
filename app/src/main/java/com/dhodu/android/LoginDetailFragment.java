@@ -29,6 +29,7 @@ public class LoginDetailFragment extends Fragment {
     private EditText street;
     private EditText locality;
     private EditText city;
+    private EditText pincode;
     private EditText referral;
 
 
@@ -60,6 +61,7 @@ public class LoginDetailFragment extends Fragment {
         street = (EditText) view.findViewById(R.id.address_street);
         locality = (EditText) view.findViewById(R.id.address_locality);
         city = (EditText) view.findViewById(R.id.address_city);
+        pincode = (EditText) view.findViewById(R.id.address_pincode);
         referral = (EditText) view.findViewById(R.id.referral);
         Button submit = (Button) view.findViewById(R.id.submit);
 
@@ -89,8 +91,11 @@ public class LoginDetailFragment extends Fragment {
         user.setPassword(Utils.generatePassword(username));
 
         user.put("name", name.getText().toString());
-        user.put("address", flat.getText().toString() + "\n" + street.getText().toString() + "\n" +
-                locality.getText().toString() + "\n" + city.getText().toString());
+        user.put("house", flat.getText().toString());
+        user.put("street", street.getText().toString());
+        user.put("locality", locality.getText().toString());
+        user.put("city", city.getText().toString());
+        user.put("pin", pincode.getText().toString());
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {

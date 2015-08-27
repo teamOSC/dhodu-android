@@ -15,7 +15,7 @@ import com.parse.ParseUser;
 public class LeftNavView extends NavigationView{
     public static final String TAG = "LeftNavView";
 
-    TextView tvProfileName, tvProfileMobile;
+    TextView tvProfileName, tvProfileMobile, tvProfileAddress;
 
     public LeftNavView(Context context) {
         super(context);
@@ -35,14 +35,21 @@ public class LeftNavView extends NavigationView{
     public void setUpProfileView() {
         tvProfileName = (TextView) getRootView().findViewById(R.id.profile_name);
         tvProfileMobile = (TextView) getRootView().findViewById(R.id.profile_mobile);
+        tvProfileAddress = (TextView) findViewById(R.id.profile_address);
 
         ParseUser pUser = ParseUser.getCurrentUser();
+        if(pUser != null){
+            setProfileInfo(
+                    pUser.getString("name"),
+                    pUser.getUsername(),
+                    pUser.getString("house"),
+                    pUser.getString("street"),
+                    pUser.getString("locality"),
+                    pUser.getString("city"),
+                    pUser.getString("pin")
+            );
+        }
 
-        setProfileInfo(
-                pUser.getString("name"),
-                pUser.getUsername(),
-                null, null, null, null, null, null
-        );
     }
 
     private void setProfileInfo(
@@ -52,10 +59,10 @@ public class LeftNavView extends NavigationView{
             String addressStreet,
             String addressLocality,
             String addressCity,
-            String addressPincode,
-            String walletAmount
+            String addressPincode
     ){
         tvProfileName.setText(name);
         tvProfileMobile.setText(phoneNumber);
+        tvProfileAddress.setText(addressHouse + "\n" + addressStreet + "\n" + addressLocality + "\n" + addressCity + "\n" + addressPincode);
     }
 }
