@@ -89,8 +89,10 @@ public class LoginDetailFragment extends Fragment {
         user.setPassword(Utils.generatePassword(username));
 
         user.put("name", name.getText().toString());
-        user.put("address", flat.getText().toString() + "\n" + street.getText().toString() + "\n" +
-                locality.getText().toString() + "\n" + city.getText().toString());
+        user.put("house", flat.getText().toString());
+        user.put("street", street.getText().toString());
+        user.put("locality", locality.getText().toString());
+        user.put("city", city.getText().toString());
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
