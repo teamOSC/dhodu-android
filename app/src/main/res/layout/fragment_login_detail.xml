@@ -1,47 +1,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.dhodu.android.LoginDetailFragment">
 
 
     <EditText
         android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
-
-    <EditText
-        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textEmailAddress" />
+        android:hint="Name"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
+        android:id="@+id/address_flat"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
+        android:hint="Flat/House No."
+        android:imeOptions="actionNext"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/address_street"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Street/Society Name"
+        android:imeOptions="actionNext"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/address_locality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Landmark/Locality"
+        android:imeOptions="actionNext"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/address_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="City"
+        android:imeOptions="actionNext"
         android:inputType="textPostalAddress" />
 
     <EditText
         android:id="@+id/referral"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:imeOptions="actionDone"
+        android:hint="Referral code" />
 
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Submit" />
+        android:text="Submit"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

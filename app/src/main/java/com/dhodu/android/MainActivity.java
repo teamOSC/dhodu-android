@@ -1,5 +1,6 @@
 package com.dhodu.android;
 
+import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,12 +44,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        ParseUser parseUser = ParseUser.getCurrentUser();
-//        if ((parseUser == null)) {
-//            Intent i = new Intent(this, LoginActivity.class);
-//            startActivity(i);
-//            finish();
-//        }
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        if ((parseUser == null)) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            finish();
+        }
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         leftNavView = (NavigationView) findViewById(R.id.nav_drawer_left);
