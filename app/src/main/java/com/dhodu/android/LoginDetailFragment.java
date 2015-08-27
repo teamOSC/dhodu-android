@@ -4,6 +4,7 @@ package com.dhodu.android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,7 @@ public class LoginDetailFragment extends Fragment {
         city = (EditText) view.findViewById(R.id.address_city);
         pincode = (EditText) view.findViewById(R.id.address_pincode);
         referral = (EditText) view.findViewById(R.id.referral);
-        Button submit = (Button) view.findViewById(R.id.submit);
+        AppCompatButton submit = (AppCompatButton) view.findViewById(R.id.submit);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
