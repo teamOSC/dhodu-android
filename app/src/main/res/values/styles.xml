@@ -16,4 +16,10 @@
         <item name="android:cacheColorHint">@android:color/transparent</item>
     </style>
 
+    <style name="EditTextDarkBackground" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#666666</item>
+        <item name="colorControlActivated">#ffffff</item>
+        <item name="colorControlHighlight">#999999</item>
+    </style>
+
 </resources>

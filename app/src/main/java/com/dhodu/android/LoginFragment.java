@@ -80,7 +80,6 @@ public class LoginFragment extends Fragment {
                     Log.d(TAG, "onEditorAction");
                     password.setVisibility(View.VISIBLE);
                     setupOTPListener();
-                    return true;
                 }
                 return false;
             }
@@ -91,7 +90,6 @@ public class LoginFragment extends Fragment {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     verifyOTP(password.getText().toString());
-                    return true;
                 }
                 return false;
             }

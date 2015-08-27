@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
