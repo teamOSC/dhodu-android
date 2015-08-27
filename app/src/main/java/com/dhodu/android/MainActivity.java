@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
         orderListView = (RecyclerView) findViewById(R.id.list_order_history);
 
+        leftNavView.setUpProfileView();
+
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(new SurfaceHolder.Callback() {
