@@ -1,4 +1,4 @@
-package com.dhodu.android;
+package com.dhodu.android.utils;
 
 /**
  * Created by prempal on 27/8/15.

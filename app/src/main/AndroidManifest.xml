@@ -30,7 +30,7 @@
         </activity>
 
         <receiver
-            android:name=".SMSReceiver" >
+            android:name=".utils.SMSReceiver" >
         </receiver>
     </application>
 

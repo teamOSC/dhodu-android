@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.dhodu.android.MainActivity;
 import com.dhodu.android.R;
-import com.dhodu.android.Utils;
+import com.dhodu.android.utils.Utils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;

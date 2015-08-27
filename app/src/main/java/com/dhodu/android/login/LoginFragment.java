@@ -20,8 +20,8 @@ import android.widget.Toast;
 
 import com.dhodu.android.MainActivity;
 import com.dhodu.android.R;
-import com.dhodu.android.SMSReceiver;
-import com.dhodu.android.Utils;
+import com.dhodu.android.utils.SMSReceiver;
+import com.dhodu.android.utils.Utils;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
