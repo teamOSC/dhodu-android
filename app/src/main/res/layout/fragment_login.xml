@@ -38,6 +38,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="phone" />
             <Button
+                android:visibility="gone"
                 android:id="@+id/button_done"
                 android:text="DONE"
                 android:layout_width="wrap_content"
@@ -45,14 +46,16 @@
         </LinearLayout>
 
         <EditText
+            android:layout_gravity="center_horizontal"
             android:maxLength="10"
             android:ems="10"
+            android:singleLine="true"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:textAlignment="center"
             android:theme="@style/EditTextDarkBackground"
             android:id="@+id/password"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="OTP"
             android:imeOptions="actionDone"

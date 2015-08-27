@@ -105,8 +105,13 @@ public class LoginFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (smsReceiver!= null)
-        getActivity().unregisterReceiver(smsReceiver);
+        if (smsReceiver!= null) {
+            try {
+                getActivity().unregisterReceiver(smsReceiver);
+            } catch (Exception e) {
+                Log.e(TAG, "onPause ", e);
+            }
+        }
     }
 
     @Override

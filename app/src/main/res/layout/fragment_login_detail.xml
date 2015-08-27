@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:text="Submit"
             android:textColor="@color/dhodu_primary_dark"
-            android:background="@android:color/white"
+            android:backgroundTint="@android:color/white"
             android:fontFamily="sans-serif-condensed"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
