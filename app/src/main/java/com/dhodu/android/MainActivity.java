@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     SurfaceHolder surfaceHolder;
     Camera camera;
     FrameLayout cameraContainer;
-    RecyclerView orderListView;
 
 
     @Override
@@ -59,14 +58,11 @@ public class MainActivity extends AppCompatActivity {
         leftNavView = (LeftNavView) findViewById(R.id.nav_drawer_left);
         rightNavView = (RightNavView) findViewById(R.id.nav_drawer_right);
         slideUpLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-
         cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
-
         hangerPulldown = (ImageView) findViewById(R.id.hanger_pulldown);
 
-        orderListView = (RecyclerView) findViewById(R.id.list_order_history);
-
         leftNavView.setUpProfileView();
+        rightNavView.setUpOrderList();
 
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         surfaceHolder = surfaceView.getHolder();
@@ -137,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        drawerLayout.setBackgroundResource(R.drawable.app_background_doodle);
+        //drawerLayout.setBackgroundResource(R.drawable.app_background_doodle);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.dhodu_primary_dark));
