@@ -63,13 +63,14 @@ public class LoginFragment extends Fragment {
         phone = (EditText) view.findViewById(R.id.phone);
         password = (EditText) view.findViewById(R.id.password);
         buttonDone = (Button) view.findViewById(R.id.button_done);
-
-        buttonDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                phoneSubmit();
-            }
-        });
+        buttonDone.setVisibility(View.GONE);
+//        buttonDone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                password.setVisibility(View.VISIBLE);
+//                setupOTPListener();
+//            }
+//        });
 
         phone.setImeOptions(EditorInfo.IME_ACTION_DONE);
         phone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
