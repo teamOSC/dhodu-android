@@ -18,6 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.dhodu.android.ui.LeftNavView;
+import com.dhodu.android.ui.RightNavView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -31,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     DrawerLayout drawerLayout;
-    NavigationView leftNavView, rightNavView;
+    LeftNavView leftNavView;
+    RightNavView rightNavView;
     SlidingUpPanelLayout slideUpLayout;
     ImageView hangerPulldown;
     SurfaceView surfaceView;
@@ -53,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        leftNavView = (NavigationView) findViewById(R.id.nav_drawer_left);
-        rightNavView = (NavigationView) findViewById(R.id.nav_drawer_right);
+        leftNavView = (LeftNavView) findViewById(R.id.nav_drawer_left);
+        rightNavView = (RightNavView) findViewById(R.id.nav_drawer_right);
         slideUpLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
         cameraContainer = (FrameLayout) findViewById(R.id.camera_container);

@@ -23,7 +23,7 @@
             android:layout_height="match_parent" />
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.dhodu.android.ui.LeftNavView
         android:id="@+id/nav_drawer_left"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -35,9 +35,9 @@
             android:layout_width="500dp"
             android:layout_height="match_parent" />
 
-    </android.support.design.widget.NavigationView>
+    </com.dhodu.android.ui.LeftNavView>
 
-    <android.support.design.widget.NavigationView
+    <com.dhodu.android.ui.RightNavView
         android:id="@+id/nav_drawer_right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -49,6 +49,6 @@
             android:layout_width="500dp"
             android:layout_height="match_parent" />
 
-    </android.support.design.widget.NavigationView>
+    </com.dhodu.android.ui.RightNavView>
 
 </android.support.v4.widget.DrawerLayout>
