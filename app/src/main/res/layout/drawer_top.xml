@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/app_background_light" />
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@drawable/app_background_light" />-->
 
     <FrameLayout
         android:id="@+id/camera_container"
@@ -34,16 +34,40 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/pickup_time_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:fontFamily="sans-serif-light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="pickup time : "
+                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                    android:textColor="@android:color/white" />
+                <EditText
+                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                    android:hint="00:00"
+                    android:textAlignment="center"
+                    android:theme="@style/EditTextDarkBackground"
+                    android:id="@+id/order_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/switch_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="NORMAL"
+                    android:text="normal"
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/white" />
 
@@ -57,10 +81,11 @@
                     android:textOn="EXPRESS" />
 
                 <TextView
+                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="EXPRESS"
+                    android:text="express"
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/white" />
             </LinearLayout>

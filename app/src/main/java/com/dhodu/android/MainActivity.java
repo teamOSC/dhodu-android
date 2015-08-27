@@ -1,5 +1,6 @@
 package com.dhodu.android;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Build;
@@ -9,17 +10,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TimePicker;
 
 import com.dhodu.android.login.LoginActivity;
 import com.dhodu.android.ui.LeftNavView;
 import com.dhodu.android.ui.RightNavView;
 import com.parse.ParseUser;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
@@ -33,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
     SurfaceHolder surfaceHolder;
     Camera camera;
     FrameLayout cameraContainer;
+    float pullDownRatio;
+    boolean cameraShowing;
+
+    EditText orderTime;
 
 
     @Override
@@ -46,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        // Instantiate the layouts
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         leftNavView = (LeftNavView) findViewById(R.id.nav_drawer_left);
         rightNavView = (RightNavView) findViewById(R.id.nav_drawer_right);
@@ -53,8 +65,39 @@ public class MainActivity extends AppCompatActivity {
         cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
         hangerPulldown = (ImageView) findViewById(R.id.hanger_pulldown);
 
+        //Set up the left and right drawers
         leftNavView.setUpProfileView();
         rightNavView.setUpOrderList();
+
+        //Setup the order pulldown screen
+        orderTime = (EditText) findViewById(R.id.order_time);
+        orderTime.setInputType(EditorInfo.TYPE_NULL);
+        orderTime.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    // TODO Auto-generated method stub
+                    Calendar mcurrentTime = Calendar.getInstance();
+                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                    int minute = mcurrentTime.get(Calendar.MINUTE);
+                    TimePickerDialog mTimePicker;
+                    mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            orderTime.setText(
+                                    ((selectedHour<10)?"0"+selectedHour:selectedHour)
+                                    + ":" +
+                                    ((selectedMinute<10)?"0"+selectedMinute:selectedMinute));
+                        }
+                    }, hour, minute, true);//Yes 24 hour time
+                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.show();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
 
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         surfaceHolder = surfaceView.getHolder();
@@ -80,27 +123,26 @@ public class MainActivity extends AppCompatActivity {
         slideUpLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View view, float v) {
-
+                hangerPulldown.setAlpha(1 - v);
+                cameraContainer.setVisibility(View.VISIBLE);
+                cameraContainer.setAlpha(v);
             }
 
             @Override
             public void onPanelCollapsed(View view) {
-                hangerPulldown.setVisibility(View.VISIBLE);
                 //Stop the camera view here
                 try {
                     camera.stopPreview();
                     camera.release();
+                    cameraShowing = false;
                 } catch (Exception e) {
                     Log.e(TAG, "onPanelCollapsed ", e);
                 }
-                cameraContainer.setVisibility(View.GONE);
             }
 
             @Override
             public void onPanelExpanded(View view) {
-                hangerPulldown.setVisibility(View.GONE);
                 //Initialise the camera view here
-                cameraContainer.setVisibility(View.VISIBLE);
                 try {
                     camera = Camera.open();
                     Camera.Parameters params = camera.getParameters();
@@ -108,10 +150,12 @@ public class MainActivity extends AppCompatActivity {
                     camera.setParameters(params);
 
                     camera.setPreviewDisplay(surfaceHolder);
+                    cameraShowing = true;
                 } catch (Exception e) {
                     Log.e(TAG, "onPanelExpanded ", e);
                 }
                 camera.startPreview();
+
             }
 
             @Override
@@ -132,6 +176,15 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.dhodu_primary_dark));
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (slideUpLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            slideUpLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
