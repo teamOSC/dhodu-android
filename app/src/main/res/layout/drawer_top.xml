@@ -89,6 +89,19 @@
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/white" />
             </LinearLayout>
+
+            <Button
+                android:textSize="20dp"
+                android:layout_margin="20dp"
+                android:padding="15dp"
+                android:fontFamily="sans-serif-light"
+                android:textAllCaps="false"
+                android:text="pickup my laundry"
+                android:textColor="@color/dhodu_primary_dark"
+                android:backgroundTint="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
