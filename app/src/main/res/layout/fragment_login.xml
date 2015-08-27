@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.dhodu.android.LoginFragment">
+    tools:context="com.dhodu.android.login.LoginFragment">
 
     <LinearLayout
         android:orientation="vertical"

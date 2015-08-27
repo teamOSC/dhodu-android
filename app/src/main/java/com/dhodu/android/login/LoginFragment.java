@@ -1,4 +1,4 @@
-package com.dhodu.android;
+package com.dhodu.android.login;
 
 
 import android.content.Intent;
@@ -18,6 +18,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dhodu.android.MainActivity;
+import com.dhodu.android.R;
+import com.dhodu.android.SMSReceiver;
+import com.dhodu.android.Utils;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;

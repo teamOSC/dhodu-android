@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_background_dark"
-    tools:context="com.dhodu.android.LoginDetailFragment">
+    tools:context="com.dhodu.android.login.LoginDetailFragment">
 
     <LinearLayout
         android:layout_gravity="center"

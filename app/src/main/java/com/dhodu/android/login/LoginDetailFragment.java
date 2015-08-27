@@ -1,4 +1,4 @@
-package com.dhodu.android;
+package com.dhodu.android.login;
 
 
 import android.content.Intent;
@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dhodu.android.MainActivity;
+import com.dhodu.android.R;
+import com.dhodu.android.Utils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
