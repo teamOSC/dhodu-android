@@ -43,6 +43,8 @@ public class LoginFragment extends Fragment {
     EditText phone;
     EditText password;
     Button buttonDone;
+    SMSReceiver smsReceiver = null;
+    IntentFilter otpIntentFilter;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -96,8 +98,21 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (smsReceiver!= null)
+        getActivity().unregisterReceiver(smsReceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (smsReceiver!= null)
+        getActivity().registerReceiver(smsReceiver, otpIntentFilter);
+    }
+
     private void setupOTPListener() {
-        SMSReceiver smsReceiver = null;
         smsReceiver = new SMSReceiver() {
             @Override
             protected void smsReceived(String code) {
@@ -106,9 +121,9 @@ public class LoginFragment extends Fragment {
                 getActivity().unregisterReceiver(this);
             }
         };
-        IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
-        intentFilter.setPriority(999);
-        getActivity().registerReceiver(smsReceiver, intentFilter);
+        otpIntentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+        otpIntentFilter.setPriority(999);
+        getActivity().registerReceiver(smsReceiver, otpIntentFilter);
         new AsyncTask<String, Void, Void>() {
 
             @Override
