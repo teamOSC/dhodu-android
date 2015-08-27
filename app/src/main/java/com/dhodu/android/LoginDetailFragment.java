@@ -102,6 +102,7 @@ public class LoginDetailFragment extends Fragment {
             public void done(ParseException e) {
                 if (e == null) {
                     startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
                 } else {
                     Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
