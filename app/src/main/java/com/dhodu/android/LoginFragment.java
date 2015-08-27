@@ -1,6 +1,7 @@
 package com.dhodu.android;
 
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -75,8 +77,19 @@ public class LoginFragment extends Fragment {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     Log.d(TAG, "onEditorAction");
-                    phoneSubmit();
+                    password.setVisibility(View.VISIBLE);
+                    setupOTPListener();
+                    return true;
+                }
+                return false;
+            }
+        });
 
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    verifyOTP(password.getText().toString());
                     return true;
                 }
                 return false;
@@ -84,31 +97,14 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void phoneSubmit() {
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereEqualTo("username", phone.getText().toString().trim());
-        query.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> objects, ParseException e) {
-                if (e == null) {
-                    if (objects.size() > 0) {
-                        showPasswordField();
-                    } else {
-                        showOTPField();
-                    }
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void showOTPField() {
-        password.setVisibility(View.VISIBLE);
-        SMSReceiver smsReceiver = new SMSReceiver() {
+    private void setupOTPListener() {
+        SMSReceiver smsReceiver = null;
+        smsReceiver = new SMSReceiver() {
             @Override
             protected void smsReceived(String code) {
                 password.setText(code);
+                verifyOTP(code);
+                getActivity().unregisterReceiver(this);
             }
         };
         IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
@@ -148,40 +144,58 @@ public class LoginFragment extends Fragment {
                 return null;
             }
         }.execute(phone.getText().toString());
-
-        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("OTP");
-                query.whereEqualTo("username", phone.getText().toString());
-                query.findInBackground(new FindCallback<ParseObject>() {
-                    public void done(List<ParseObject> scoreList, ParseException e) {
-                        if (e == null) {
-                            proceed();
-                        } else {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                return false;
-            }
-        });
-
     }
 
-    private void showPasswordField() {
-        password.setVisibility(View.VISIBLE);
-        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                return false;
+    private void verifyOTP(final String code) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("OTP");
+        query.whereEqualTo("username", phone.getText().toString());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    if (code.equals(list.get(0).getString("otp"))) {
+                        proceed();
+                    } else {
+                        Toast.makeText(getActivity(), "Invalid OTP", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
             }
         });
     }
 
     private void proceed() {
-        FragmentTransaction transaction = LoginActivity.fragmentManager.beginTransaction();
-        LoginDetailFragment loginDetailFragment = LoginDetailFragment.newInstance(phone.getText().toString());
-        transaction.replace(R.id.login_container, loginDetailFragment).commit();
+        final String username = phone.getText().toString().trim();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("username", username);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e == null) {
+
+                    if (objects.size() > 0) {
+                        ParseUser.logInInBackground(username, Utils.generatePassword(username), new LogInCallback() {
+                            public void done(ParseUser user, ParseException e) {
+                                if (user != null) {
+                                    startActivity(new Intent(getActivity(), MainActivity.class));
+                                    getActivity().finish();
+                                } else {
+                                    Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    } else {
+                        FragmentTransaction transaction = LoginActivity.fragmentManager.beginTransaction();
+                        LoginDetailFragment loginDetailFragment = LoginDetailFragment.newInstance(username);
+                        transaction.replace(R.id.login_container, loginDetailFragment).commit();
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 }

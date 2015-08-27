@@ -51,31 +51,37 @@
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
-            android:text="Address"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Address" />
+
         <TextView
-            android:textAppearance="@android:style/TextAppearance.Large"
-            android:textColor="@color/dhodu_primary_dark"
-            android:text="I-2/8, Sector 16\nRohini\nNew Delhi 110058"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="I-2/8, Sector 16\nRohini\nNew Delhi 110058"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="@color/dhodu_primary_dark" />
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+            android:layout_height="30dp" />
+
         <TextView
-            android:text="Dhodu Wallet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Dhodu Wallet" />
+
         <TextView
-            android:textAppearance="@android:style/TextAppearance.Large"
-            android:textColor="@color/dhodu_primary_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="\u20b9 456"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="@color/dhodu_primary_dark" />
 
     </LinearLayout>
 

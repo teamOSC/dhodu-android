@@ -4,14 +4,19 @@ package com.dhodu.android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
 /**
@@ -19,15 +24,22 @@ import com.parse.ParseUser;
  */
 public class LoginDetailFragment extends Fragment {
 
+    private EditText name;
+    private EditText flat;
+    private EditText street;
+    private EditText locality;
+    private EditText city;
+    private EditText referral;
+
 
     public LoginDetailFragment() {
         // Required empty public constructor
     }
 
-    public static LoginDetailFragment newInstance(String phone) {
+    public static LoginDetailFragment newInstance(String username) {
         LoginDetailFragment f = new LoginDetailFragment();
         Bundle args = new Bundle();
-        args.putString("phone", phone);
+        args.putString("username", username);
         f.setArguments(args);
         return f;
     }
@@ -43,21 +55,53 @@ public class LoginDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        name = (EditText) view.findViewById(R.id.name);
+        flat = (EditText) view.findViewById(R.id.address_flat);
+        street = (EditText) view.findViewById(R.id.address_street);
+        locality = (EditText) view.findViewById(R.id.address_locality);
+        city = (EditText) view.findViewById(R.id.address_city);
+        referral = (EditText) view.findViewById(R.id.referral);
         Button submit = (Button) view.findViewById(R.id.submit);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseUser.logInInBackground(getArguments().getString("phone"), "sdd", new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                        if (e == null) {
-                            //TODO: set user details
-                            startActivity(new Intent(getActivity(), MainActivity.class));
-                            getActivity().finish();
-                        }
-                    }
-                });
+                signUpUser();
             }
         });
+
+        referral.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    signUpUser();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void signUpUser() {
+        ParseUser user = new ParseUser();
+        String username = getArguments().getString("username");
+        user.setUsername(username);
+        user.setPassword(Utils.generatePassword(username));
+
+        user.put("name", name.getText().toString());
+        user.put("address", flat.getText().toString() + "\n" + street.getText().toString() + "\n" +
+                locality.getText().toString() + "\n" + city.getText().toString());
+
+        user.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) {
+                if (e == null) {
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                } else {
+                    Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 }

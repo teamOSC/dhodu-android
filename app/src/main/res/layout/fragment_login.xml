@@ -33,5 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="OTP"
+        android:imeOptions="actionDone"
+        android:inputType="number"
         android:visibility="gone" />
 </LinearLayout>
