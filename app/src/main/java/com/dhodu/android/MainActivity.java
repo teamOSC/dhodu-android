@@ -15,15 +15,20 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.dhodu.android.login.LoginActivity;
 import com.dhodu.android.ui.LeftNavView;
 import com.dhodu.android.ui.RightNavView;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.Calendar;
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     boolean cameraShowing;
 
     EditText orderTime;
+    Button submitOrder;
 
 
     @Override
@@ -85,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             orderTime.setText(
-                                    ((selectedHour<10)?"0"+selectedHour:selectedHour)
-                                    + ":" +
-                                    ((selectedMinute<10)?"0"+selectedMinute:selectedMinute));
+                                    ((selectedHour < 10) ? "0" + selectedHour : selectedHour)
+                                            + ":" +
+                                            ((selectedMinute < 10) ? "0" + selectedMinute : selectedMinute));
                         }
                     }, hour, minute, true);//Yes 24 hour time
                     mTimePicker.setTitle("Select Time");
@@ -96,6 +102,27 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     return false;
                 }
+            }
+        });
+
+        submitOrder = (Button) findViewById(R.id.btn_submit_order);
+        submitOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseObject transaction = new ParseObject("Transaction");
+                transaction.put("status", 0);
+                transaction.put("customer", ParseUser.getCurrentUser());
+                transaction.put("time_pick", orderTime.getText().toString());
+                transaction.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 

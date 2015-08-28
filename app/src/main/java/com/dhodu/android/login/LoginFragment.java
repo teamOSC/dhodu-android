@@ -105,15 +105,15 @@ public class LoginFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (smsReceiver!= null)
-        getActivity().unregisterReceiver(smsReceiver);
+        if (smsReceiver != null)
+            getActivity().unregisterReceiver(smsReceiver);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (smsReceiver!= null)
-        getActivity().registerReceiver(smsReceiver, otpIntentFilter);
+        if (smsReceiver != null)
+            getActivity().registerReceiver(smsReceiver, otpIntentFilter);
     }
 
     private void setupOTPListener() {
