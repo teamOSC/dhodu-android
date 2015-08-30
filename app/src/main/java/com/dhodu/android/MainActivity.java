@@ -115,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
                 query.countInBackground(new CountCallback() {
                     @Override
                     public void done(int count, ParseException e) {
-                        if(e != null){
+                        if (e != null) {
                             Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             ParseObject transaction = new ParseObject("Transaction");
                             transaction.put("status", 0);
                             transaction.put("transaction_id", count + 1);
