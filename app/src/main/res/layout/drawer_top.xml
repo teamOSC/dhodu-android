@@ -59,6 +59,35 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/pickup_location_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="location : "
+                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="primary"
+                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                    android:textColor="@android:color/white" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_location"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/switch_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +130,7 @@
                 android:backgroundTint="@android:color/white"
                 android:fontFamily="sans-serif-light"
                 android:padding="15dp"
-                android:text="pickup my laundry"
+                android:text="Schedule Pickup"
                 android:textAllCaps="false"
                 android:textColor="@color/dhodu_primary_dark"
                 android:textSize="20dp" />
