@@ -25,8 +25,10 @@ import android.widget.Toast;
 import com.dhodu.android.login.LoginActivity;
 import com.dhodu.android.ui.LeftNavView;
 import com.dhodu.android.ui.RightNavView;
+import com.parse.CountCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -109,17 +111,28 @@ public class MainActivity extends AppCompatActivity {
         submitOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseObject transaction = new ParseObject("Transaction");
-                transaction.put("status", 0);
-                transaction.put("customer", ParseUser.getCurrentUser());
-                transaction.put("time_pick", orderTime.getText().toString());
-                transaction.saveInBackground(new SaveCallback() {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Transaction");
+                query.countInBackground(new CountCallback() {
                     @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                        } else {
+                    public void done(int count, ParseException e) {
+                        if(e != null){
                             Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                        }else{
+                            ParseObject transaction = new ParseObject("Transaction");
+                            transaction.put("status", 0);
+                            transaction.put("transaction_id", count + 1);
+                            transaction.put("customer", ParseUser.getCurrentUser());
+                            transaction.put("time_pick", orderTime.getText().toString());
+                            transaction.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
                     }
                 });
