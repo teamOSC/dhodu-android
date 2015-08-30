@@ -33,9 +33,8 @@ public class SplashActivity extends AppCompatActivity {
         imageSplash.setVisibility(View.INVISIBLE);
         TextView tagline = (TextView) findViewById(R.id.tagline);
         TextView header = (TextView) findViewById(R.id.heading);
-        Typeface font = Typeface.createFromAsset(getAssets(), "Raleway-Regular.ttf");
-        header.setTypeface(font);
-        tagline.setTypeface(font);
+        header.setTypeface(Typeface.createFromAsset(getAssets(), "Raleway-ExtraBold.ttf"));
+        tagline.setTypeface(Typeface.createFromAsset(getAssets(), "Raleway-Regular.ttf"));
         AnimationSet as = new AnimationSet(true);
         Animation aa = new ScaleAnimation((float) 0.6
                 , (float) 0.5, (float) 0.6, (float) 0.5
