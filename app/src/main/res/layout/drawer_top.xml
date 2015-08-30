@@ -5,9 +5,9 @@
     android:orientation="vertical">
 
     <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@drawable/app_background_light" />-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@drawable/app_background_light" />-->
 
     <FrameLayout
         android:id="@+id/camera_container"
@@ -34,26 +34,28 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/pickup_time_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
                     android:text="pickup time : "
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/white" />
+
                 <EditText
-                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                    android:hint="00:00"
-                    android:textAlignment="center"
-                    android:theme="@style/EditTextDarkBackground"
                     android:id="@+id/order_time"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:hint="00:00"
+                    android:textAlignment="center"
+                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                    android:theme="@style/EditTextDarkBackground" />
             </LinearLayout>
 
             <LinearLayout
@@ -63,10 +65,10 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:fontFamily="sans-serif-light"
                     android:text="normal"
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/white" />
@@ -81,27 +83,28 @@
                     android:textOn="EXPRESS" />
 
                 <TextView
-                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:fontFamily="sans-serif-light"
                     android:text="express"
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/white" />
             </LinearLayout>
 
             <Button
-                android:textSize="20dp"
-                android:layout_margin="20dp"
-                android:padding="15dp"
-                android:fontFamily="sans-serif-light"
-                android:textAllCaps="false"
-                android:text="pickup my laundry"
-                android:textColor="@color/dhodu_primary_dark"
-                android:backgroundTint="@android:color/white"
-                android:layout_gravity="center_horizontal"
+                android:id="@+id/btn_submit_order"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:backgroundTint="@android:color/white"
+                android:fontFamily="sans-serif-light"
+                android:padding="15dp"
+                android:text="pickup my laundry"
+                android:textAllCaps="false"
+                android:textColor="@color/dhodu_primary_dark"
+                android:textSize="20dp" />
         </LinearLayout>
 
 
