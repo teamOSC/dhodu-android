@@ -4,6 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:paddingTop="30dp"
+        android:background="@drawable/app_background_dark"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <TextView
+            android:fontFamily="sans-serif-thin"
+            android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+            android:layout_margin="20dp"
+            android:textColor="@android:color/white"
+            android:text="Order History"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_order_history"
         android:layout_width="match_parent"
