@@ -30,7 +30,8 @@
             android:id="@+id/form_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -103,7 +104,7 @@
                     android:textColor="@android:color/white" />
 
                 <Switch
-                    android:id="@+id/switch1"
+                    android:id="@+id/express_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -130,7 +131,7 @@
                 android:backgroundTint="@android:color/white"
                 android:fontFamily="sans-serif-light"
                 android:padding="15dp"
-                android:text="Schedule Pickup"
+                android:text="schedule pickup"
                 android:textAllCaps="false"
                 android:textColor="@color/dhodu_primary_dark"
                 android:textSize="20dp" />

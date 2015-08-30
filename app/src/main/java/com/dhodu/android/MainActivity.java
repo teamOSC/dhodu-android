@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -16,9 +17,11 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText orderTime;
     Button submitOrder;
+    Switch expressSwitch;
 
 
     @Override
@@ -103,6 +107,17 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 } else {
                     return false;
+                }
+            }
+        });
+
+        expressSwitch = (Switch) findViewById(R.id.express_switch);
+        expressSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    Toast.makeText(getBaseContext(), "Express service coming soon", Toast.LENGTH_SHORT).show();
+                    expressSwitch.setChecked(false);
                 }
             }
         });
