@@ -85,8 +85,8 @@
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/white"
             android:layout_gravity="center_horizontal"
+            android:backgroundTint="@android:color/white"
             android:fontFamily="sans-serif-condensed"
             android:text="Submit"
             android:textColor="@color/dhodu_primary_dark" />
