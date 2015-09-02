@@ -28,7 +28,7 @@ public abstract class SMSReceiver extends BroadcastReceiver {
                     Log.d(TAG, "Received SMS: " + message + ", Sender: " + senderAddress);
 
                     // if the SMS is not from our gateway, ignore the message
-                    if (!senderAddress.toLowerCase().contains("dm-notify")) {
+                    if (!(senderAddress.toLowerCase().contains("dm-notify") && message.contains("Dhodu"))) {
                         return;
                     } else {
                         // verification code from sms

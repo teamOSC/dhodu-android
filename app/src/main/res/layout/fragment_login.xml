@@ -1,42 +1,81 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainView"
     android:background="@drawable/app_background_dark"
-    android:orientation="vertical"
     tools:context="com.dhodu.android.login.LoginFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:orientation="vertical">
+        android:gravity="top"
+        android:orientation="vertical"
+        android:paddingTop="40dp"
+        android:layout_centerHorizontal="true">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_margin="50dp"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:gravity="center|center_horizontal"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/dhodu_icon_512" />
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Dhodu"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/tagline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Wash. Press. Repeat."
+            android:textColor="@android:color/white"
+            android:textSize="19sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:paddingTop="55dp"
+           >
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:focusable="false"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="+91"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:background="@android:color/transparent"
+                android:theme="@style/EditTextDarkBackground" />
 
             <EditText
                 android:id="@+id/phone"
+                android:padding="18dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:hint="Mobile number"
+                android:hint="Enter Mobile number"
                 android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:maxLength="10"
+                android:paddingLeft="15dp"
                 android:singleLine="true"
-                android:textAlignment="center"
+                android:textSize="22sp"
                 android:theme="@style/EditTextDarkBackground" />
 
             <Button
@@ -47,21 +86,37 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:ems="10"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:hint="OTP"
-            android:imeOptions="actionDone"
-            android:inputType="number"
-            android:maxLength="10"
-            android:textAlignment="center"
-            android:theme="@style/EditTextDarkBackground"
-            android:visibility="visible" />
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:text="TERMS OF SERVICE"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:text="Activate Washing Machine"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:gravity="center_vertical|center_horizontal"
+            android:id="@+id/activate"
+            android:layout_gravity="center_horizontal"
+          />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
