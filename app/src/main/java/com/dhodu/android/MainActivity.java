@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.dhodu.android.addresses.MyAddressesActivity;
 import com.dhodu.android.login.LoginActivity;
 import com.parse.CountCallback;
 import com.parse.ParseException;
@@ -77,6 +78,17 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setUpProfileView();
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    switch (menuItem.getItemId()){
+                        case R.id.nav_addresses:
+                            Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
+                            startActivity(intent);
+                    }
+                    return false;
+                }
+            });
         }
 
         //Setup the order pulldown screen

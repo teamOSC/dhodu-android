@@ -14,24 +14,28 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:screenOrientation="locked"
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:screenOrientation="locked" >
         </activity>
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".addresses.MyAddressesActivity"
+            android:label="@string/title_activity_my_addresses" >
         </activity>
     </application>
 
