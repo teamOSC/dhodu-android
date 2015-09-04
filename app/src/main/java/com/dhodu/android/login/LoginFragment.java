@@ -1,12 +1,9 @@
 package com.dhodu.android.login;
 
 
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dhodu.android.R;
-import com.dhodu.android.utils.SMSReceiver;
 
 
 /**
@@ -28,11 +24,6 @@ public class LoginFragment extends Fragment {
 
     public static final String TAG = "LoginFragment";
     EditText phone;
-
-    Button buttonDone;
-    SMSReceiver smsReceiver = null;
-    IntentFilter otpIntentFilter;
-
     Button accept;
 
     public LoginFragment() {
@@ -48,11 +39,7 @@ public class LoginFragment extends Fragment {
         final View view= inflater.inflate(R.layout.fragment_login, container, false);
 
         phone = (EditText) view.findViewById(R.id.phone);
-
-        buttonDone = (Button) view.findViewById(R.id.button_done);
-        buttonDone.setVisibility(View.GONE);
         accept=(Button) view.findViewById(R.id.activate);
-
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,36 +60,12 @@ public class LoginFragment extends Fragment {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     Log.d(TAG, "onEditorAction");
-                        proceed();
+                    proceed();
                 }
                 return false;
             }
         });
 
-
-
-        phone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (count==10){
-//                    accept.setTextColor(getResources().getColor(android.R.color.black));
-//                    accept.setBackgroundColor(getResources().getColor(android.R.color.white));
-//                } else {
-//                    accept.setTextColor(getResources().getColor(android.R.color.white));
-//                    accept.setBackgroundColor(getResources().getColor(R.color.dhodu_primary_dark));
-//                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 
     private void proceed(){

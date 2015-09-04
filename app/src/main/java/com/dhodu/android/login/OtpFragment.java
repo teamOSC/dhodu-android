@@ -6,12 +6,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +38,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-/**
- * Created by naman on 03/09/15.
- */
 public class OtpFragment extends Fragment {
 
     public static final String TAG = "OtpFragment";
@@ -48,6 +48,7 @@ public class OtpFragment extends Fragment {
     EditText password;
     String phone;
     TextView verifying;
+    Button verifyManual;
 
     public static OtpFragment newInstance(String phone) {
         OtpFragment f = new OtpFragment();
@@ -67,6 +68,7 @@ public class OtpFragment extends Fragment {
 
         password = (EditText) view.findViewById(R.id.password);
         verifying=(TextView) view.findViewById(R.id.verifying);
+        verifyManual=(Button) view.findViewById(R.id.verify_manual);
 
         verifying.setText("We have sent an SMS with an activation code to +91- "+phone+" ...");
 
@@ -77,6 +79,31 @@ public class OtpFragment extends Fragment {
                     verifyOTP(password.getText().toString());
                 }
                 return false;
+            }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()>=6){
+                    verifyManual.setVisibility(View.VISIBLE);
+                } else {
+                    verifyManual.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        verifyManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verifyOTP(password.getText().toString());
             }
         });
 

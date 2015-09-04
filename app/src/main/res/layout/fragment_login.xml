@@ -78,12 +78,6 @@
                 android:textSize="22sp"
                 android:theme="@style/EditTextDarkBackground" />
 
-            <Button
-                android:id="@+id/button_done"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DONE"
-                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>
