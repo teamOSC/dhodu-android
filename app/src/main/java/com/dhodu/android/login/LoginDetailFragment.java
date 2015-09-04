@@ -21,6 +21,9 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,12 +96,19 @@ public class LoginDetailFragment extends Fragment {
         user.setUsername(username);
         user.setPassword(Utils.generatePassword(username));
 
+        JSONObject address = new JSONObject();
+        try {
+            address.put("house", flat.getText().toString());
+            address.put("street", street.getText().toString());
+            address.put("locality", locality.getText().toString());
+            address.put("city", city.getText().toString());
+            address.put("pin", pincode.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         user.put("name", name.getText().toString());
-        user.put("house", flat.getText().toString());
-        user.put("street", street.getText().toString());
-        user.put("locality", locality.getText().toString());
-        user.put("city", city.getText().toString());
-        user.put("pin", pincode.getText().toString());
+        user.addUnique("address", address);
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
