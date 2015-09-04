@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/app_background_dark"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingTop="30dp">
+
+        <ImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:paddingLeft="15dp"
+            android:src="@drawable/dhodu_icon_512" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="5dp">
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Dhodu Dhodu"
+                android:textAppearance="?android:attr/textAppearanceLargeInverse" />
+
+            <TextView
+                android:id="@+id/profile_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="sans-serif-thin"
+                android:text="+919891743645"
+                android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

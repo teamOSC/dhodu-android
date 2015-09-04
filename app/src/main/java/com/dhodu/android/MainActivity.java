@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,12 +22,11 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.dhodu.android.login.LoginActivity;
-import com.dhodu.android.ui.LeftNavView;
-import com.dhodu.android.ui.RightNavView;
 import com.parse.CountCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -42,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     DrawerLayout drawerLayout;
-    LeftNavView leftNavView;
-    RightNavView rightNavView;
     SlidingUpPanelLayout slideUpLayout;
     ImageView hangerPulldown;
     SurfaceView surfaceView;
@@ -56,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     EditText orderTime;
     Button submitOrder;
     Switch expressSwitch;
+
+    TextView tvProfileName, tvProfileMobile, tvProfileAddress;
 
 
     @Override
@@ -71,15 +70,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Instantiate the layouts
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        leftNavView = (LeftNavView) findViewById(R.id.nav_drawer_left);
-        rightNavView = (RightNavView) findViewById(R.id.nav_drawer_right);
         slideUpLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
         hangerPulldown = (ImageView) findViewById(R.id.hanger_pulldown);
 
-        //Set up the left and right drawers
-        leftNavView.setUpProfileView();
-        rightNavView.setUpOrderList();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            setUpProfileView();
+        }
 
         //Setup the order pulldown screen
         orderTime = (EditText) findViewById(R.id.order_time);
@@ -262,6 +260,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpProfileView() {
+        tvProfileName = (TextView) findViewById(R.id.profile_name);
+        tvProfileMobile = (TextView) findViewById(R.id.profile_mobile);
+
+        ParseUser pUser = ParseUser.getCurrentUser();
+        if (pUser != null) {
+            setProfileInfo(
+                    pUser.getString("name"),
+                    pUser.getUsername()
+            );
+        }
+
+    }
+
+    private void setProfileInfo(
+            String name,
+            String phoneNumber
+    ) {
+        tvProfileName.setText(name);
+        tvProfileMobile.setText(phoneNumber);
     }
 
 }

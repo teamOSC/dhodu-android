@@ -1,4 +1,5 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,19 +25,14 @@
             android:layout_height="match_parent" />
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-    <com.dhodu.android.ui.LeftNavView
-        android:id="@+id/nav_drawer_left"
-        android:layout_width="wrap_content"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:fitsSystemWindows="true">
-
-        <include
-            layout="@layout/drawer_left"
-            android:layout_width="500dp"
-            android:layout_height="match_parent" />
-
-    </com.dhodu.android.ui.LeftNavView>
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu"/>
 
     <com.dhodu.android.ui.RightNavView
         android:id="@+id/nav_drawer_right"
