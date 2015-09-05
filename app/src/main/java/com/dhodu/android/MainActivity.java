@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
 import com.dhodu.android.login.LoginActivity;
+import com.dhodu.android.ui.DividerItemDecoration;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvProfileMobile;
     RecyclerView ordersView;
     Toolbar toolbar;
+    TextView orderCount;
 
 
     @Override
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
         topView = (LinearLayout) findViewById(R.id.topView);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        orderCount = (TextView) findViewById(R.id.order_count);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -304,6 +307,7 @@ public class MainActivity extends AppCompatActivity {
     public void setUpOrderList() {
         ordersView = (RecyclerView) findViewById(R.id.list_order_history);
         ordersView.setLayoutManager(new LinearLayoutManager(this));
+        ordersView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
         fetchOrderHistory();
     }
 
@@ -315,6 +319,13 @@ public class MainActivity extends AppCompatActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     ordersView.setAdapter(new OrderListAdapter(list));
+                    if (list.size()==0){
+                        orderCount.setText("Your order history will appear here.");
+                    } else {
+                        if (list.size()==1)
+                        orderCount.setText("1 order placed");
+                        else orderCount.setText(list.size()+" orders placed");
+                    }
                 } else {
                     e.printStackTrace();
                 }
