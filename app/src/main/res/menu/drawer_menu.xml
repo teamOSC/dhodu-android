@@ -4,14 +4,15 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_addresses"
-            android:title="My Addresses" />
+            android:title="My Addresses"
+            android:icon="@drawable/ic_location_city_black_48dp"/>
         <item
             android:id="@+id/nav_stats"
-
+            android:icon="@drawable/stocking"
             android:title="Stats" />
         <item
             android:id="@+id/nav_ratecard"
-
+            android:icon="@drawable/ic_picture_in_picture_black_48dp"
             android:title="Rate Card" />
 
     </group>
@@ -19,10 +20,10 @@
     <item android:title="Others">
         <menu>
             <item
-
+                android:icon="@drawable/ic_call_black_48dp"
                 android:title="Call Us" />
             <item
-
+                android:icon="@drawable/star"
                 android:title="Rate Us" />
         </menu>
     </item>

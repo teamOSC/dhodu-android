@@ -3,15 +3,15 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background_doodle"
     android:fitsSystemWindows="true">
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/sliding_layout"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
-        sothree:umanoPanelHeight="85dp"
+        android:id="@+id/sliding_layout"
+        sothree:umanoPanelHeight="116dp"
         sothree:umanoShadowHeight="0dp">
 
         <include
@@ -25,6 +25,7 @@
             android:layout_height="match_parent" />
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_height="match_parent"
@@ -34,18 +35,5 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
 
-    <com.dhodu.android.ui.RightNavView
-        android:id="@+id/nav_drawer_right"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:fitsSystemWindows="true">
-
-        <include
-            layout="@layout/drawer_right"
-            android:layout_width="500dp"
-            android:layout_height="match_parent" />
-
-    </com.dhodu.android.ui.RightNavView>
 
 </android.support.v4.widget.DrawerLayout>

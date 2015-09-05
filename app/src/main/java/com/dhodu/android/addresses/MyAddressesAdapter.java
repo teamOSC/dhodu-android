@@ -29,10 +29,10 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
     @Override
     public MyAddressesAdapter.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_addnew_address, null);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_addnew_address, parent,false);
             return new ItemHolder(v);
         } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, null);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, parent,false);
             return new ItemHolder(v);
         }
     }
@@ -48,7 +48,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
                 holder.name.setText(address.getString("name"));
                 holder.flat.setText(address.getString("house"));
                 holder.locality.setText(address.getString("locality"));
-                holder.pincode.setText(address.getString("pin"));
+                holder.street.setText(address.getString("street"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -64,7 +64,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
 
     public class ItemHolder extends RecyclerView.ViewHolder {
 
-        protected TextView name, flat, locality, pincode;
+        protected TextView name, flat, street, locality;
 
         public ItemHolder(View itemView) {
             super(itemView);
@@ -72,7 +72,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
             name = (TextView) itemView.findViewById(R.id.name);
             flat= (TextView) itemView.findViewById(R.id.address_flat);
             locality = (TextView) itemView.findViewById(R.id.address_locality);
-            pincode = (TextView) itemView.findViewById(R.id.address_pincode);
+            street = (TextView) itemView.findViewById(R.id.address_street);
 
          itemView.setOnClickListener(new View.OnClickListener() {
              @Override

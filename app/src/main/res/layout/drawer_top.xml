@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!--<View-->
@@ -10,9 +11,16 @@
     <!--android:background="@drawable/app_background_light" />-->
 
     <FrameLayout
-        android:id="@+id/camera_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+
+    <FrameLayout
+        android:id="@+id/camera_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top">
 
         <SurfaceView
             android:id="@+id/surface_view"
@@ -138,16 +146,62 @@
         </LinearLayout>
 
 
+
+    </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:elevation="5dp"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:id="@+id/topView">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@color/dhodu_primary"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:background="@color/dhodu_primary"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pull down to create a new order"
+                    android:textColor="@android:color/white"
+                    android:layout_marginLeft="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_expand_more_white_36dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="20dp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
     </FrameLayout>
 
 
-    <ImageView
-        android:id="@+id/hanger_pulldown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="0dp"
-        android:padding="0dp"
-        android:src="@drawable/hanger_dark" />
 </RelativeLayout>

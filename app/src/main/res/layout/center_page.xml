@@ -1,26 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <ImageView
-        android:layout_gravity="center"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:src="@drawable/dhodu_icon_512"/>
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="85dp"
+    sothree:umanoShadowHeight="5dp"
+    sothree:umanoFadeColor="@android:color/transparent">
 
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="30dp"
-        android:width="300dp"
-        android:backgroundTint="@color/dhodu_primary_dark"
-        android:fontFamily="sans-serif-thin"
-        android:padding="20dp"
-        android:text="ESTIMATE"
-        android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
-</FrameLayout>
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="160dp"
+            android:layout_marginBottom="90dp"
+            app:cardUseCompatPadding="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No current order found"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/neworder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/dhodu_primary_dark"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="Create a new order"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="85dp">
+            <TextView
+                android:fontFamily="sans-serif-medium"
+                android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@android:color/black"
+                android:text="Order History"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@android:color/black"
+                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                android:text="Your order history will appear here."/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_order_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
