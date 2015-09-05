@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!--<View-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
     <!--android:background="@drawable/app_background_light" />-->
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
 
     <FrameLayout
         android:id="@+id/camera_container"
@@ -25,7 +19,7 @@
         <SurfaceView
             android:id="@+id/surface_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></SurfaceView>
+            android:layout_height="match_parent" />
 
         <View
             android:layout_width="match_parent"
@@ -146,62 +140,57 @@
         </LinearLayout>
 
 
-
     </FrameLayout>
 
-        <LinearLayout
+    <LinearLayout
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:elevation="5dp"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:elevation="5dp"
-            android:layout_gravity="bottom"
-            android:gravity="bottom"
-            android:id="@+id/topView">
+            android:layout_gravity="top"
+            android:background="@color/dhodu_primary"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/dhodu_primary"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:background="@color/dhodu_primary"
-                android:minHeight="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="25dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Pull down to create a new order"
+                android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal"
-                android:background="@color/dhodu_primary"
-                android:layout_gravity="center_vertical">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_expand_more_white_36dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pull down to create a new order"
-                    android:textColor="@android:color/white"
-                    android:layout_marginLeft="25dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:textSize="18sp"
-                    android:layout_gravity="center_vertical"
-                    android:fontFamily="sans-serif-medium"
-                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_expand_more_white_36dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="20dp"/>
-
-            </RelativeLayout>
-        </LinearLayout>
-
-    </FrameLayout>
-
+        </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
