@@ -5,7 +5,6 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 
 import com.dhodu.android.MainActivity;
 import com.dhodu.android.R;
+import com.dhodu.android.addresses.AddAddressActivity;
 import com.dhodu.android.utils.SMSReceiver;
 import com.dhodu.android.utils.Utils;
 import com.parse.FindCallback;
@@ -29,6 +29,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import org.json.JSONObject;
 
@@ -219,11 +220,29 @@ public class OtpFragment extends Fragment {
                             }
                         });
                     } else {
-                        FragmentTransaction transaction = LoginActivity.fragmentManager.beginTransaction();
-                        LoginDetailFragment loginDetailFragment = LoginDetailFragment.newInstance(username);
-                        transaction.replace(R.id.login_container, loginDetailFragment).commit();
+                        signUpUser(username);
                     }
                 } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private void signUpUser(String username) {
+        ParseUser user = new ParseUser();
+        user.setUsername(username);
+        user.setPassword(Utils.generatePassword(username));
+
+        user.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) {
+                if (e == null) {
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    startActivity(new Intent(getActivity(), AddAddressActivity.class));
+                    getActivity().finish();
+                } else {
+                    Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }

@@ -37,6 +37,10 @@
             android:name=".addresses.MyAddressesActivity"
             android:label="@string/title_activity_my_addresses" >
         </activity>
+        <activity
+            android:name=".addresses.AddAddressActivity"
+            android:label="Add Address" >
+        </activity>
     </application>
 
 </manifest>

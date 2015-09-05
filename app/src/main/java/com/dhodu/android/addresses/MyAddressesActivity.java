@@ -1,12 +1,17 @@
 package com.dhodu.android.addresses;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.dhodu.android.R;
+import com.dhodu.android.ui.DividerItemDecoration;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -18,6 +23,9 @@ public class MyAddressesActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MyAddressesAdapter adapter;
 
+    View emptyLayout;
+    Button addNewAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,18 +33,34 @@ public class MyAddressesActivity extends AppCompatActivity {
 
         toolbar=(Toolbar) findViewById(R.id.toolbar);
         recyclerView=(RecyclerView) findViewById(R.id.recyclerview_addresses);
+        emptyLayout = findViewById(R.id.empty_layout);
+        addNewAddress = (Button) findViewById(R.id.add_new_address);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("My Addresses");
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         ParseUser currentuser = ParseUser.getCurrentUser();
         JSONArray address = currentuser.getJSONArray("address");
 
-        if (address != null) {
-            adapter = new MyAddressesAdapter(address);
+        if (address != null && address.length() != 0) {
+            adapter = new MyAddressesAdapter(this,address);
             recyclerView.setAdapter(adapter);
+            recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
+        } else {
+            emptyLayout.setVisibility(View.VISIBLE);
         }
+
+
+        addNewAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyAddressesActivity.this,AddAddressActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -49,5 +73,9 @@ public class MyAddressesActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public MyAddressesAdapter getAddressAdpater() {
+        return adapter;
     }
 }
