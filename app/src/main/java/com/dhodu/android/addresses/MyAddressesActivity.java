@@ -76,6 +76,7 @@ public class MyAddressesActivity extends AppCompatActivity {
         if (address != null && address.length() != 0) {
             adapter.updateDataSet(address);
             adapter.notifyDataSetChanged();
+            emptyLayout.setVisibility(View.GONE);
         } else {
             emptyLayout.setVisibility(View.VISIBLE);
         }

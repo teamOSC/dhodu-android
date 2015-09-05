@@ -45,6 +45,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
         } else {
             try {
                 JSONObject address = array.getJSONObject(position-1);
+                holder.name.setText(address.getString("name"));
                 holder.flat.setText(address.getString("house"));
                 holder.locality.setText(address.getString("locality"));
                 holder.pincode.setText(address.getString("pin"));
@@ -63,11 +64,12 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
 
     public class ItemHolder extends RecyclerView.ViewHolder {
 
-        protected TextView flat, locality, pincode;
+        protected TextView name, flat, locality, pincode;
 
         public ItemHolder(View itemView) {
             super(itemView);
 
+            name = (TextView) itemView.findViewById(R.id.name);
             flat= (TextView) itemView.findViewById(R.id.address_flat);
             locality = (TextView) itemView.findViewById(R.id.address_locality);
             pincode = (TextView) itemView.findViewById(R.id.address_pincode);

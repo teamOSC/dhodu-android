@@ -24,4 +24,11 @@
         <item name="colorControlHighlight">#999999</item>
     </style>
 
+    <style name="EditTextLightBackground" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#000000</item>
+        <item name="colorControlActivated">@color/dhodu_primary_dark</item>
+        <item name="colorControlHighlight">#000000</item>
+    </style>
+
+
 </resources>

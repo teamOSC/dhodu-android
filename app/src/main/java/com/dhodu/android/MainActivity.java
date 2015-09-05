@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
-                    switch (menuItem.getItemId()){
+                    switch (menuItem.getItemId()) {
                         case R.id.nav_addresses:
                             Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
                             startActivity(intent);
@@ -275,25 +275,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpProfileView() {
-        tvProfileName = (TextView) findViewById(R.id.profile_name);
         tvProfileMobile = (TextView) findViewById(R.id.profile_mobile);
 
         ParseUser pUser = ParseUser.getCurrentUser();
         if (pUser != null) {
-            setProfileInfo(
-                    pUser.getString("name"),
+            tvProfileMobile.setText(
                     pUser.getUsername()
             );
         }
 
-    }
-
-    private void setProfileInfo(
-            String name,
-            String phoneNumber
-    ) {
-        tvProfileName.setText(name);
-        tvProfileMobile.setText(phoneNumber);
     }
 
 }

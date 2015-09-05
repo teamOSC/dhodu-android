@@ -11,7 +11,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    lintOptions {
+        abortOnError false
+    }
+    signingConfigs {
+        debug {
+            storeFile file('debug.jks')
+            storePassword "dhodudebug"
+            keyAlias "cert"
+            keyPassword "dhodudebug"
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -28,4 +42,5 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.2.1'
     compile 'com.android.support:recyclerview-v7:23.0.0'
     compile 'com.android.support:cardview-v7:23.0.0'
+    compile "com.google.android.gms:play-services-location:7.5.0"
 }

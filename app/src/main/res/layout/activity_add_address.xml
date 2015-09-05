@@ -1,95 +1,160 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background_dark"
     tools:context="com.dhodu.android.addresses.AddAddressActivity">
 
-    <LinearLayout
-        android:layout_width="300dp"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_gravity="top"
+        android:background="@color/dhodu_primary"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
         <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-thin"
+            android:fontFamily="sans-serif-small"
             android:hint="Name"
             android:imeOptions="actionNext"
             android:inputType="textPersonName"
-            android:theme="@style/EditTextDarkBackground" />
+            android:theme="@style/EditTextLightBackground" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
         <EditText
             android:id="@+id/address_flat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-thin"
+            android:fontFamily="sans-serif-small"
             android:hint="Flat/House No."
             android:imeOptions="actionNext"
             android:inputType="textPostalAddress"
-            android:theme="@style/EditTextDarkBackground" />
+            android:theme="@style/EditTextLightBackground" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
         <EditText
             android:id="@+id/address_street"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-thin"
+            android:fontFamily="sans-serif-small"
             android:hint="Street/Society Name"
             android:imeOptions="actionNext"
             android:inputType="textPostalAddress"
-            android:theme="@style/EditTextDarkBackground" />
+            android:theme="@style/EditTextLightBackground" />
 
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
         <EditText
             android:id="@+id/address_locality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-thin"
+            android:fontFamily="sans-serif-small"
             android:hint="Landmark/Locality"
             android:imeOptions="actionNext"
             android:inputType="textPostalAddress"
-            android:theme="@style/EditTextDarkBackground" />
+            android:theme="@style/EditTextLightBackground" />
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat"
+            android:visibility="gone">
         <EditText
             android:id="@+id/address_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-thin"
+            android:fontFamily="sans-serif-small"
             android:hint="City"
             android:imeOptions="actionNext"
             android:inputType="textPostalAddress"
-            android:theme="@style/EditTextDarkBackground" />
+            android:theme="@style/EditTextLightBackground" />
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat"
+            android:visibility="gone">
         <EditText
             android:id="@+id/address_pincode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-thin"
+            android:fontFamily="sans-serif-small"
             android:hint="Pincode"
             android:imeOptions="actionNext"
             android:inputType="number"
-            android:theme="@style/EditTextDarkBackground" />
+            android:theme="@style/EditTextLightBackground" />
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:visibility="gone"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
         <EditText
             android:id="@+id/referral"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-thin"
+            android:fontFamily="sans-serif-small"
             android:hint="Referral code"
             android:imeOptions="actionDone"
-            android:theme="@style/EditTextDarkBackground" />
+            android:theme="@style/EditTextLightBackground" />
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:backgroundTint="@android:color/white"
-            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/dhodu_primary_dark"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:text="Submit"
-            android:textColor="@color/dhodu_primary_dark" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 
