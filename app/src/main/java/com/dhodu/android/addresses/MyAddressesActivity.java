@@ -26,6 +26,9 @@ public class MyAddressesActivity extends AppCompatActivity {
     View emptyLayout;
     Button addNewAddress;
 
+    String action;
+    String chooseAddress = "chooseAddress";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +41,15 @@ public class MyAddressesActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("My Addresses");
+
+        action = getIntent().getAction();
+
+        if ( action.equals(chooseAddress))
+        getSupportActionBar().setTitle("Choose Address");
+        else getSupportActionBar().setTitle("My Addresses");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAddressesAdapter(this);
+        adapter = new MyAddressesAdapter(this, action.equals(chooseAddress));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
 

@@ -1,5 +1,6 @@
 package com.dhodu.android.addresses;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -21,9 +22,11 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
 
     private JSONArray array;
     private Context context;
+    private boolean isChooseAddress;
 
-    public MyAddressesAdapter(Context context) {
+    public MyAddressesAdapter(Context context, boolean isChooseAddress) {
         this.context = context;
+        this.isChooseAddress = isChooseAddress;
     }
 
     @Override
@@ -80,6 +83,14 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
                  if (getAdapterPosition() == 0) {
                      Intent intent = new Intent(context,AddAddressActivity.class);
                      context.startActivity(intent);
+                 } else {
+                     if (isChooseAddress){
+                         Intent returnIntent = new Intent();
+                         returnIntent.putExtra("address_index",getAdapterPosition()-1);
+                         returnIntent.putExtra("address_name",flat.getText().toString());
+                         ((Activity)context).setResult(Activity.RESULT_OK,returnIntent);
+                         ((Activity)context).finish();
+                     }
                  }
              }
          });

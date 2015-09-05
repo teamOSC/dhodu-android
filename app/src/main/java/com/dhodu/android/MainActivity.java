@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     EditText orderTime;
     Button submitOrder;
     Switch expressSwitch;
+    TextView locationAddress;
 
     TextView tvProfileMobile;
     RecyclerView ordersView;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         topView = (LinearLayout) findViewById(R.id.topView);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         orderCount = (TextView) findViewById(R.id.order_count);
+        locationAddress = (TextView) findViewById(R.id.location_address);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_addresses:
                             Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
+                            intent.setAction("addAddress");
                             startActivity(intent);
                     }
                     return false;
@@ -135,6 +138,15 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     return false;
                 }
+            }
+        });
+
+        locationAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MyAddressesActivity.class);
+                intent.setAction("chooseAddress");
+                startActivityForResult(intent,0);
             }
         });
 
@@ -262,6 +274,20 @@ public class MainActivity extends AppCompatActivity {
 
         setUpOrderList();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if(resultCode == RESULT_OK){
+                int index = data.getIntExtra("address_index",0);
+                String name = data.getStringExtra("address_name");
+                Log.d("lol",String.valueOf(index));
+                locationAddress.setText(name);
+            }
+            if (resultCode == RESULT_CANCELED) {
+            }
+        }
     }
 
     @Override
