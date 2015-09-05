@@ -41,18 +41,9 @@ public class MyAddressesActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("My Addresses");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        ParseUser currentuser = ParseUser.getCurrentUser();
-        JSONArray address = currentuser.getJSONArray("address");
-
-        if (address != null && address.length() != 0) {
-            adapter = new MyAddressesAdapter(this,address);
-            recyclerView.setAdapter(adapter);
-            recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
-        } else {
-            emptyLayout.setVisibility(View.VISIBLE);
-        }
-
+        adapter = new MyAddressesAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
 
         addNewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +66,18 @@ public class MyAddressesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public MyAddressesAdapter getAddressAdpater() {
-        return adapter;
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ParseUser currentuser = ParseUser.getCurrentUser();
+        JSONArray address = currentuser.getJSONArray("address");
+
+        if (address != null && address.length() != 0) {
+            adapter.updateDataSet(address);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyLayout.setVisibility(View.VISIBLE);
+        }
     }
 }

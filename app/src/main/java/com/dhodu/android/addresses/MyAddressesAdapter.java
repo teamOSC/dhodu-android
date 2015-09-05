@@ -3,7 +3,6 @@ package com.dhodu.android.addresses;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,20 +22,16 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
     private JSONArray array;
     private Context context;
 
-    public MyAddressesAdapter(Context context, JSONArray array) {
+    public MyAddressesAdapter(Context context) {
         this.context = context;
-        this.array = array;
-        Log.d("lol",String.valueOf(array.length()));
     }
 
     @Override
     public MyAddressesAdapter.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            Log.d("lol","here");
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_addnew_address, null);
             return new ItemHolder(v);
         } else {
-            Log.d("lol","here2");
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, null);
             return new ItemHolder(v);
         }
@@ -61,7 +56,9 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
 
     @Override
     public int getItemCount() {
+        if (array != null)
         return array.length() + 1;
+        else return 0;
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder {

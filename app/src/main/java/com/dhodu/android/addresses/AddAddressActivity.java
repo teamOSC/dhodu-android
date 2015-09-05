@@ -16,7 +16,6 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -91,7 +90,6 @@ public class AddAddressActivity extends AppCompatActivity {
                 @Override
                 public void done(ParseException e) {
                     if (e == null) {
-                        notifyAddressAdapter();
                         finish();
                     } else {
                         Toast.makeText(AddAddressActivity.this, "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
@@ -101,17 +99,5 @@ public class AddAddressActivity extends AppCompatActivity {
             });
         }
 
-    }
-
-    private void notifyAddressAdapter() {
-        MyAddressesActivity activity = new MyAddressesActivity();
-        MyAddressesAdapter adapter =activity.getAddressAdpater();
-
-        if (adapter != null) {
-            ParseUser currentuser = ParseUser.getCurrentUser();
-            JSONArray address = currentuser.getJSONArray("address");
-            adapter.updateDataSet(address);
-            adapter.notifyDataSetChanged();
-        }
     }
 }
