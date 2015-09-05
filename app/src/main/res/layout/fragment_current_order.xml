@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_current_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="15dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No current order found"
+            android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/neworder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/dhodu_primary_dark"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Create a new order"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    </FrameLayout>

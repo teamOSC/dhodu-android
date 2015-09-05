@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="primary"
+                    android:text="Choose address"
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/white" />
 

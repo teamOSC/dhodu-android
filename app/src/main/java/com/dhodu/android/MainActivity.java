@@ -6,6 +6,7 @@ import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView orderCount;
 
+    int addressindex = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.current_fragment_container,new CurrentOrderFragment());
+        transaction.commit();
 
         //Setup the order pulldown screen
         orderTime = (EditText) findViewById(R.id.order_time);
@@ -177,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
                             transaction.put("transaction_id", count + 1);
                             transaction.put("customer", ParseUser.getCurrentUser());
                             transaction.put("time_pick", orderTime.getText().toString());
+                            transaction.put("address_index",addressindex);
+                            transaction.put("comments","");
                             transaction.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
@@ -280,9 +289,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
             if(resultCode == RESULT_OK){
-                int index = data.getIntExtra("address_index",0);
+                addressindex = data.getIntExtra("address_index",0);
                 String name = data.getStringExtra("address_name");
-                Log.d("lol",String.valueOf(index));
                 locationAddress.setText(name);
             }
             if (resultCode == RESULT_CANCELED) {
@@ -340,6 +348,7 @@ public class MainActivity extends AppCompatActivity {
     private void fetchOrderHistory() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
         query.whereEqualTo("customer", ParseUser.getCurrentUser());
+        query.whereEqualTo("status",6);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
