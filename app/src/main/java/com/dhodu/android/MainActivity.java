@@ -43,6 +43,7 @@ import com.dhodu.android.ui.CircleImageView;
 import com.dhodu.android.ui.SpacesItemDecoration;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -121,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
                                 intent.setAction("addAddress");
                                 startActivity(intent);
+                                break;
+                            case R.id.nav_logout:
+                                ParseUser.logOutInBackground(new LogOutCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                                    }
+                                });
                         }
                         return false;
                     }
