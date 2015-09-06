@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String photoPath;
     private LatLng latLng;
+    int locationShifted = 0;
 
 
     @Override
@@ -510,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
     public void setCurrentLocation(Context context) {
 
         latLng = new LatLng(0,0);
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         try {
             locationManager.requestLocationUpdates(
@@ -519,6 +520,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onLocationChanged(Location location) {
                             latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                            locationShifted++;
+                            if (locationShifted>2) {
+                                try {
+                                    locationManager.removeUpdates(this);
+                                } catch (SecurityException e){
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
                         @Override
@@ -547,7 +556,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onLocationChanged(Location location) {
                             latLng = new LatLng(location.getLatitude(),location.getLongitude());
-
+                            locationShifted++;
+                            if (locationShifted>2) {
+                                try {
+                                    locationManager.removeUpdates(this);
+                                } catch (SecurityException e){
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
                         @Override
