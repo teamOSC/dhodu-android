@@ -1,5 +1,6 @@
 package com.dhodu.android;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ public class CurrentOrderFragment extends Fragment {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
+                    if (list.size()>0)
                     setUpOrderCard(list);
                 } else {
                     e.printStackTrace();
@@ -51,9 +53,13 @@ public class CurrentOrderFragment extends Fragment {
     }
 
     private void setUpOrderCard(List<ParseObject> list) {
-        if (list.size() > 0) {
-            getLayoutIdForStatus(list.get(0).getInt("status"));
-        }
+        int layoutId =getLayoutIdForStatus(list.get(0).getInt("status"));
+
+        LayoutInflater inflater = (LayoutInflater) getActivity()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View cardView =  inflater.inflate(layoutId, null);
+
+        rootContainer.addView(cardView);;
     }
 
     private int getLayoutIdForStatus(int statusCode) {

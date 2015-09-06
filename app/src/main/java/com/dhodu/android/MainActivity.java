@@ -40,7 +40,7 @@ import android.widget.Toast;
 import com.dhodu.android.addresses.MyAddressesActivity;
 import com.dhodu.android.login.LoginActivity;
 import com.dhodu.android.ui.CircleImageView;
-import com.dhodu.android.ui.DividerItemDecoration;
+import com.dhodu.android.ui.SpacesItemDecoration;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -442,7 +442,8 @@ public class MainActivity extends AppCompatActivity {
     public void setUpOrderList() {
         ordersView = (RecyclerView) findViewById(R.id.list_order_history);
         ordersView.setLayoutManager(new LinearLayoutManager(this));
-        ordersView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_card_order_history);
+        ordersView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         fetchOrderHistory();
     }
 
@@ -468,5 +469,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
