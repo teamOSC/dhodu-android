@@ -81,215 +81,215 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
             finish();
-        }
+        } else {
+            // Instantiate the layouts
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            slideUpLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+            cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
+            topView = (LinearLayout) findViewById(R.id.topView);
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            orderCount = (TextView) findViewById(R.id.order_count);
+            locationAddress = (TextView) findViewById(R.id.location_address);
 
-        // Instantiate the layouts
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        slideUpLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
-        topView = (LinearLayout) findViewById(R.id.topView);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        orderCount = (TextView) findViewById(R.id.order_count);
-        locationAddress = (TextView) findViewById(R.id.location_address);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+            getSupportActionBar().setTitle("Dhodu");
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        getSupportActionBar().setTitle("Dhodu");
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (navigationView != null) {
-            setUpProfileView();
-            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(MenuItem menuItem) {
-                    switch (menuItem.getItemId()) {
-                        case R.id.nav_addresses:
-                            Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
-                            intent.setAction("addAddress");
-                            startActivity(intent);
-                    }
-                    return false;
-                }
-            });
-        }
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.current_fragment_container,new CurrentOrderFragment());
-        transaction.commit();
-
-        //Setup the order pulldown screen
-        orderTime = (EditText) findViewById(R.id.order_time);
-        orderTime.setInputType(EditorInfo.TYPE_NULL);
-        orderTime.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    // TODO Auto-generated method stub
-                    Calendar mcurrentTime = Calendar.getInstance();
-                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                    int minute = mcurrentTime.get(Calendar.MINUTE);
-                    TimePickerDialog mTimePicker;
-                    mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            orderTime.setText(
-                                    ((selectedHour < 10) ? "0" + selectedHour : selectedHour)
-                                            + ":" +
-                                            ((selectedMinute < 10) ? "0" + selectedMinute : selectedMinute));
-                        }
-                    }, hour, minute, true);//Yes 24 hour time
-                    mTimePicker.setTitle("Select Time");
-                    mTimePicker.show();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-
-        locationAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MyAddressesActivity.class);
-                intent.setAction("chooseAddress");
-                startActivityForResult(intent,0);
-            }
-        });
-
-        expressSwitch = (Switch) findViewById(R.id.express_switch);
-        expressSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    Toast.makeText(getBaseContext(), "Express service coming soon", Toast.LENGTH_SHORT).show();
-                    expressSwitch.setChecked(false);
-                }
-            }
-        });
-
-        submitOrder = (Button) findViewById(R.id.btn_submit_order);
-        submitOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Transaction");
-                query.countInBackground(new CountCallback() {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            if (navigationView != null) {
+                setUpProfileView();
+                navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public void done(int count, ParseException e) {
-                        if (e != null) {
-                            Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                        } else {
-                            ParseObject transaction = new ParseObject("Transaction");
-                            transaction.put("status", 0);
-                            transaction.put("transaction_id", count + 1);
-                            transaction.put("customer", ParseUser.getCurrentUser());
-                            transaction.put("time_pick", orderTime.getText().toString());
-                            transaction.put("address_index",addressindex);
-                            transaction.put("comments","");
-                            transaction.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e == null) {
-                                        Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_addresses:
+                                Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
+                                intent.setAction("addAddress");
+                                startActivity(intent);
                         }
+                        return false;
                     }
                 });
             }
-        });
 
-        surfaceView = (SurfaceView) findViewById(R.id.surface_view);
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.current_fragment_container, new CurrentOrderFragment());
+            transaction.commit();
 
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
-            }
-        });
-
-        cameraContainer.setVisibility(View.GONE);
-
-        slideUpLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-            @Override
-            public void onPanelSlide(View view, float v) {
-                cameraContainer.setVisibility(View.VISIBLE);
-                cameraContainer.setAlpha(v);
-                topView.setAlpha(1-v);
-            }
-
-            @Override
-            public void onPanelCollapsed(View view) {
-                topView.setVisibility(View.VISIBLE);
-                //Stop the camera view here
-                try {
-                    camera.stopPreview();
-                    camera.release();
-                    cameraShowing = false;
-                } catch (Exception e) {
-                    Log.e(TAG, "onPanelCollapsed ", e);
+            //Setup the order pulldown screen
+            orderTime = (EditText) findViewById(R.id.order_time);
+            orderTime.setInputType(EditorInfo.TYPE_NULL);
+            orderTime.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        // TODO Auto-generated method stub
+                        Calendar mcurrentTime = Calendar.getInstance();
+                        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                        int minute = mcurrentTime.get(Calendar.MINUTE);
+                        TimePickerDialog mTimePicker;
+                        mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                                orderTime.setText(
+                                        ((selectedHour < 10) ? "0" + selectedHour : selectedHour)
+                                                + ":" +
+                                                ((selectedMinute < 10) ? "0" + selectedMinute : selectedMinute));
+                            }
+                        }, hour, minute, true);//Yes 24 hour time
+                        mTimePicker.setTitle("Select Time");
+                        mTimePicker.show();
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
-            }
+            });
 
-            @Override
-            public void onPanelExpanded(View view) {
-                //Initialise the camera view here
-                topView.setVisibility(View.GONE);
-                try {
-                    camera = Camera.open();
-                    Camera.Parameters params = camera.getParameters();
-                    camera.setDisplayOrientation(90);
-                    camera.setParameters(params);
-
-                    camera.setPreviewDisplay(surfaceHolder);
-                    cameraShowing = true;
-                } catch (Exception e) {
-                    Log.e(TAG, "onPanelExpanded ", e);
+            locationAddress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
+                    intent.setAction("chooseAddress");
+                    startActivityForResult(intent, 0);
                 }
-                camera.startPreview();
+            });
 
+            expressSwitch = (Switch) findViewById(R.id.express_switch);
+            expressSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b) {
+                        Toast.makeText(getBaseContext(), "Express service coming soon", Toast.LENGTH_SHORT).show();
+                        expressSwitch.setChecked(false);
+                    }
+                }
+            });
+
+            submitOrder = (Button) findViewById(R.id.btn_submit_order);
+            submitOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Transaction");
+                    query.countInBackground(new CountCallback() {
+                        @Override
+                        public void done(int count, ParseException e) {
+                            if (e != null) {
+                                Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                            } else {
+                                ParseObject transaction = new ParseObject("Transaction");
+                                transaction.put("status", 0);
+                                transaction.put("transaction_id", count + 1);
+                                transaction.put("customer", ParseUser.getCurrentUser());
+                                transaction.put("time_pick", orderTime.getText().toString());
+                                transaction.put("address_index", addressindex);
+                                transaction.put("comments", "");
+                                transaction.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+            surfaceView = (SurfaceView) findViewById(R.id.surface_view);
+            surfaceHolder = surfaceView.getHolder();
+            surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+                @Override
+                public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+                }
+
+                @Override
+                public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
+                }
+            });
+
+            cameraContainer.setVisibility(View.GONE);
+
+            slideUpLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+                @Override
+                public void onPanelSlide(View view, float v) {
+                    cameraContainer.setVisibility(View.VISIBLE);
+                    cameraContainer.setAlpha(v);
+                    topView.setAlpha(1 - v);
+                }
+
+                @Override
+                public void onPanelCollapsed(View view) {
+                    topView.setVisibility(View.VISIBLE);
+                    //Stop the camera view here
+                    try {
+                        camera.stopPreview();
+                        camera.release();
+                        cameraShowing = false;
+                    } catch (Exception e) {
+                        Log.e(TAG, "onPanelCollapsed ", e);
+                    }
+                }
+
+                @Override
+                public void onPanelExpanded(View view) {
+                    //Initialise the camera view here
+                    topView.setVisibility(View.GONE);
+                    try {
+                        camera = Camera.open();
+                        Camera.Parameters params = camera.getParameters();
+                        camera.setDisplayOrientation(90);
+                        camera.setParameters(params);
+
+                        camera.setPreviewDisplay(surfaceHolder);
+                        cameraShowing = true;
+                    } catch (Exception e) {
+                        Log.e(TAG, "onPanelExpanded ", e);
+                    }
+                    camera.startPreview();
+
+                }
+
+                @Override
+                public void onPanelAnchored(View view) {
+
+                }
+
+                @Override
+                public void onPanelHidden(View view) {
+
+                }
+            });
+
+            //drawerLayout.setBackgroundResource(R.drawable.app_background_doodle);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(getResources().getColor(R.color.dhodu_primary_dark));
+                getWindow().setNavigationBarColor(getResources().getColor(R.color.dhodu_primary_dark));
             }
 
-            @Override
-            public void onPanelAnchored(View view) {
-
-            }
-
-            @Override
-            public void onPanelHidden(View view) {
-
-            }
-        });
-
-        //drawerLayout.setBackgroundResource(R.drawable.app_background_doodle);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.dhodu_primary_dark));
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.dhodu_primary_dark));
+            setUpOrderList();
         }
-
-        setUpOrderList();
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
-            if(resultCode == RESULT_OK){
-                addressindex = data.getIntExtra("address_index",0);
+            if (resultCode == RESULT_OK) {
+                addressindex = data.getIntExtra("address_index", 0);
                 String name = data.getStringExtra("address_name");
                 locationAddress.setText(name);
             }
@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
@@ -341,25 +341,25 @@ public class MainActivity extends AppCompatActivity {
     public void setUpOrderList() {
         ordersView = (RecyclerView) findViewById(R.id.list_order_history);
         ordersView.setLayoutManager(new LinearLayoutManager(this));
-        ordersView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
+        ordersView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         fetchOrderHistory();
     }
 
     private void fetchOrderHistory() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
         query.whereEqualTo("customer", ParseUser.getCurrentUser());
-        query.whereEqualTo("status",5);
+        query.whereEqualTo("status", 5);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     ordersView.setAdapter(new OrderListAdapter(list));
-                    if (list.size()==0){
+                    if (list.size() == 0) {
                         orderCount.setText("Your order history will appear here.");
                     } else {
-                        if (list.size()==1)
-                        orderCount.setText("1 order placed");
-                        else orderCount.setText(list.size()+" orders placed");
+                        if (list.size() == 1)
+                            orderCount.setText("1 order placed");
+                        else orderCount.setText(list.size() + " orders placed");
                     }
                 } else {
                     e.printStackTrace();
