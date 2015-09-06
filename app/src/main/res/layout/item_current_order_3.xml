@@ -101,13 +101,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Order placed at   -   "
+                android:text="Delivering to   -   "
                 android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/transaction_date"
+                android:id="@+id/pick_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Small.Inverse"

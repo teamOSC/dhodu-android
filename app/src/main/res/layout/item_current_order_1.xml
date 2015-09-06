@@ -66,7 +66,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -74,13 +75,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Transaction ID   -   "
+                android:text="Picking up from   -   "
                 android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/transaction_id"
+                android:id="@+id/pick_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Small.Inverse"
@@ -88,7 +89,6 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,13 +101,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Order placed at   -   "
+                android:text="Manager Details   -   "
                 android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/transaction_date"
+                android:id="@+id/agent_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Small.Inverse"

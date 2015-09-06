@@ -112,6 +112,33 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Small.Inverse"
                 android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Picking up from   -   "
+                android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/pick_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
         </LinearLayout>

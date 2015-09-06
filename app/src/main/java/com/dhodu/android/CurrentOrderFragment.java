@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.dhodu.android.ui.StepsView;
 import com.parse.FindCallback;
@@ -15,6 +16,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -66,10 +71,10 @@ public class CurrentOrderFragment extends Fragment {
         View cardView =  inflater.inflate(layoutId, null);
         stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
         rootContainer.addView(cardView);
-        setCardDetails(list.get(0));
+        setCardDetails(list.get(0),cardView);
     }
 
-    private void setCardDetails(ParseObject transaction) {
+    private void setCardDetails(ParseObject transaction, View cardView) {
 
         int statusCode = transaction.getInt("status");
 
@@ -79,6 +84,36 @@ public class CurrentOrderFragment extends Fragment {
                 .setLabelColorIndicator(getContext().getResources().getColor(R.color.dhodu_primary_dark))
                 .setCompletedPosition(statusCode)
                 .drawView();
+
+        TextView transactionId =(TextView) cardView.findViewById(R.id.transaction_id);
+        TextView transactiondate =(TextView) cardView.findViewById(R.id.transaction_date);
+        TextView pickaddress =(TextView) cardView.findViewById(R.id.pick_address);
+        TextView agentdetails =(TextView) cardView.findViewById(R.id.agent_detail);
+
+        if (transactionId!=null)
+        transactionId.setText(String.valueOf(transaction.getInt("transaction_id")));
+
+        if (pickaddress!=null) {
+            ParseUser currentuser = ParseUser.getCurrentUser();
+            JSONArray addresses = currentuser.getJSONArray("address");
+            try {
+                JSONObject address = addresses.getJSONObject(transaction.getInt("address_index"));
+                pickaddress.setText(address.getString("name") + "\n" + address.getString("house") + " , " + address.getString("locality"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (transactiondate!=null){
+            transactiondate.setText(transaction.getCreatedAt().toString());
+
+        }
+//        if (agentdetails!=null){
+//            ParseObject manager = transaction.getParseObject("assigned_manager");
+//            if (manager!=null)
+//            agentdetails.setText(manager.getString("name"));
+//        }
+
     }
 
     private int getLayoutIdForStatus(int statusCode) {
