@@ -1,6 +1,7 @@
 package com.dhodu.android;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.dhodu.android.ui.StepsView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -22,6 +24,10 @@ import java.util.List;
 public class CurrentOrderFragment extends Fragment {
 
     FrameLayout rootContainer;
+    StepsView stepsView;
+
+
+    private final String[] statuses= {"", "", "", "", "", ""};
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -58,8 +64,21 @@ public class CurrentOrderFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater) getActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View cardView =  inflater.inflate(layoutId, null);
+        stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
+        rootContainer.addView(cardView);
+        setCardDetails(list.get(0));
+    }
 
-        rootContainer.addView(cardView);;
+    private void setCardDetails(ParseObject transaction) {
+
+        int statusCode = transaction.getInt("status");
+
+        stepsView.setLabels(statuses)
+                .setBarColorIndicator(getContext().getResources().getColor(R.color.material_blue_grey_800))
+                .setProgressColorIndicator(Color.parseColor("#FF9800"))
+                .setLabelColorIndicator(getContext().getResources().getColor(R.color.dhodu_primary_dark))
+                .setCompletedPosition(statusCode)
+                .drawView();
     }
 
     private int getLayoutIdForStatus(int statusCode) {
