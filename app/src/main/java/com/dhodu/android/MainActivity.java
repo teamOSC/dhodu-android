@@ -217,35 +217,32 @@ public class MainActivity extends AppCompatActivity {
                                 transaction.put("time_pick", orderTime.getText().toString());
                                 transaction.put("address_index", addressindex);
                                 transaction.put("comments", "");
-                                try{
-                                    ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
-                                    transaction.put("location", geoPoint);
-                                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
-                                    query.whereNear("location", geoPoint);
-                                    query.getFirstInBackground(new GetCallback<ParseObject>() {
-                                        @Override
-                                        public void done(ParseObject object, ParseException e) {
-                                            if(e == null){
-                                                transaction.put("assigned_manager", object);
-                                            } else {
-                                                e.printStackTrace();
-                                            }
-
-                                        }
-                                    });
-                                }catch(Exception e1){
-                                    e1.printStackTrace();
-                                }
-                                transaction.saveInBackground(new SaveCallback() {
+                                ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+                                transaction.put("location", geoPoint);
+                                ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
+                                query.whereNear("location", geoPoint);
+                                query.getFirstInBackground(new GetCallback<ParseObject>() {
                                     @Override
-                                    public void done(ParseException e) {
+                                    public void done(ParseObject object, ParseException e) {
                                         if (e == null) {
-                                            Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                            transaction.put("assigned_manager", object);
+                                            transaction.saveInBackground(new SaveCallback() {
+                                                @Override
+                                                public void done(ParseException e) {
+                                                    if (e == null) {
+                                                        Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                         } else {
-                                            Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                                            e.printStackTrace();
                                         }
+
                                     }
                                 });
+
                             }
                         }
                     });
