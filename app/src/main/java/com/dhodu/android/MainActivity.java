@@ -1,11 +1,15 @@
 package com.dhodu.android;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +45,7 @@ import com.dhodu.android.addresses.MyAddressesActivity;
 import com.dhodu.android.login.LoginActivity;
 import com.dhodu.android.ui.CircleImageView;
 import com.dhodu.android.ui.SpacesItemDecoration;
+import com.google.android.gms.maps.model.LatLng;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.LogOutCallback;
@@ -85,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     int addressindex = 0;
 
     private String photoPath;
+    private LatLng latLng;
 
 
     @Override
@@ -477,6 +483,71 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public LatLng getCurrentLocation(Context context) {
+
+        latLng = new LatLng(0,0);
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        try {
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, 1000, 0,
+                    new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+
+                        }
+                    });
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000, 0, new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            latLng = new LatLng(location.getLatitude(),location.getLongitude());
+
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+
+                        }
+                    });
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
+        return latLng;
     }
 
 

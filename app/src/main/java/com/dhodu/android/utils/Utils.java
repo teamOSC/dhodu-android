@@ -8,5 +8,4 @@ public class Utils {
     public static String generatePassword(String username) {
         return "dhodu";
     }
-
 }
