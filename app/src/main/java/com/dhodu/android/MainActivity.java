@@ -217,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
                                 transaction.put("address_index", addressindex);
                                 transaction.put("comments", "");
                                 try{
-                                    LatLng latLng = getCurrentLocation(MainActivity.this);
                                     ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
                                     transaction.put("location", geoPoint);
                                     ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
@@ -332,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             setUpOrderList();
+            setCurrentLocation(this);
         }
 
     }
@@ -507,7 +507,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public LatLng getCurrentLocation(Context context) {
+    public void setCurrentLocation(Context context) {
 
         latLng = new LatLng(0,0);
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -569,7 +569,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        return latLng;
     }
 
 
