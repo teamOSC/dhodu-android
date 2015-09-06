@@ -27,7 +27,7 @@ public class CurrentOrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view= inflater.inflate(R.layout.fragment_current_order, container, false);
+        final View view = inflater.inflate(R.layout.fragment_current_order, container, false);
 
         rootContainer = (FrameLayout) view.findViewById(R.id.rootContainer);
 
@@ -38,11 +38,12 @@ public class CurrentOrderFragment extends Fragment {
     private void fetchCurrentOrders() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
         query.whereEqualTo("customer", ParseUser.getCurrentUser());
-        query.whereLessThanOrEqualTo("status",4);
+        query.whereLessThanOrEqualTo("status", 4);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
+                    if (list.size()>0)
                     setUpOrderCard(list);
                 } else {
                     e.printStackTrace();
@@ -58,7 +59,7 @@ public class CurrentOrderFragment extends Fragment {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View cardView =  inflater.inflate(layoutId, null);
 
-        rootContainer.addView(cardView);
+        rootContainer.addView(cardView);;
     }
 
     private int getLayoutIdForStatus(int statusCode) {
