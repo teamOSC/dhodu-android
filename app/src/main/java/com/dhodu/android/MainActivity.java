@@ -48,8 +48,10 @@ import com.dhodu.android.ui.SpacesItemDecoration;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -207,13 +209,33 @@ public class MainActivity extends AppCompatActivity {
                             if (e != null) {
                                 Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                             } else {
-                                ParseObject transaction = new ParseObject("Transaction");
+                                final ParseObject transaction = new ParseObject("Transaction");
                                 transaction.put("status", 0);
                                 transaction.put("transaction_id", count + 1);
                                 transaction.put("customer", ParseUser.getCurrentUser());
                                 transaction.put("time_pick", orderTime.getText().toString());
                                 transaction.put("address_index", addressindex);
                                 transaction.put("comments", "");
+                                try{
+                                    LatLng latLng = getCurrentLocation(MainActivity.this);
+                                    ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+                                    transaction.put("location", geoPoint);
+                                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
+                                    query.whereNear("location", geoPoint);
+                                    query.getFirstInBackground(new GetCallback<ParseObject>() {
+                                        @Override
+                                        public void done(ParseObject object, ParseException e) {
+                                            if(e == null){
+                                                transaction.put("assigned_manager", object);
+                                            } else {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+                                    });
+                                }catch(Exception e1){
+                                    e1.printStackTrace();
+                                }
                                 transaction.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
