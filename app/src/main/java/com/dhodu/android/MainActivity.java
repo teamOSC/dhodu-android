@@ -2,9 +2,15 @@ package com.dhodu.android;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -33,6 +39,7 @@ import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
 import com.dhodu.android.login.LoginActivity;
+import com.dhodu.android.ui.CircleImageView;
 import com.dhodu.android.ui.DividerItemDecoration;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
@@ -43,7 +50,11 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,11 +76,14 @@ public class MainActivity extends AppCompatActivity {
     TextView locationAddress;
 
     TextView tvProfileMobile;
+    CircleImageView profilePhoto;
     RecyclerView ordersView;
     Toolbar toolbar;
     TextView orderCount;
 
     int addressindex = 0;
+
+    private String photoPath;
 
 
     @Override
@@ -295,7 +309,50 @@ public class MainActivity extends AppCompatActivity {
             }
             if (resultCode == RESULT_CANCELED) {
             }
+        } else if (requestCode == 69) {
+            if (resultCode == RESULT_CANCELED) {
+                File photoFile = new File(photoPath);
+                if (photoFile.exists())
+                    new File(photoPath).delete();
+            } else if (resultCode == RESULT_OK) {
+                if (data == null) {
+                    setImage(photoPath);
+
+                } else {
+                    Uri selectedImage = data.getData();
+                    String[] filePath = {MediaStore.Images.Media.DATA};
+                    Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
+                    c.moveToFirst();
+                    int columnIndex = c.getColumnIndex(filePath[0]);
+                    String picturePath = c.getString(columnIndex);
+                    c.close();
+                    setImage(picturePath);
+                }
+            }
         }
+    }
+
+    private void setImage(String path) {
+        int targetW = 60;
+        int targetH = 60;
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
+        profilePhoto.setImageBitmap(bitmap);
     }
 
     @Override
@@ -328,6 +385,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpProfileView() {
         tvProfileMobile = (TextView) findViewById(R.id.profile_mobile);
+        profilePhoto = (CircleImageView) findViewById(R.id.profile_pic);
 
         ParseUser pUser = ParseUser.getCurrentUser();
         if (pUser != null) {
@@ -336,6 +394,49 @@ public class MainActivity extends AppCompatActivity {
             );
         }
 
+        profilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(photoFile));
+                }
+
+                Intent chooser = new Intent(Intent.ACTION_CHOOSER);
+                chooser.putExtra(Intent.EXTRA_INTENT, galleryIntent);
+                chooser.putExtra(Intent.EXTRA_TITLE, "Choose Profile Picture");
+
+                Intent[] intentArray = {cameraIntent};
+                chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+                startActivityForResult(chooser, 69);
+            }
+        });
+
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        photoPath = image.getAbsolutePath();
+        return image;
     }
 
     public void setUpOrderList() {
