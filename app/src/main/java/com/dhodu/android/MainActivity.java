@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                                     }
                                 });
+                                break;
                         }
                         return false;
                     }
@@ -413,7 +414,10 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-
+            case R.id.action_call:
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "7827121121"));
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -579,7 +583,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setStatusToHeader(String status, int imageId) {
-        expandCreateOrder.setImageResource(imageId);
+        if(imageId != 0){
+            expandCreateOrder.setImageResource(imageId);
+        }
         orderStatus.setText(status);
     }
 

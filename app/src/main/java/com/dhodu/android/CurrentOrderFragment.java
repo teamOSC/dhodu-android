@@ -120,13 +120,13 @@ public class CurrentOrderFragment extends Fragment {
                 setStatusToHeader("Laundry picked. Being washed", R.drawable.ic_cancel_white_48dp);
                 break;
             case 3:
-                setStatusToHeader("Laundry ready. Ready to be delivered", R.drawable.phone);
+                setStatusToHeader("Laundry ready. Ready to be delivered", 0);
                 break;
             case 4:
-                setStatusToHeader("Laundry out for delivery.", R.drawable.phone);
+                setStatusToHeader("Laundry out for delivery.", 0);
                 break;
             case 5:
-                setStatusToHeader("Laundry delivered", R.drawable.phone);
+                setStatusToHeader("Laundry delivered", 0);
                 break;
             default:
                 break;
