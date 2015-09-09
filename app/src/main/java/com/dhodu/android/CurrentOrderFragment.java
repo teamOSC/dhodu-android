@@ -1,9 +1,11 @@
 package com.dhodu.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -28,6 +31,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,10 +92,13 @@ public class CurrentOrderFragment extends Fragment {
 
         TextView transactionId = (TextView) cardView.findViewById(R.id.transaction_id);
         TextView transactiondate = (TextView) cardView.findViewById(R.id.transaction_date);
-        TextView agentname = (TextView) cardView.findViewById(R.id.agentName);
+        TextView agentName = (TextView) cardView.findViewById(R.id.agentName);
         TextView agentVehicle = (TextView) cardView.findViewById(R.id.agentVehicle);
+        ImageView agentPhoto = (ImageView) cardView.findViewById(R.id.profile_pic);
         TextView pickaddress = (TextView) cardView.findViewById(R.id.pick_address);
         TextView serviceType = (TextView) cardView.findViewById(R.id.service_type);
+        ImageView agentCall = (ImageView) cardView.findViewById(R.id.call_agent);
+        TextView pickupTime = (TextView) cardView.findViewById(R.id.eta_pick);
 
         RatingBar ratingBar = (RatingBar) cardView.findViewById(R.id.rating);
 
@@ -148,25 +155,40 @@ public class CurrentOrderFragment extends Fragment {
         }
 
         if (serviceType != null) {
-            JSONArray array = transaction.getJSONArray("clothes_data");
-            if (array != null) {
-                String serviceString = "";
-                for (int i = 0; i < array.length(); i++) {
-                    try {
-                        serviceString = serviceString + getServiceForType(array.getJSONObject(i).getInt("service_type")) + " ";
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                serviceType.setText(serviceString);
+            String transaction_type = transaction.getString("service_type");
+            String serviceString = null;
+            if (transaction_type.contains("0")) {
+                serviceString = getServiceForType(0);
             }
+            if (transaction_type.contains("1")) {
+                if (serviceString != null)
+                    serviceString = serviceString + ", " + getServiceForType(1);
+                else
+                    serviceString = getServiceForType(1);
+            }
+            if (transaction_type.contains("2")) {
+                if (serviceString != null)
+                    serviceString = serviceString + ", " + getServiceForType(2);
+                else
+                    serviceString = getServiceForType(2);
+            }
+            serviceType.setText(serviceString);
         }
 
-        if (agentname != null) {
+        if (agentName != null) {
             ParseObject object = transaction.getParseObject("agent_pick");
             try {
-                agentname.setText(object.fetchIfNeeded().getString("name"));
+                final String agentPhone = object.fetchIfNeeded().getString("contact");
+                agentName.setText(object.fetchIfNeeded().getString("name"));
                 agentVehicle.setText(object.fetchIfNeeded().getString("vehicle"));
+                agentCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + agentPhone));
+                        startActivity(intent);
+                    }
+                });
+                Picasso.with(getActivity()).load(object.fetchIfNeeded().getString("agent_photo")).into(agentPhoto);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -180,10 +202,14 @@ public class CurrentOrderFragment extends Fragment {
             JSONArray addresses = currentuser.getJSONArray("address");
             try {
                 JSONObject address = addresses.getJSONObject(transaction.getInt("address_index"));
-                pickaddress.setText(address.getString("name") + "\n" + address.getString("house") + " , " + address.getString("locality"));
+                pickaddress.setText(address.getString("house") + ", " + address.getString("street"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (pickupTime != null) {
+            pickupTime.setText(transaction.getString("time_pick") + ", " + transaction.getString("pick_date"));
         }
 
         if (transactiondate != null) {

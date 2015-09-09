@@ -1,7 +1,9 @@
 package com.dhodu.android;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -583,8 +585,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setStatusToHeader(String status, int imageId) {
-        if(imageId != 0){
+        if (imageId != 0) {
             expandCreateOrder.setImageResource(imageId);
+            expandCreateOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final AlertDialog.Builder cancelDialog = new AlertDialog.Builder(MainActivity.this);
+                    cancelDialog.setTitle("Cancel Booking");
+                    cancelDialog.setCancelable(true);
+                    cancelDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //TODO:
+                        }
+                    });
+                    cancelDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    cancelDialog.setMessage("Are you sure you want to cancel the booking?");
+                    cancelDialog.show();
+                }
+            });
         }
         orderStatus.setText(status);
     }
