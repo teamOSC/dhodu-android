@@ -21,7 +21,7 @@
             android:fontFamily="sans-serif-condensed"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="Order number   -   "
+            android:text="Order number   "
             android:textAppearance="@android:style/TextAppearance.Large.Inverse"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
@@ -52,7 +52,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="Total items  -   "
+            android:text="Total items"
             android:textAppearance="@android:style/TextAppearance.Large.Inverse"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -91,7 +91,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="Total amount  -   "
+            android:text="Total amount"
             android:textAppearance="@android:style/TextAppearance.Large.Inverse"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="Pickup time  -   "
+                    android:text="Pickup time"
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="Delivery time  -   "
+                    android:text="Delivery time"
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />

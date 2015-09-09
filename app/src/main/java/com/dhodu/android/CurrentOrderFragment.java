@@ -12,10 +12,13 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dhodu.android.ui.StepsView;
 import com.google.android.gms.maps.CameraUpdate;
@@ -31,6 +34,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -86,7 +90,7 @@ public class CurrentOrderFragment extends Fragment {
         setCardDetails(object, cardView);
     }
 
-    private void setCardDetails(ParseObject transaction, View cardView) {
+    private void setCardDetails(final ParseObject transaction, View cardView) {
 
         int statusCode = transaction.getInt("status");
 
@@ -99,8 +103,17 @@ public class CurrentOrderFragment extends Fragment {
         TextView serviceType = (TextView) cardView.findViewById(R.id.service_type);
         ImageView agentCall = (ImageView) cardView.findViewById(R.id.call_agent);
         TextView pickupTime = (TextView) cardView.findViewById(R.id.eta_pick);
+        TextView deliveryTime = (TextView) cardView.findViewById(R.id.delivery_time);
+        TextView pickTime = (TextView) cardView.findViewById(R.id.pickup_time);
+        TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
 
-        RatingBar ratingBar = (RatingBar) cardView.findViewById(R.id.rating);
+        TextView totalItems = (TextView) cardView.findViewById(R.id.total_items);
+        TextView totalAmount = (TextView) cardView.findViewById(R.id.total_amount);
+
+        final EditText feedback = (EditText) cardView.findViewById(R.id.et_feedback);
+        Button feedbackSubmit = (Button) cardView.findViewById(R.id.submit_feedback);
+
+        final RatingBar ratingBar = (RatingBar) cardView.findViewById(R.id.rating);
 
         switch (statusCode) {
             case 0:
@@ -176,26 +189,34 @@ public class CurrentOrderFragment extends Fragment {
         }
 
         if (agentName != null) {
-            ParseObject object = transaction.getParseObject("agent_pick");
+            final ParseObject object = transaction.getParseObject("agent_pick");
             try {
                 final String agentPhone = object.fetchIfNeeded().getString("contact");
                 agentName.setText(object.fetchIfNeeded().getString("name"));
                 agentVehicle.setText(object.fetchIfNeeded().getString("vehicle"));
-                agentCall.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + agentPhone));
-                        startActivity(intent);
-                    }
-                });
+                if (agentCall != null) {
+                    agentCall.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + agentPhone));
+                            startActivity(intent);
+                        }
+                    });
+                }
                 Picasso.with(getActivity()).load(object.fetchIfNeeded().getString("agent_photo")).into(agentPhoto);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
 
+
         if (transactionId != null)
             transactionId.setText(String.valueOf(transaction.getInt("transaction_id")));
+
+        if (totalAmount != null && totalItems != null) {
+            totalAmount.setText("₹ " + transaction.getNumber("amount").toString());
+            totalItems.setText(transaction.getJSONArray("clothes_data").length() + "");
+        }
 
         if (pickaddress != null) {
             ParseUser currentuser = ParseUser.getCurrentUser();
@@ -212,10 +233,45 @@ public class CurrentOrderFragment extends Fragment {
             pickupTime.setText(transaction.getString("time_pick") + ", " + transaction.getString("pick_date"));
         }
 
+        if (pickTime != null) {
+            pickTime.setText(transaction.getString("time_pick") + ", " + transaction.getString("pick_date"));
+        }
+
+        if (deliveryTime != null) {
+            deliveryTime.setText(transaction.getString("drop_date"));
+        }
+
+        if (dropTime != null) {
+            dropTime.setText(transaction.getString("drop_date"));
+        }
+
         if (transactiondate != null) {
             transactiondate.setText(transaction.getCreatedAt().toString());
 
         }
+
+        if (feedback != null) {
+            feedbackSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    transaction.put("rating", ratingBar.getNumStars());
+                    transaction.put("feedback", feedback.getText().toString());
+                    transaction.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+
 //        if (agentdetails!=null){
 //            ParseObject manager = transaction.getParseObject("assigned_manager");
 //            if (manager!=null)
