@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +34,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -85,9 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvProfileMobile;
     CircleImageView profilePhoto;
-    RecyclerView ordersView;
     Toolbar toolbar;
-    TextView orderCount;
 
     int addressindex = 0;
 
@@ -95,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
     private LatLng latLng;
     int locationShifted = 0;
 
+    private TextView orderStatus;
+    private ImageView expandCreateOrder;
+
+    RecyclerView centerRecyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +114,10 @@ public class MainActivity extends AppCompatActivity {
             cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
             topView = (LinearLayout) findViewById(R.id.topView);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
-            orderCount = (TextView) findViewById(R.id.order_count);
             locationAddress = (TextView) findViewById(R.id.location_address);
+            orderStatus = (TextView) findViewById(R.id.orderStatus);
+            expandCreateOrder = (ImageView) findViewById(R.id.expand);
+            centerRecyclerview = (RecyclerView) findViewById(R.id.center_recyclerview);
 
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -145,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.current_fragment_container, new CurrentOrderFragment());
-            transaction.commit();
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.current_fragment_container, new CurrentOrderFragment());
+//            transaction.commit();
 
             //Setup the order pulldown screen
             orderTime = (EditText) findViewById(R.id.order_time);
@@ -328,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
                 getWindow().setNavigationBarColor(getResources().getColor(R.color.dhodu_primary_dark));
             }
 
-            setUpOrderList();
+            setUpAdapter();
             setCurrentLocation(this);
         }
 
@@ -474,13 +478,11 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
 
-    public void setUpOrderList() {
-        ordersView = (RecyclerView) findViewById(R.id.list_order_history);
-        ordersView.setLayoutManager(new LinearLayoutManager(this));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_card_order_history);
-        ordersView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+    public void setUpAdapter() {
+        centerRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         fetchOrderHistory();
     }
+
 
     private void fetchOrderHistory() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
@@ -490,14 +492,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
-                    ordersView.setAdapter(new OrderListAdapter(list));
-                    if (list.size() == 0) {
-                        orderCount.setText("Your order history will appear here.");
-                    } else {
-                        if (list.size() == 1)
-                            orderCount.setText("1 order placed");
-                        else orderCount.setText(list.size() + " orders placed");
-                    }
+                    int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_card_order_history);
+                    centerRecyclerview.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+                    centerRecyclerview.setAdapter(new CenterAdapter(MainActivity.this,list));
                 } else {
                     e.printStackTrace();
                 }
@@ -582,6 +579,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void setStatusToHeader(String status,int imageId) {
+        expandCreateOrder.setImageResource(imageId);
+        orderStatus.setText(status);
     }
 
 

@@ -12,39 +12,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="40dp">
 
-        <RelativeLayout
+        <com.dhodu.android.ui.CircleImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/avatar_blank" />
+
+        <TextView
+            android:id="@+id/agentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:paddingTop="5dp"/>
+        <TextView
+            android:id="@+id/agentVehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:paddingTop="5dp"/>
+
+        <com.dhodu.android.ui.StepsView
+            android:id="@+id/stepsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:fontFamily="sans-serif-medium"
-                android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="100dp"
-                android:layout_alignParentLeft="true"
-                android:textColor="@android:color/black"
-                android:text="Booking confirmed."
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <com.dhodu.android.ui.DotsTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="20dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/dots"
-                android:textSize="45sp"
-                android:layout_alignParentRight="true"
-                android:textColor="@android:color/black"
-                dots:autoplay="true"
-                dots:period="1000"/>
-
-        </RelativeLayout>
-
+            app:numOfSteps="5"
+            />
         <TextView
             android:id="@+id/order_count"
             android:layout_width="wrap_content"
@@ -56,13 +58,6 @@
             android:textAppearance="@android:style/TextAppearance.Small.Inverse"
             android:text="Our agent has confirmed your booking and will be picking up your laundry shortly."/>
 
-        <com.dhodu.android.ui.StepsView
-            android:id="@+id/stepsView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:numOfSteps="5"
-            />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,51 +65,64 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginLeft="20dp"
-                android:fontFamily="sans-serif-condensed"
-                android:text="Picking up from   -   "
-                android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:src="@drawable/timetable"
+                />
 
             <TextView
-                android:id="@+id/pick_address"
+                android:id="@+id/eta_pick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Small.Inverse"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:text="9 September 2015"
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="sans-serif-condensed"
-                android:text="Manager Details   -   "
-                android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/agent_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-        </LinearLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/scrollingFrame">
+
+        <com.dhodu.android.ui.ScrollingImageView
+            android:id="@+id/scollingImage1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            app:speed="1dp"
+            app:src="@drawable/scrolling_background" />
+
+        <com.dhodu.android.ui.ScrollingImageView
+            android:id="@+id/scollingImage2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            app:speed="1.9dp"
+            app:src="@drawable/scrolling_foreground" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:src="@drawable/van"
+            android:id="@+id/van"/>
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_call_black_48dp"
+        android:layout_gravity="top|right"
+        android:layout_margin="10dp"
+        android:background="?selectableItemBackgroundBorderless"/>
 
 </android.support.v7.widget.CardView>
