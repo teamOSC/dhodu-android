@@ -9,21 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 class Wave extends View {
+    public final int DEFAULT_ABOVE_WAVE_ALPHA = 150;
+    public final int DEFAULT_BLOW_WAVE_ALPHA = 255;
     private final int WAVE_HEIGHT_LARGE = 46;
     private final int WAVE_HEIGHT_MIDDLE = 8;
     private final int WAVE_HEIGHT_LITTLE = 5;
-
     private final float WAVE_LENGTH_MULTIPLE_LARGE = 1.5f;
     private final float WAVE_LENGTH_MULTIPLE_MIDDLE = 1f;
     private final float WAVE_LENGTH_MULTIPLE_LITTLE = 0.5f;
-
     private final float WAVE_HZ_FAST = 0.12f;
     private final float WAVE_HZ_NORMAL = 0.09f;
     private final float WAVE_HZ_SLOW = 0.05f;
-
-    public final int DEFAULT_ABOVE_WAVE_ALPHA = 150;
-    public final int DEFAULT_BLOW_WAVE_ALPHA = 255;
-
     private final float X_SPACE = 20;
     private final double PI2 = 2 * Math.PI;
 

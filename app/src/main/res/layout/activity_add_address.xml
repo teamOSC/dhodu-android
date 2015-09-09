@@ -20,10 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -31,15 +31,15 @@
             android:layout_marginTop="25dp"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-small"
-            android:hint="Name"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            android:theme="@style/EditTextLightBackground" />
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-small"
+                android:hint="Name"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                android:theme="@style/EditTextLightBackground" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -49,15 +49,15 @@
             android:layout_marginTop="7dp"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-        <EditText
-            android:id="@+id/address_flat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-small"
-            android:hint="Flat/House No."
-            android:imeOptions="actionNext"
-            android:inputType="textPostalAddress"
-            android:theme="@style/EditTextLightBackground" />
+            <EditText
+                android:id="@+id/address_flat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-small"
+                android:hint="Flat/House No."
+                android:imeOptions="actionNext"
+                android:inputType="textPostalAddress"
+                android:theme="@style/EditTextLightBackground" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -66,65 +66,33 @@
             android:layout_marginTop="7dp"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-        <EditText
-            android:id="@+id/address_street"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-small"
-            android:hint="Street/Society Name"
-            android:imeOptions="actionNext"
-            android:inputType="textPostalAddress"
-            android:theme="@style/EditTextLightBackground" />
+            <EditText
+                android:id="@+id/address_street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-small"
+                android:hint="Street/Society Name"
+                android:imeOptions="actionNext"
+                android:inputType="textPostalAddress"
+                android:theme="@style/EditTextLightBackground" />
 
         </android.support.design.widget.TextInputLayout>
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
-        <EditText
-            android:id="@+id/address_locality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-small"
-            android:hint="Landmark/Locality"
-            android:imeOptions="actionNext"
-            android:inputType="textPostalAddress"
-            android:theme="@style/EditTextLightBackground" />
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            app:hintTextAppearance="@style/TextAppearance.AppCompat"
-            android:visibility="gone">
-        <EditText
-            android:id="@+id/address_city"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-small"
-            android:hint="City"
-            android:imeOptions="actionNext"
-            android:inputType="textPostalAddress"
-            android:theme="@style/EditTextLightBackground" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            app:hintTextAppearance="@style/TextAppearance.AppCompat"
-            android:visibility="gone">
-        <EditText
-            android:id="@+id/address_pincode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-small"
-            android:hint="Pincode"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:theme="@style/EditTextLightBackground" />
+            <EditText
+                android:id="@+id/address_locality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-small"
+                android:hint="Landmark/Locality"
+                android:imeOptions="actionNext"
+                android:inputType="textPostalAddress"
+                android:theme="@style/EditTextLightBackground" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -133,14 +101,51 @@
             android:layout_marginTop="7dp"
             android:visibility="gone"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
-        <EditText
-            android:id="@+id/referral"
+
+            <EditText
+                android:id="@+id/address_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-small"
+                android:hint="City"
+                android:imeOptions="actionNext"
+                android:inputType="textPostalAddress"
+                android:theme="@style/EditTextLightBackground" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-small"
-            android:hint="Referral code"
-            android:imeOptions="actionDone"
-            android:theme="@style/EditTextLightBackground" />
+            android:layout_marginTop="7dp"
+            android:visibility="gone"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+            <EditText
+                android:id="@+id/address_pincode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-small"
+                android:hint="Pincode"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:theme="@style/EditTextLightBackground" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:visibility="gone"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+            <EditText
+                android:id="@+id/referral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-small"
+                android:hint="Referral code"
+                android:imeOptions="actionDone"
+                android:theme="@style/EditTextLightBackground" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton

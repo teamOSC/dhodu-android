@@ -88,15 +88,12 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     int addressindex = 0;
-
+    int locationShifted = 0;
+    RecyclerView centerRecyclerview;
     private String photoPath;
     private LatLng latLng;
-    int locationShifted = 0;
-
     private TextView orderStatus;
     private ImageView expandCreateOrder;
-
-    RecyclerView centerRecyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -479,7 +476,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setUpAdapter() {
-        centerRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        centerRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         fetchOrderHistory();
     }
 
@@ -494,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null) {
                     int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_card_order_history);
                     centerRecyclerview.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-                    centerRecyclerview.setAdapter(new CenterAdapter(MainActivity.this,list));
+                    centerRecyclerview.setAdapter(new CenterAdapter(MainActivity.this, list));
                 } else {
                     e.printStackTrace();
                 }
@@ -504,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setCurrentLocation(Context context) {
 
-        latLng = new LatLng(0,0);
+        latLng = new LatLng(0, 0);
         final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         try {
@@ -513,12 +510,12 @@ public class MainActivity extends AppCompatActivity {
                     new LocationListener() {
                         @Override
                         public void onLocationChanged(Location location) {
-                            latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                            latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             locationShifted++;
-                            if (locationShifted>2) {
+                            if (locationShifted > 2) {
                                 try {
                                     locationManager.removeUpdates(this);
-                                } catch (SecurityException e){
+                                } catch (SecurityException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -549,12 +546,12 @@ public class MainActivity extends AppCompatActivity {
                     1000, 0, new LocationListener() {
                         @Override
                         public void onLocationChanged(Location location) {
-                            latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                            latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             locationShifted++;
-                            if (locationShifted>2) {
+                            if (locationShifted > 2) {
                                 try {
                                     locationManager.removeUpdates(this);
-                                } catch (SecurityException e){
+                                } catch (SecurityException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -581,7 +578,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setStatusToHeader(String status,int imageId) {
+    public void setStatusToHeader(String status, int imageId) {
         expandCreateOrder.setImageResource(imageId);
         orderStatus.setText(status);
     }

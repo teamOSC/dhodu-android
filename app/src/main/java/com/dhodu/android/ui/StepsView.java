@@ -35,7 +35,7 @@ public class StepsView extends LinearLayout implements StepsViewIndicator.OnDraw
     }
 
     public StepsView(Context context, AttributeSet attrs,
-            int defStyleAttr) {
+                     int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

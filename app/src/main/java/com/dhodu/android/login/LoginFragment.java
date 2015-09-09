@@ -36,14 +36,14 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        final View view= inflater.inflate(R.layout.fragment_login, container, false);
+        final View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         phone = (EditText) view.findViewById(R.id.phone);
-        accept=(Button) view.findViewById(R.id.activate);
+        accept = (Button) view.findViewById(R.id.activate);
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               proceed();
+                proceed();
             }
         });
 
@@ -68,7 +68,7 @@ public class LoginFragment extends Fragment {
 
     }
 
-    private void proceed(){
+    private void proceed() {
         FragmentTransaction transaction = LoginActivity.fragmentManager.beginTransaction();
         OtpFragment otpFragment = new OtpFragment().newInstance(phone.getText().toString());
         transaction.replace(R.id.login_container, otpFragment).commit();

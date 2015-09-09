@@ -38,11 +38,9 @@ import org.json.JSONObject;
  */
 public class CurrentOrderFragment extends Fragment {
 
+    private final String[] statuses = {"", "", "", "", "", ""};
     FrameLayout rootContainer;
     StepsView stepsView;
-
-
-    private final String[] statuses= {"", "", "", "", "", ""};
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -74,32 +72,32 @@ public class CurrentOrderFragment extends Fragment {
     }
 
     private void setUpOrderCard(ParseObject object) {
-        int layoutId =getLayoutIdForStatus(object.getInt("status"));
+        int layoutId = getLayoutIdForStatus(object.getInt("status"));
 
         LayoutInflater inflater = (LayoutInflater) getActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View cardView =  inflater.inflate(layoutId, null);
+        View cardView = inflater.inflate(layoutId, null);
         stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
         rootContainer.addView(cardView);
-        setCardDetails(object,cardView);
+        setCardDetails(object, cardView);
     }
 
     private void setCardDetails(ParseObject transaction, View cardView) {
 
         int statusCode = transaction.getInt("status");
 
-        TextView transactionId =(TextView) cardView.findViewById(R.id.transaction_id);
-        TextView transactiondate =(TextView) cardView.findViewById(R.id.transaction_date);
+        TextView transactionId = (TextView) cardView.findViewById(R.id.transaction_id);
+        TextView transactiondate = (TextView) cardView.findViewById(R.id.transaction_date);
         TextView agentname = (TextView) cardView.findViewById(R.id.agentName);
         TextView agentVehicle = (TextView) cardView.findViewById(R.id.agentVehicle);
-        TextView pickaddress =(TextView) cardView.findViewById(R.id.pick_address);
+        TextView pickaddress = (TextView) cardView.findViewById(R.id.pick_address);
         TextView serviceType = (TextView) cardView.findViewById(R.id.service_type);
 
         RatingBar ratingBar = (RatingBar) cardView.findViewById(R.id.rating);
 
         switch (statusCode) {
             case 0:
-                setStatusToHeader("Order placed. Confirmation awaited.",R.drawable.ic_cancel_white_48dp);
+                setStatusToHeader("Order placed. Confirmation awaited.", R.drawable.ic_cancel_white_48dp);
                 GoogleMapOptions options = new GoogleMapOptions();
 
                 SupportMapFragment mapFragment = SupportMapFragment.newInstance(options);
@@ -110,31 +108,31 @@ public class CurrentOrderFragment extends Fragment {
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
-                        addToMap(new LatLng(28.542,77.259), googleMap);
+                        addToMap(new LatLng(28.542, 77.259), googleMap);
                     }
                 });
 
                 break;
             case 1:
-                setStatusToHeader("Booking confirmed.",R.drawable.ic_cancel_white_48dp);
+                setStatusToHeader("Booking confirmed.", R.drawable.ic_cancel_white_48dp);
                 break;
             case 2:
-                setStatusToHeader("Laundry picked. Being washed",R.drawable.ic_cancel_white_48dp);
+                setStatusToHeader("Laundry picked. Being washed", R.drawable.ic_cancel_white_48dp);
                 break;
             case 3:
-                setStatusToHeader("Laundry ready. Ready to be delivered",R.drawable.phone);
+                setStatusToHeader("Laundry ready. Ready to be delivered", R.drawable.phone);
                 break;
             case 4:
-                setStatusToHeader("Laundry out for delivery.",R.drawable.phone);
+                setStatusToHeader("Laundry out for delivery.", R.drawable.phone);
                 break;
             case 5:
-                setStatusToHeader("Laundry delivered",R.drawable.phone);
+                setStatusToHeader("Laundry delivered", R.drawable.phone);
                 break;
             default:
                 break;
         }
 
-        if (stepsView!=null) {
+        if (stepsView != null) {
             stepsView.setLabels(statuses)
                     .setBarColorIndicator(getContext().getResources().getColor(R.color.material_blue_grey_800))
                     .setProgressColorIndicator(Color.parseColor("#FF9800"))
@@ -143,15 +141,15 @@ public class CurrentOrderFragment extends Fragment {
                     .drawView();
         }
 
-        if (ratingBar!=null){
+        if (ratingBar != null) {
             ratingBar.setRating(4);
             LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
             stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.dhodu_primary_dark), PorterDuff.Mode.SRC_ATOP);
         }
 
-        if (serviceType!=null) {
+        if (serviceType != null) {
             JSONArray array = transaction.getJSONArray("clothes_data");
-            if (array!=null) {
+            if (array != null) {
                 String serviceString = "";
                 for (int i = 0; i < array.length(); i++) {
                     try {
@@ -164,20 +162,20 @@ public class CurrentOrderFragment extends Fragment {
             }
         }
 
-        if (agentname!=null) {
+        if (agentname != null) {
             ParseObject object = transaction.getParseObject("agent_pick");
             try {
                 agentname.setText(object.fetchIfNeeded().getString("name"));
                 agentVehicle.setText(object.fetchIfNeeded().getString("vehicle"));
-            } catch (ParseException e){
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
 
-        if (transactionId!=null)
-        transactionId.setText(String.valueOf(transaction.getInt("transaction_id")));
+        if (transactionId != null)
+            transactionId.setText(String.valueOf(transaction.getInt("transaction_id")));
 
-        if (pickaddress!=null) {
+        if (pickaddress != null) {
             ParseUser currentuser = ParseUser.getCurrentUser();
             JSONArray addresses = currentuser.getJSONArray("address");
             try {
@@ -188,7 +186,7 @@ public class CurrentOrderFragment extends Fragment {
             }
         }
 
-        if (transactiondate!=null){
+        if (transactiondate != null) {
             transactiondate.setText(transaction.getCreatedAt().toString());
 
         }
@@ -233,10 +231,10 @@ public class CurrentOrderFragment extends Fragment {
     }
 
     private void setStatusToHeader(String status, int imageResId) {
-        ((MainActivity)getActivity()).setStatusToHeader(status, imageResId);
+        ((MainActivity) getActivity()).setStatusToHeader(status, imageResId);
     }
 
-    private void addToMap(LatLng latLng,GoogleMap mMap){
+    private void addToMap(LatLng latLng, GoogleMap mMap) {
 
         MarkerOptions markerOptions;
         markerOptions = new MarkerOptions();

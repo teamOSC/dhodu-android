@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-<item>
-    <color android:color="@color/dhodu_primary_dark"/>
-</item>
+    <item>
+        <color android:color="@color/dhodu_primary_dark" />
+    </item>
 
-<item>
-    <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-        android:src="@drawable/dhodu_background_pattern"
-        android:tileMode="repeat" />
-</item>
+    <item>
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:src="@drawable/dhodu_background_pattern"
+            android:tileMode="repeat" />
+    </item>
 </layer-list>

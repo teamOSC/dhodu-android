@@ -34,8 +34,8 @@ public class MyAddressesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_addresses);
 
-        toolbar=(Toolbar) findViewById(R.id.toolbar);
-        recyclerView=(RecyclerView) findViewById(R.id.recyclerview_addresses);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_addresses);
         emptyLayout = findViewById(R.id.empty_layout);
         addNewAddress = (Button) findViewById(R.id.add_new_address);
 
@@ -44,19 +44,19 @@ public class MyAddressesActivity extends AppCompatActivity {
 
         action = getIntent().getAction();
 
-        if ( action.equals(chooseAddress))
-        getSupportActionBar().setTitle("Choose Address");
+        if (action.equals(chooseAddress))
+            getSupportActionBar().setTitle("Choose Address");
         else getSupportActionBar().setTitle("My Addresses");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyAddressesAdapter(this, action.equals(chooseAddress));
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
         addNewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyAddressesActivity.this,AddAddressActivity.class);
+                Intent intent = new Intent(MyAddressesActivity.this, AddAddressActivity.class);
                 startActivity(intent);
             }
         });

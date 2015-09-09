@@ -38,7 +38,7 @@ public class AddAddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
 
-        toolbar=(Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add Address");
@@ -63,7 +63,7 @@ public class AddAddressActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
-                   addUserAddress();
+                    addUserAddress();
                     return true;
                 }
                 return false;
@@ -86,7 +86,7 @@ public class AddAddressActivity extends AppCompatActivity {
     private void addUserAddress() {
         ParseUser user = ParseUser.getCurrentUser();
 
-        if (user !=null) {
+        if (user != null) {
             if (!name.getText().toString().equals("") && !flat.getText().toString().equals("")) {
                 JSONObject address = new JSONObject();
                 try {

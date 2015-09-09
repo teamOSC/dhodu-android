@@ -65,13 +65,13 @@ public class OtpFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_otp, container, false);
 
-        phone=getArguments().getString("phone");
+        phone = getArguments().getString("phone");
 
         password = (EditText) view.findViewById(R.id.password);
-        verifying=(TextView) view.findViewById(R.id.verifying);
-        verifyManual=(Button) view.findViewById(R.id.verify_manual);
+        verifying = (TextView) view.findViewById(R.id.verifying);
+        verifyManual = (Button) view.findViewById(R.id.verify_manual);
 
-        verifying.setText("We have sent an SMS with an activation code to +91- "+phone+" ...");
+        verifying.setText("We have sent an SMS with an activation code to +91- " + phone + " ...");
 
         password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -90,7 +90,7 @@ public class OtpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()>=6){
+                if (s.length() >= 6) {
                     verifyManual.setVisibility(View.VISIBLE);
                 } else {
                     verifyManual.setVisibility(View.GONE);
@@ -115,7 +115,7 @@ public class OtpFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (smsReceiver!= null) {
+        if (smsReceiver != null) {
             try {
                 getActivity().unregisterReceiver(smsReceiver);
             } catch (Exception e) {
@@ -127,7 +127,7 @@ public class OtpFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (smsReceiver!= null)
+        if (smsReceiver != null)
             getActivity().registerReceiver(smsReceiver, otpIntentFilter);
     }
 

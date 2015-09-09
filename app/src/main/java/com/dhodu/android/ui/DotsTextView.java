@@ -8,16 +8,16 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.FontMetricsInt;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.ReplacementSpan;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Paint.FontMetricsInt;
-import android.text.style.ReplacementSpan;
 
 import com.dhodu.android.R;
 
@@ -93,7 +93,7 @@ public class DotsTextView extends TextView {
                 period / 6), createDotJumpAnimator(dotThree, period * 2 / 6));
 
         isPlaying = autoPlay;
-        if(autoPlay) {
+        if (autoPlay) {
             start();
         }
     }

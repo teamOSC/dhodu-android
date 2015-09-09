@@ -16,22 +16,18 @@ public class WaterWave extends LinearLayout {
     protected static final int LARGE = 1;
     protected static final int MIDDLE = 2;
     protected static final int LITTLE = 3;
-
+    private final int DEFAULT_ABOVE_WAVE_COLOR = Color.WHITE;
+    private final int DEFAULT_BLOW_WAVE_COLOR = Color.WHITE;
+    private final int DEFAULT_PROGRESS = 80;
     private int mAboveWaveColor;
     private int mBlowWaveColor;
     private int mProgress;
     private int mWaveHeight;
     private int mWaveMultiple;
     private int mWaveHz;
-
     private int mWaveToTop;
-
     private Wave mWave;
     private SolidBelowWave mSolidBelowWave;
-
-    private final int DEFAULT_ABOVE_WAVE_COLOR = Color.WHITE;
-    private final int DEFAULT_BLOW_WAVE_COLOR = Color.WHITE;
-    private final int DEFAULT_PROGRESS = 80;
 
 
     public WaterWave(Context context, AttributeSet attrs) {
@@ -106,13 +102,21 @@ public class WaterWave extends LinearLayout {
     }
 
     private static class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
         int progress;
 
 
         SavedState(Parcelable superState) {
             super(superState);
         }
-
 
         private SavedState(Parcel in) {
             super(in);
@@ -124,19 +128,7 @@ public class WaterWave extends LinearLayout {
             super.writeToParcel(out, flags);
             out.writeInt(progress);
         }
-
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
     }
-
-
 
 
 }

@@ -12,9 +12,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.dhodu.android.ui.waterwave.WaterWave;
-
 import com.dhodu.android.R;
+import com.dhodu.android.ui.waterwave.WaterWave;
 
 /**
  * Created by naman on 28/08/15.
@@ -32,10 +31,10 @@ public class WashingMachineView extends LinearLayout {
         super(context, attrs);
 
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MachineView);
-        mTopviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_top_view_height,getDimensionInPixel(50));
-        mBottomviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_bottom_view_height,getDimensionInPixel(20));
-        mMiddleviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_middle_view_height,getDimensionInPixel(240));
-        mMachineColor=attributes.getColor(R.styleable.MachineView_machineColor,Color.BLACK);
+        mTopviewHeight = attributes.getDimensionPixelSize(R.styleable.MachineView_top_view_height, getDimensionInPixel(50));
+        mBottomviewHeight = attributes.getDimensionPixelSize(R.styleable.MachineView_bottom_view_height, getDimensionInPixel(20));
+        mMiddleviewHeight = attributes.getDimensionPixelSize(R.styleable.MachineView_middle_view_height, getDimensionInPixel(240));
+        mMachineColor = attributes.getColor(R.styleable.MachineView_machineColor, Color.BLACK);
         attributes.recycle();
 
         setOrientation(VERTICAL);
@@ -46,6 +45,11 @@ public class WashingMachineView extends LinearLayout {
         addView(new BottomView(context, attrs));
 
 
+    }
+
+    //get all dimensions in dp so that views behaves properly on different screen resolutions
+    private int getDimensionInPixel(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 
     public class TopView extends View {
@@ -86,6 +90,9 @@ public class WashingMachineView extends LinearLayout {
         }
     }
 
+    //machineview(middle view) extends FrameLayout and has two views-WaterWave and Overlay.
+    //Overlay consists of a transparent hole from which water waves are visible
+
     public class BottomView extends View {
 
         Paint paint = new Paint();
@@ -111,9 +118,6 @@ public class WashingMachineView extends LinearLayout {
         }
     }
 
-    //machineview(middle view) extends FrameLayout and has two views-WaterWave and Overlay.
-    //Overlay consists of a transparent hole from which water waves are visible
-
     public class MachineView extends FrameLayout {
 
         public MachineView(Context context, AttributeSet attrs) {
@@ -126,10 +130,5 @@ public class WashingMachineView extends LinearLayout {
         }
 
 
-    }
-
-    //get all dimensions in dp so that views behaves properly on different screen resolutions
-    private int getDimensionInPixel(int dp){
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 }

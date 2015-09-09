@@ -71,6 +71,15 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
         return arraylist.size() + 2;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0)
+            return 0;
+        else if (position == 1)
+            return 1;
+        else return 2;
+    }
+
     public class ItemHolder extends RecyclerView.ViewHolder {
 
         TextView transactionId, transactionDate, orderCount;
@@ -81,14 +90,5 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
             transactionDate = (TextView) itemView.findViewById(R.id.transaction_date);
             orderCount = (TextView) itemView.findViewById(R.id.order_count);
         }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0)
-            return 0;
-        else if (position == 1)
-            return 1;
-        else return 2;
     }
 }

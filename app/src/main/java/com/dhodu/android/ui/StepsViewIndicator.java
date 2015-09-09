@@ -56,6 +56,16 @@ public class StepsViewIndicator extends View {
         init();
     }
 
+    public static int getColorWithAlpha(int color, float ratio) {
+        int newColor = 0;
+        int alpha = Math.round(Color.alpha(color) * ratio);
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+        newColor = Color.argb(alpha, r, g, b);
+        return newColor;
+    }
+
     private void init() {
         mLineHeight = 0.2f * THUMB_SIZE;
         mThumbRadius = 0.4f * THUMB_SIZE;
@@ -165,16 +175,6 @@ public class StepsViewIndicator extends View {
                 canvas.drawCircle(pos, mCenterY, mCircleRadius * 1.8f, selectedPaint);
             }
         }
-    }
-
-    public static int getColorWithAlpha(int color, float ratio) {
-        int newColor = 0;
-        int alpha = Math.round(Color.alpha(color) * ratio);
-        int r = Color.red(color);
-        int g = Color.green(color);
-        int b = Color.blue(color);
-        newColor = Color.argb(alpha, r, g, b);
-        return newColor;
     }
 
     public interface OnDrawListener {

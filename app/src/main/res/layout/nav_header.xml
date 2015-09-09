@@ -12,60 +12,60 @@
         android:layout_gravity="bottom"
         android:gravity="bottom">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_alignParentLeft="true"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
-        android:background="?selectableItemBackgroundBorderless">
-
-        <com.dhodu.android.ui.CircleImageView
-            android:id="@+id/profile_pic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="bottom"
-            android:gravity="bottom"
-            android:paddingLeft="15dp"
-            android:src="@drawable/avatar_blank" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Tap to add a name"
-            android:textAllCaps="true"
-            android:textSize="16sp"
-            android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-            android:textColor="@android:color/white" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/profile_mobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="3dp"
-            android:fontFamily="sans-serif-small"
-            android:textSize="17sp"
-            android:gravity="bottom"
-            android:text="+919891743645"
-            android:textAppearance="?android:attr/textAppearanceLargeInverse" />
+            <com.dhodu.android.ui.CircleImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:paddingLeft="15dp"
+                android:src="@drawable/avatar_blank" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Tap to add a name"
+                android:textAllCaps="true"
+                android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/profile_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="3dp"
+                android:fontFamily="sans-serif-small"
+                android:gravity="bottom"
+                android:text="+919891743645"
+                android:textAppearance="?android:attr/textAppearanceLargeInverse"
+                android:textSize="17sp" />
+
+        </LinearLayout>
 
         <ImageView
+            android:id="@+id/edit_profile"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="25dp"
-            android:src="@drawable/pencil"
-            android:id="@+id/edit_profile"/>
+            android:layout_marginRight="20dp"
+            android:src="@drawable/pencil" />
     </RelativeLayout>
 
 </FrameLayout>

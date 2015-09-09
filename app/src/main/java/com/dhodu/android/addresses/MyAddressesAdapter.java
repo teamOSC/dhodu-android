@@ -32,10 +32,10 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
     @Override
     public MyAddressesAdapter.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_addnew_address, parent,false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_addnew_address, parent, false);
             return new ItemHolder(v);
         } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, parent,false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, parent, false);
             return new ItemHolder(v);
         }
     }
@@ -47,7 +47,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
             //do nothing
         } else {
             try {
-                JSONObject address = array.getJSONObject(position-1);
+                JSONObject address = array.getJSONObject(position - 1);
                 holder.name.setText(address.getString("name"));
                 holder.flat.setText(address.getString("house"));
                 holder.locality.setText(address.getString("locality"));
@@ -61,40 +61,8 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
     @Override
     public int getItemCount() {
         if (array != null)
-        return array.length() + 1;
+            return array.length() + 1;
         else return 0;
-    }
-
-    public class ItemHolder extends RecyclerView.ViewHolder {
-
-        protected TextView name, flat, street, locality;
-
-        public ItemHolder(View itemView) {
-            super(itemView);
-
-            name = (TextView) itemView.findViewById(R.id.name);
-            flat= (TextView) itemView.findViewById(R.id.address_flat);
-            locality = (TextView) itemView.findViewById(R.id.address_locality);
-            street = (TextView) itemView.findViewById(R.id.address_street);
-
-         itemView.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 if (getAdapterPosition() == 0) {
-                     Intent intent = new Intent(context,AddAddressActivity.class);
-                     context.startActivity(intent);
-                 } else {
-                     if (isChooseAddress){
-                         Intent returnIntent = new Intent();
-                         returnIntent.putExtra("address_index",getAdapterPosition()-1);
-                         returnIntent.putExtra("address_name",flat.getText().toString());
-                         ((Activity)context).setResult(Activity.RESULT_OK,returnIntent);
-                         ((Activity)context).finish();
-                     }
-                 }
-             }
-         });
-        }
     }
 
     @Override
@@ -106,5 +74,37 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
 
     public void updateDataSet(JSONArray array) {
         this.array = array;
+    }
+
+    public class ItemHolder extends RecyclerView.ViewHolder {
+
+        protected TextView name, flat, street, locality;
+
+        public ItemHolder(View itemView) {
+            super(itemView);
+
+            name = (TextView) itemView.findViewById(R.id.name);
+            flat = (TextView) itemView.findViewById(R.id.address_flat);
+            locality = (TextView) itemView.findViewById(R.id.address_locality);
+            street = (TextView) itemView.findViewById(R.id.address_street);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getAdapterPosition() == 0) {
+                        Intent intent = new Intent(context, AddAddressActivity.class);
+                        context.startActivity(intent);
+                    } else {
+                        if (isChooseAddress) {
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra("address_index", getAdapterPosition() - 1);
+                            returnIntent.putExtra("address_name", flat.getText().toString());
+                            ((Activity) context).setResult(Activity.RESULT_OK, returnIntent);
+                            ((Activity) context).finish();
+                        }
+                    }
+                }
+            });
+        }
     }
 }
