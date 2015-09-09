@@ -23,7 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -32,8 +32,6 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * Created by naman on 06/09/15.
@@ -63,12 +61,11 @@ public class CurrentOrderFragment extends Fragment {
         query.whereEqualTo("customer", ParseUser.getCurrentUser());
         query.include("Agent");
         query.whereLessThanOrEqualTo("status", 5);
-        query.findInBackground(new FindCallback<ParseObject>() {
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> list, ParseException e) {
+            public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    if (list.size()>0)
-                    setUpOrderCard(list);
+                    setUpOrderCard(object);
                 } else {
                     e.printStackTrace();
                 }
@@ -76,15 +73,15 @@ public class CurrentOrderFragment extends Fragment {
         });
     }
 
-    private void setUpOrderCard(List<ParseObject> list) {
-        int layoutId =getLayoutIdForStatus(list.get(0).getInt("status"));
+    private void setUpOrderCard(ParseObject object) {
+        int layoutId =getLayoutIdForStatus(object.getInt("status"));
 
         LayoutInflater inflater = (LayoutInflater) getActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View cardView =  inflater.inflate(layoutId, null);
         stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
         rootContainer.addView(cardView);
-        setCardDetails(list.get(0),cardView);
+        setCardDetails(object,cardView);
     }
 
     private void setCardDetails(ParseObject transaction, View cardView) {
@@ -102,7 +99,7 @@ public class CurrentOrderFragment extends Fragment {
 
         switch (statusCode) {
             case 0:
-                setStatusToHeader("Order placed. Confirmation awaited.",R.drawable.ic_clear_black_48dp);
+                setStatusToHeader("Order placed. Confirmation awaited.",R.drawable.ic_cancel_white_48dp);
                 GoogleMapOptions options = new GoogleMapOptions();
 
                 SupportMapFragment mapFragment = SupportMapFragment.newInstance(options);
@@ -119,10 +116,10 @@ public class CurrentOrderFragment extends Fragment {
 
                 break;
             case 1:
-                setStatusToHeader("Booking confirmed.",R.drawable.ic_clear_black_48dp);
+                setStatusToHeader("Booking confirmed.",R.drawable.ic_cancel_white_48dp);
                 break;
             case 2:
-                setStatusToHeader("Laundry picked. Being washed",R.drawable.ic_clear_black_48dp);
+                setStatusToHeader("Laundry picked. Being washed",R.drawable.ic_cancel_white_48dp);
                 break;
             case 3:
                 setStatusToHeader("Laundry ready. Ready to be delivered",R.drawable.phone);
