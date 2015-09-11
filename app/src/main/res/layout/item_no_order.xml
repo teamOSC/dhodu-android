@@ -41,7 +41,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"
             android:gravity="center"
-            android:text="Pull down to schedule a pickup \n Or pull down to see your order history"
+            android:text="Pull down to schedule a pickup \n Or pull up to see your order history"
             android:textColor="@color/dhodu_primary_dark"
             android:textSize="12sp"
             android:textStyle="italic" />

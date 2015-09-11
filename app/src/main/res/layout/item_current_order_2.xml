@@ -14,23 +14,23 @@
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
-        <!--<com.dhodu.android.ui.WashingMachineView-->
-        <!--android:id="@+id/wave_view"-->
-        <!--android:layout_width="130dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:above_wave_color="#303F9F"-->
-        <!--app:blow_wave_color="#303F9F"-->
-        <!--app:progress="2"-->
-        <!--app:wave_height="large"-->
-        <!--app:wave_hz="fast"-->
-        <!--app:wave_length="middle"-->
-        <!--app:top_view_height="0dp"-->
-        <!--app:bottom_view_height="0dp"-->
-        <!--app:middle_view_height="120dp"-->
-        <!--app:machineColor="#009688"-->
-        <!--app:holeRadius="30dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--/>-->
+        <com.dhodu.android.ui.WashingMachineView
+        android:id="@+id/wave_view"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        app:above_wave_color="#303F9F"
+        app:blow_wave_color="#303F9F"
+        app:progress="2"
+        app:wave_height="middle"
+        app:wave_hz="fast"
+        app:wave_length="little"
+        app:top_view_height="0dp"
+        app:bottom_view_height="0dp"
+        app:middle_view_height="120dp"
+        app:machineColor="#009688"
+        app:holeRadius="30dp"
+        android:layout_gravity="center_horizontal"
+        />
 
         <com.dhodu.android.ui.StepsView
             android:id="@+id/stepsView"
