@@ -2,7 +2,6 @@ package com.dhodu.android.login;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -31,12 +30,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 public class OtpFragment extends Fragment {
@@ -48,7 +41,7 @@ public class OtpFragment extends Fragment {
 
     EditText password;
     String phone;
-    TextView verifying;
+    TextView verifying, resendOtp, noOtp;
     Button verifyManual;
 
     public static OtpFragment newInstance(String phone) {
@@ -70,6 +63,8 @@ public class OtpFragment extends Fragment {
         password = (EditText) view.findViewById(R.id.password);
         verifying = (TextView) view.findViewById(R.id.verifying);
         verifyManual = (Button) view.findViewById(R.id.verify_manual);
+        noOtp = (TextView) view.findViewById(R.id.no_otp);
+        resendOtp = (TextView) view.findViewById(R.id.resend_otp);
 
         verifying.setText("We have sent an SMS with an activation code to +91- " + phone + " ...");
 
@@ -101,10 +96,26 @@ public class OtpFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         });
+
         verifyManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 verifyOTP(password.getText().toString());
+            }
+        });
+
+        resendOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.requestOtp(getActivity(), phone);
+                Toast.makeText(getActivity(), "We've re sent you an OTP", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        noOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -144,40 +155,7 @@ public class OtpFragment extends Fragment {
         otpIntentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
         otpIntentFilter.setPriority(999);
         getActivity().registerReceiver(smsReceiver, otpIntentFilter);
-        new AsyncTask<String, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(String... strings) {
-                URL obj = null;
-                try {
-                    obj = new URL("http://128.199.128.227:9865/api/v1/otp?username=" + strings[0]);
-                    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-                    con.setRequestMethod("GET");
-                    int responseCode = con.getResponseCode();
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        BufferedReader in = new BufferedReader(new InputStreamReader(
-                                con.getInputStream()));
-                        String inputLine;
-                        StringBuffer response = new StringBuffer();
-
-                        while ((inputLine = in.readLine()) != null) {
-                            response.append(inputLine);
-                        }
-                        in.close();
-                        JSONObject jsonResponse = new JSONObject(response.toString());
-                        if (!jsonResponse.getString("status").equals("success")) {
-                            Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return null;
-            }
-        }.execute(phone);
+        Utils.requestOtp(getActivity(), phone);
     }
 
     private void verifyOTP(final String code) {
