@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.location.Location;
 import android.location.LocationListener;
@@ -55,14 +53,18 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -360,8 +362,8 @@ public class MainActivity extends AppCompatActivity {
                     new File(photoPath).delete();
             } else if (resultCode == RESULT_OK) {
                 if (data == null) {
-                    setImage(photoPath);
-
+                    Picasso.with(this).load(new File(photoPath)).into(profilePhoto);
+                    saveImageToParse(photoPath);
                 } else {
                     Uri selectedImage = data.getData();
                     String[] filePath = {MediaStore.Images.Media.DATA};
@@ -370,33 +372,37 @@ public class MainActivity extends AppCompatActivity {
                     int columnIndex = c.getColumnIndex(filePath[0]);
                     String picturePath = c.getString(columnIndex);
                     c.close();
-                    setImage(picturePath);
+                    Picasso.with(this).load(new File(picturePath)).into(profilePhoto);
+                    saveImageToParse(picturePath);
                 }
             }
         }
     }
 
-    private void setImage(String path) {
-        int targetW = 60;
-        int targetH = 60;
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(path, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
-        profilePhoto.setImageBitmap(bitmap);
+    private void saveImageToParse(String path){
+        File file = new File(path);
+        int size = (int) file.length();
+        byte[] bytes = new byte[size];
+        try {
+            BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
+            buf.read(bytes, 0, bytes.length);
+            buf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        final ParseUser parseUser = ParseUser.getCurrentUser();
+        final ParseFile parseFile = new ParseFile("photo.png", bytes);
+        parseFile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    parseUser.put("photo", parseFile.getUrl());
+                    parseUser.saveInBackground();
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -439,6 +445,8 @@ public class MainActivity extends AppCompatActivity {
             tvProfileMobile.setText(
                     pUser.getUsername()
             );
+            if(pUser.getString("photo") != null)
+                Picasso.with(this).load(pUser.getString("photo")).placeholder(R.drawable.avatar_blank).into(profilePhoto);
         }
 
         profilePhoto.setOnClickListener(new View.OnClickListener() {
