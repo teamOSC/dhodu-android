@@ -74,14 +74,18 @@ public class CurrentOrderFragment extends Fragment {
                     setUpOrderCard(object);
                 } else {
                     e.printStackTrace();
+                    setUpOrderCard(null);
                 }
             }
         });
     }
 
     private void setUpOrderCard(ParseObject object) {
-        int layoutId = getLayoutIdForStatus(object.getInt("status"));
-
+        int layoutId;
+        if(object != null)
+            layoutId = getLayoutIdForStatus(object.getInt("status"));
+        else
+            layoutId = getLayoutIdForStatus(-1);
         LayoutInflater inflater = (LayoutInflater) getActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View cardView = inflater.inflate(layoutId, null);
@@ -91,8 +95,13 @@ public class CurrentOrderFragment extends Fragment {
     }
 
     private void setCardDetails(final ParseObject transaction, View cardView) {
-
-        int statusCode = transaction.getInt("status");
+        int statusCode;
+        try{
+            statusCode = transaction.getInt("status");
+        } catch (Exception e){
+            statusCode = -1;
+            e.printStackTrace();
+        }
 
         TextView transactionId = (TextView) cardView.findViewById(R.id.transaction_id);
         TextView transactiondate = (TextView) cardView.findViewById(R.id.transaction_date);
@@ -295,7 +304,7 @@ public class CurrentOrderFragment extends Fragment {
             case 5:
                 return R.layout.item_current_order_5;
             default:
-                return R.layout.item_current_order_0;
+                return R.layout.item_no_order;
         }
     }
 
