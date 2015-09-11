@@ -146,6 +146,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_ratecard:
                                 startActivity(new Intent(MainActivity.this, RateCardActivity.class));
                                 break;
+                            case R.id.nav_referral:
+                                startActivity(new Intent(MainActivity.this, ReferActivity.class));
+                                break;
                             case R.id.nav_logout:
                                 ParseUser.logOutInBackground(new LogOutCallback() {
                                     @Override
