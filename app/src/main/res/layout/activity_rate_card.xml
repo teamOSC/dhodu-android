@@ -1,19 +1,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dhodu.android.RateCardActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/dhodu_primary"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select category:"
-        android:id="@+id/textView2" />
+        android:padding="16dp"
+        android:text="Select category:" />
 
     <Spinner
         android:id="@+id/category"
@@ -21,10 +30,11 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select service type:"
-        android:id="@+id/textView3" />
+        android:padding="16dp"
+        android:text="Select service type:" />
 
     <Spinner
         android:id="@+id/service_type"
@@ -36,7 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" />
+        android:padding="16dp" />
 
 </LinearLayout>
