@@ -37,16 +37,41 @@
                 android:id="@+id/form_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
+                android:layout_gravity="bottom|left"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/pickup_date_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="pickup date : "
+                        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                        android:textColor="@android:color/white" />
+
+                    <Spinner
+                        android:id="@+id/order_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:prompt="@string/day_prompt"
+                        android:entries="@array/day_selector"
+                        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                        android:theme="@style/EditTextDarkBackground" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/pickup_time_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -70,8 +95,8 @@
                     android:id="@+id/pickup_location_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -86,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Choose address"
+                        android:text="choose address"
                         android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                         android:textColor="@android:color/white" />
 
@@ -132,9 +157,8 @@
 
                 <Button
                     android:id="@+id/btn_submit_order"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
                     android:backgroundTint="@android:color/white"
                     android:fontFamily="sans-serif-light"
