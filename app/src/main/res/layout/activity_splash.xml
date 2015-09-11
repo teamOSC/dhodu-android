@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dhodu.android.SplashActivity">
 
+    <ImageView
+        android:id="@+id/loader_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/loader_icon"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,7 +50,6 @@
             android:textColor="@android:color/white"
             android:textSize="36sp" />
 
-
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
