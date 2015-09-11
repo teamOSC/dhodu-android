@@ -20,4 +20,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_my_addresses">MyAddressesActivity</string>
+    <string name="title_activity_rate_card">RateCardActivity</string>
 </resources>

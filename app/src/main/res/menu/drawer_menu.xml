@@ -6,18 +6,14 @@
             android:id="@+id/nav_addresses"
             android:icon="@drawable/ic_location_city_black_48dp"
             android:title="My Addresses" />
-        <item
-            android:id="@+id/nav_stats"
-            android:icon="@drawable/stocking"
-            android:title="Stats" />
+        <!--<item-->
+            <!--android:id="@+id/nav_stats"-->
+            <!--android:icon="@drawable/stocking"-->
+            <!--android:title="Stats" />-->
         <item
             android:id="@+id/nav_ratecard"
             android:icon="@drawable/ic_picture_in_picture_black_48dp"
             android:title="Rate Card" />
-        <item
-            android:id="@+id/nav_wallet"
-            android:icon="@drawable/ic_account_balance_wallet_black_48dp"
-            android:title="Wallet" />
         <item
             android:id="@+id/nav_referral"
             android:icon="@drawable/account"

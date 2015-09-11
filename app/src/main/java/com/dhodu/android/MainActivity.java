@@ -143,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
                                 intent.setAction("addAddress");
                                 startActivity(intent);
                                 break;
+                            case R.id.nav_ratecard:
+                                startActivity(new Intent(MainActivity.this, RateCardActivity.class));
+                                break;
                             case R.id.nav_logout:
                                 ParseUser.logOutInBackground(new LogOutCallback() {
                                     @Override
@@ -448,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
             );
             if (pUser.getString("photo") != null)
                 Picasso.with(this).load(pUser.getString("photo")).placeholder(R.drawable.avatar_blank).into(profilePhoto);
-            if(pUser.getString("name") != null)
+            if (pUser.getString("name") != null)
                 profileName.setText(pUser.getString("name"));
             else
                 profileName.setOnClickListener(new View.OnClickListener() {
