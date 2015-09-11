@@ -90,7 +90,7 @@ public class OtpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() >= 6) {
+                if (s.length() >= 4) { //TODO: Just ==4, after Shubham fixes this on the server
                     verifyManual.setVisibility(View.VISIBLE);
                 } else {
                     verifyManual.setVisibility(View.GONE);
@@ -136,6 +136,7 @@ public class OtpFragment extends Fragment {
             @Override
             protected void smsReceived(String code) {
                 password.setText(code);
+                verifyManual.setVisibility(View.GONE);
                 verifyOTP(code);
                 getActivity().unregisterReceiver(this);
             }

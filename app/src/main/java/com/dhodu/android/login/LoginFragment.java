@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dhodu.android.R;
 
@@ -69,9 +70,14 @@ public class LoginFragment extends Fragment {
     }
 
     private void proceed() {
-        FragmentTransaction transaction = LoginActivity.fragmentManager.beginTransaction();
-        OtpFragment otpFragment = new OtpFragment().newInstance(phone.getText().toString());
-        transaction.replace(R.id.login_container, otpFragment).commit();
+        if (phone.getText().toString().length() == 10) {
+            FragmentTransaction transaction = LoginActivity.fragmentManager.beginTransaction();
+            OtpFragment otpFragment = OtpFragment.newInstance(phone.getText().toString());
+            transaction.replace(R.id.login_container, otpFragment).commit();
+        } else {
+            Toast.makeText(getActivity(), "Enter a valid number", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }
