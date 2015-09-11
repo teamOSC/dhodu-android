@@ -1,11 +1,13 @@
 package com.dhodu.android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -79,8 +81,13 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Intent go = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(go);
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
+                Intent intent;
+                if (sp.getBoolean("app_first_run", true))
+                    intent = new Intent(SplashActivity.this, DhoduIntro.class);
+                else
+                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
                 SplashActivity.this.finish();
             }
         };
