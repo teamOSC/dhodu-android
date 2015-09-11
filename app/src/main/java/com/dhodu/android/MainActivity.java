@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     TextView locationAddress;
 
     TextView tvProfileMobile;
+    TextView profileName;
     CircleImageView profilePhoto;
     Toolbar toolbar;
 
@@ -379,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveImageToParse(String path){
+    private void saveImageToParse(String path) {
         File file = new File(path);
         int size = (int) file.length();
         byte[] bytes = new byte[size];
@@ -438,15 +439,44 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpProfileView() {
         tvProfileMobile = (TextView) findViewById(R.id.profile_mobile);
+        profileName = (TextView) findViewById(R.id.profie_name);
         profilePhoto = (CircleImageView) findViewById(R.id.profile_pic);
 
-        ParseUser pUser = ParseUser.getCurrentUser();
+        final ParseUser pUser = ParseUser.getCurrentUser();
         if (pUser != null) {
-            tvProfileMobile.setText(
-                    pUser.getUsername()
+            tvProfileMobile.setText(pUser.getUsername()
             );
-            if(pUser.getString("photo") != null)
+            if (pUser.getString("photo") != null)
                 Picasso.with(this).load(pUser.getString("photo")).placeholder(R.drawable.avatar_blank).into(profilePhoto);
+            if(pUser.getString("name") != null)
+                profileName.setText(pUser.getString("name"));
+            else
+                profileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                        final EditText name = new EditText(MainActivity.this);
+                        name.setHint("James Bond");
+                        alert.setView(name);
+                        alert.setMessage("What do we call you?");
+                        alert.setCancelable(true);
+                        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                String userName = name.getText().toString().trim();
+                                profileName.setText(userName);
+                                pUser.put("name", userName);
+                                pUser.saveInBackground();
+                            }
+                        });
+                        alert.setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                    }
+                                });
+                        alert.show();
+                    }
+                });
+
         }
 
         profilePhoto.setOnClickListener(new View.OnClickListener() {

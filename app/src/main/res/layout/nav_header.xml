@@ -32,11 +32,12 @@
                 android:src="@drawable/avatar_blank" />
 
             <TextView
+                android:id="@+id/profie_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Tap to add a name"
+                android:text="Tap to add your name"
                 android:textAllCaps="true"
                 android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                 android:textColor="@android:color/white"
@@ -57,15 +58,15 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/edit_profile"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/pencil" />
+        <!--<ImageView-->
+            <!--android:id="@+id/edit_profile"-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginBottom="25dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:src="@drawable/pencil" />-->
     </RelativeLayout>
 
 </FrameLayout>
