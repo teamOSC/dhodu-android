@@ -41,6 +41,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 /**
  * Created by naman on 06/09/15.
  */
@@ -115,6 +117,8 @@ public class CurrentOrderFragment extends Fragment {
         TextView deliveryTime = (TextView) cardView.findViewById(R.id.delivery_time);
         TextView pickTime = (TextView) cardView.findViewById(R.id.pickup_time);
         TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
+
+        final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 
         TextView totalItems = (TextView) cardView.findViewById(R.id.total_items);
         TextView totalAmount = (TextView) cardView.findViewById(R.id.total_amount);
@@ -195,6 +199,28 @@ public class CurrentOrderFragment extends Fragment {
                     serviceString = getServiceForType(2);
             }
             serviceType.setText(serviceString);
+        }
+
+        if(noOrderText != null){
+            ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
+            query.whereEqualTo("customer", ParseUser.getCurrentUser());
+            query.orderByDescending("updatedAt");
+            query.getFirstInBackground(new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject object, ParseException e) {
+                    if (e == null) {
+                        Date today = new Date();
+                        Date orderPlaced = object.getCreatedAt();
+                        long diffInDays = (today.getTime() - orderPlaced.getTime())/(24 * 60 * 60 * 1000);  //FIXME
+                        noOrderText.setText("Hey there! Looks like you haven't done your laundry in " + diffInDays + " days.");
+                    } else if(e.getCode() == ParseException.OBJECT_NOT_FOUND){
+                        noOrderText.setText("Congratulations on saying goodbye to your laundry hassles. Welcome to Dhodu!");
+                    }
+                    else {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
 
         if (agentName != null) {

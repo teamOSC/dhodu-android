@@ -62,7 +62,7 @@
             android:src="@drawable/notification" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/no_order_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
