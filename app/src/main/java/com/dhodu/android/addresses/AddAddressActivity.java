@@ -40,7 +40,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(getIntent().getBooleanExtra("HOME_UP", true));
         getSupportActionBar().setTitle("Add Address");
 
         name = (EditText) findViewById(R.id.name);
@@ -87,7 +87,7 @@ public class AddAddressActivity extends AppCompatActivity {
         ParseUser user = ParseUser.getCurrentUser();
 
         if (user != null) {
-            if (!name.getText().toString().equals("") && !flat.getText().toString().equals("")) {
+            if (!name.getText().toString().equals("") && !flat.getText().toString().equals("") && !street.getText().toString().equals("")) {
                 JSONObject address = new JSONObject();
                 try {
                     address.put("house", flat.getText().toString());
@@ -100,6 +100,13 @@ public class AddAddressActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 user.addUnique("address", address);
+            }else{
+                if(name.getText().toString().equals(""))
+                    name.setError("Required");
+                if(flat.getText().toString().equals(""))
+                    flat.setError("Required");
+                if(street.getText().toString().equals(""))
+                    street.setError("Required");
             }
 
             user.saveInBackground(new SaveCallback() {

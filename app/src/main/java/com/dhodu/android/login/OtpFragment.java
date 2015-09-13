@@ -1,7 +1,10 @@
 package com.dhodu.android.login;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -85,7 +88,7 @@ public class OtpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() >= 4) { //TODO: Just ==4, after Shubham fixes this on the server
+                if (s.length() == 4) {
                     verifyManual.setVisibility(View.VISIBLE);
                 } else {
                     verifyManual.setVisibility(View.GONE);
@@ -115,7 +118,21 @@ public class OtpFragment extends Fragment {
         noOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                alert.setTitle("Give us a call");
+                alert.setMessage("No code? No worries, please give us a call on our number and our operator will help you out.");
+                alert.setCancelable(true);
+                alert.setPositiveButton("Call Us", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "7827121121")));
+                    }
+                });
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+                alert.show();
             }
         });
 
@@ -217,8 +234,10 @@ public class OtpFragment extends Fragment {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
+                    Intent intent = new Intent(new Intent(getActivity(), AddAddressActivity.class));
+                    intent.putExtra("HOME_UP", false);
                     startActivity(new Intent(getActivity(), MainActivity.class));
-                    startActivity(new Intent(getActivity(), AddAddressActivity.class));
+                    startActivity(intent);
                     getActivity().finish();
                 } else {
                     Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
