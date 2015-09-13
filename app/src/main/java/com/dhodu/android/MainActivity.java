@@ -1,6 +1,7 @@
 package com.dhodu.android;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -157,9 +158,14 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "7827121121")));
                                 break;
                             case R.id.nav_logout:
+                                final ProgressDialog pDialog = new ProgressDialog(MainActivity.this);
+                                pDialog.setMessage("Logging out...");
+                                pDialog.setCancelable(false);
+                                pDialog.show();
                                 ParseUser.logOutInBackground(new LogOutCallback() {
                                     @Override
                                     public void done(ParseException e) {
+                                        pDialog.dismiss();
                                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                                     }
                                 });
