@@ -33,6 +33,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
     Button submitOrder;
     Switch expressSwitch;
     TextView locationAddress;
+    CheckBox press;
+    CheckBox washPress;
+    CheckBox dryclean;
 
     TextView tvProfileMobile;
     TextView profileName;
@@ -148,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_referral:
                                 startActivity(new Intent(MainActivity.this, ReferActivity.class));
+                                break;
+                            case R.id.nav_call:
+                                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "7827121121")));
                                 break;
                             case R.id.nav_logout:
                                 ParseUser.logOutInBackground(new LogOutCallback() {
@@ -217,6 +224,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            press = (CheckBox) findViewById(R.id.cb_press);
+            washPress = (CheckBox) findViewById(R.id.cb_wash_press);
+            dryclean = (CheckBox) findViewById(R.id.cb_dryclean);
+
             submitOrder = (Button) findViewById(R.id.btn_submit_order);
             submitOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -228,15 +239,24 @@ public class MainActivity extends AppCompatActivity {
                             if (e != null) {
                                 Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                             } else {
+                                String serviceTypes = "";
+                                if (press.isChecked())
+                                    serviceTypes = serviceTypes + 0;
+                                if (washPress.isChecked())
+                                    serviceTypes = serviceTypes + 1;
+                                if (dryclean.isChecked())
+                                    serviceTypes = serviceTypes + 2;
                                 final ParseObject transaction = new ParseObject("Transaction");
                                 transaction.put("status", 0);
                                 transaction.put("transaction_id", count + 1);
                                 transaction.put("customer", ParseUser.getCurrentUser());
                                 transaction.put("time_pick", orderTime.getText().toString());
+                                transaction.put("pick_date", "12-09-2015");
                                 transaction.put("address_index", addressindex);
                                 transaction.put("comments", "");
                                 ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
                                 transaction.put("location", geoPoint);
+                                transaction.put("service_type", serviceTypes);
                                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
                                 query.whereNear("location", geoPoint);
                                 query.getFirstInBackground(new GetCallback<ParseObject>() {

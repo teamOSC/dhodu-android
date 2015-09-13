@@ -52,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="pickup date : "
+                        android:text="pickup day : "
                         android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                         android:textColor="@android:color/white" />
 
@@ -125,7 +125,8 @@
                     android:id="@+id/switch_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -153,6 +154,41 @@
                         android:text="express"
                         android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                         android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/service_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cb_press"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Press"
+                        android:buttonTint="@android:color/white"
+                        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                        android:textColor="@android:color/white"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_wash_press"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wash &amp; Press"
+                        android:buttonTint="@android:color/white"
+                        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                        android:textColor="@android:color/white"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_dryclean"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dryclean"
+                        android:buttonTint="@android:color/white"
+                        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                        android:textColor="@android:color/white"/>
+
                 </LinearLayout>
 
                 <Button
