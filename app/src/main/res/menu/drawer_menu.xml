@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_location_city_black_48dp"
             android:title="My Addresses" />
         <!--<item-->
-            <!--android:id="@+id/nav_stats"-->
-            <!--android:icon="@drawable/stocking"-->
-            <!--android:title="Stats" />-->
+        <!--android:id="@+id/nav_stats"-->
+        <!--android:icon="@drawable/stocking"-->
+        <!--android:title="Stats" />-->
         <item
             android:id="@+id/nav_ratecard"
             android:icon="@drawable/ic_picture_in_picture_black_48dp"

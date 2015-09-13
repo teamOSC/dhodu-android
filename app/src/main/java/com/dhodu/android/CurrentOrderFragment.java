@@ -82,7 +82,7 @@ public class CurrentOrderFragment extends Fragment {
 
     private void setUpOrderCard(ParseObject object) {
         int layoutId;
-        if(object != null)
+        if (object != null)
             layoutId = getLayoutIdForStatus(object.getInt("status"));
         else
             layoutId = getLayoutIdForStatus(-1);
@@ -96,9 +96,9 @@ public class CurrentOrderFragment extends Fragment {
 
     private void setCardDetails(final ParseObject transaction, View cardView) {
         int statusCode;
-        try{
+        try {
             statusCode = transaction.getInt("status");
-        } catch (Exception e){
+        } catch (Exception e) {
             statusCode = -1;
             e.printStackTrace();
         }

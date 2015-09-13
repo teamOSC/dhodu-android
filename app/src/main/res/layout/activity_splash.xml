@@ -14,17 +14,17 @@
         android:id="@+id/loader_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/loader_icon"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/loader_icon" />
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imageView"

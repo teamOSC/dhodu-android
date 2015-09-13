@@ -45,8 +45,8 @@
                     android:id="@+id/pickup_date_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -60,8 +60,8 @@
                         android:id="@+id/order_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:prompt="@string/day_prompt"
                         android:entries="@array/day_selector"
+                        android:prompt="@string/day_prompt"
                         android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                         android:theme="@style/EditTextDarkBackground" />
                 </LinearLayout>
@@ -70,8 +70,8 @@
                     android:id="@+id/pickup_time_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -95,8 +95,8 @@
                     android:id="@+id/pickup_location_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -166,28 +166,28 @@
                         android:id="@+id/cb_press"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Press"
                         android:buttonTint="@android:color/white"
+                        android:text="Press"
                         android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                        android:textColor="@android:color/white"/>
+                        android:textColor="@android:color/white" />
 
                     <CheckBox
                         android:id="@+id/cb_wash_press"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wash &amp; Press"
                         android:buttonTint="@android:color/white"
+                        android:text="Wash &amp; Press"
                         android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                        android:textColor="@android:color/white"/>
+                        android:textColor="@android:color/white" />
 
                     <CheckBox
                         android:id="@+id/cb_dryclean"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dryclean"
                         android:buttonTint="@android:color/white"
+                        android:text="Dryclean"
                         android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                        android:textColor="@android:color/white"/>
+                        android:textColor="@android:color/white" />
 
                 </LinearLayout>
 

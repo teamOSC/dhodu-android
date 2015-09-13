@@ -20,7 +20,7 @@ public class Utils {
         return "dhodu";
     }
 
-    public static void requestOtp(final Context context, String mobile){
+    public static void requestOtp(final Context context, String mobile) {
         new AsyncTask<String, Void, Void>() {
 
             @Override
