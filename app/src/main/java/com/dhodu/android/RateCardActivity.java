@@ -8,7 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -23,6 +25,7 @@ public class RateCardActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     List<ParseObject> clothesList;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,8 @@ public class RateCardActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         final Spinner serviceType = (Spinner) findViewById(R.id.service_type);
         final Spinner category = (Spinner) findViewById(R.id.category);
@@ -92,11 +97,15 @@ public class RateCardActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
+                progressBar.setVisibility(View.GONE);
                 if (e == null) {
                     clothesList = objects;
                     recyclerView.setAdapter(new RateCardAdapter(clothesList, serviceType.getSelectedItemPosition()));
-                } else
+                } else{
                     e.printStackTrace();
+                    Toast.makeText(RateCardActivity.this, "Error fetching rate list", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
