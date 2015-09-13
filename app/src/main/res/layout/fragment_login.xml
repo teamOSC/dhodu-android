@@ -88,11 +88,12 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:paddingBottom="15dp"
-            android:text="TERMS OF SERVICE"
+            android:text="@string/tos"
             android:textColor="#ffffff"
             android:textSize="12sp" />
 

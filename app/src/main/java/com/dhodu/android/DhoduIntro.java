@@ -18,6 +18,7 @@ public class DhoduIntro extends AppIntro {
         setBarColor(getResources().getColor(R.color.dhodu_primary_dark));
         setSeparatorColor(Color.parseColor("#2196F3"));
         showSkipButton(true);
+        setFlowAnimation();
     }
 
     @Override

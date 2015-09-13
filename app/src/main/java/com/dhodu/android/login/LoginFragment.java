@@ -1,6 +1,8 @@
 package com.dhodu.android.login;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -45,6 +47,22 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 proceed();
+            }
+        });
+        TextView tos = (TextView) view.findViewById(R.id.tos);
+        tos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                alert.setTitle("Terms of Service");
+                alert.setMessage(R.string.tos_expanded);
+                alert.setCancelable(true);
+                alert.setNegativeButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                            }
+                        });
+                alert.show();
             }
         });
 
