@@ -27,6 +27,8 @@ public class WashingMachineView extends LinearLayout {
     private int mBottomviewHeight;
     private int mMachineColor;
 
+    private WaterWave waterWave;
+
     public WashingMachineView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -76,16 +78,16 @@ public class WashingMachineView extends LinearLayout {
             canvas.drawRect(rectBackground, paint);
 
             //the rectangular strip on topview
-            Rect rectWhite = new Rect(getDimensionInPixel(20), getHeight() / 2 - getDimensionInPixel(4), getDimensionInPixel(60), getHeight() / 2 + getDimensionInPixel(4));
+            Rect rectWhite = new Rect(getDimensionInPixel(20), getHeight() / 2 - getDimensionInPixel(3), getDimensionInPixel(60), getHeight() / 2 + getDimensionInPixel(3));
             paint.setColor(Color.WHITE);
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
             canvas.drawRect(rectWhite, paint);
 
             //three dots at the end of topview
-            canvas.drawCircle(getWidth() - getDimensionInPixel(80), getHeight() / 2, getDimensionInPixel(6), paint);
-            canvas.drawCircle(getWidth() - getDimensionInPixel(55), getHeight() / 2, getDimensionInPixel(6), paint);
-            canvas.drawCircle(getWidth() - getDimensionInPixel(30), getHeight() / 2, getDimensionInPixel(4), paint);
+            canvas.drawCircle(getWidth() - getDimensionInPixel(80), getHeight() / 2, getDimensionInPixel(5), paint);
+            canvas.drawCircle(getWidth() - getDimensionInPixel(55), getHeight() / 2, getDimensionInPixel(5), paint);
+            canvas.drawCircle(getWidth() - getDimensionInPixel(30), getHeight() / 2, getDimensionInPixel(3), paint);
 
         }
     }
@@ -125,10 +127,15 @@ public class WashingMachineView extends LinearLayout {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mMiddleviewHeight);
             setLayoutParams(params);
 
-            addView(new WaterWave(context, attrs));
+            waterWave = new WaterWave(context,attrs);
+            addView(waterWave);
             addView(new OverlayView(context, attrs));
         }
 
 
+    }
+
+    public WaterWave getWaterWave() {
+        return waterWave;
     }
 }

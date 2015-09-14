@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhodu.android.ui.StepsView;
+import com.dhodu.android.ui.WashingMachineView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -120,6 +121,7 @@ public class CurrentOrderFragment extends Fragment {
         TextView deliveryTime = (TextView) cardView.findViewById(R.id.delivery_time);
         TextView pickTime = (TextView) cardView.findViewById(R.id.pickup_time);
         TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
+        WashingMachineView washingMachineView = (WashingMachineView) cardView.findViewById(R.id.wave_view);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 

@@ -16,20 +16,21 @@
 
         <com.dhodu.android.ui.WashingMachineView
             android:id="@+id/wave_view"
-            android:layout_width="130dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             app:above_wave_color="#303F9F"
             app:blow_wave_color="#303F9F"
-            app:bottom_view_height="0dp"
-            app:holeRadius="30dp"
-            app:machineColor="#009688"
-            app:middle_view_height="120dp"
-            app:progress="2"
-            app:top_view_height="0dp"
-            app:wave_height="middle"
+            app:progress="55"
+            app:wave_height="large"
             app:wave_hz="fast"
-            app:wave_length="little" />
+            app:wave_length="middle"
+            app:top_view_height="25dp"
+            app:bottom_view_height="15dp"
+            app:middle_view_height="140dp"
+            app:machineColor="#009688"
+            app:holeRadius="30dp"
+            />
 
         <com.dhodu.android.ui.StepsView
             android:id="@+id/stepsView"

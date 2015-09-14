@@ -26,8 +26,8 @@ public class WaterWave extends LinearLayout {
     private int mWaveMultiple;
     private int mWaveHz;
     private int mWaveToTop;
-    private Wave mWave;
-    private SolidBelowWave mSolidBelowWave;
+    public Wave mWave;
+    public SolidBelowWave mSolidBelowWave;
 
 
     public WaterWave(Context context, AttributeSet attrs) {
@@ -76,7 +76,7 @@ public class WaterWave extends LinearLayout {
         }
     }
 
-    private void computeWaveToTop() {
+    public void computeWaveToTop() {
         mWaveToTop = (int) (getHeight() * (1f - mProgress / 100f));
         ViewGroup.LayoutParams params = mWave.getLayoutParams();
         if (params != null) {
@@ -128,6 +128,14 @@ public class WaterWave extends LinearLayout {
             super.writeToParcel(out, flags);
             out.writeInt(progress);
         }
+    }
+
+    public Wave getWave() {
+        return mWave;
+    }
+
+    public SolidBelowWave getmSolidBelowWave() {
+        return mSolidBelowWave;
     }
 
 

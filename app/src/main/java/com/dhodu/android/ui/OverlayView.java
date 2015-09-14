@@ -71,7 +71,7 @@ public class OverlayView extends View {
         Paint ringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         ringPaint.setStyle(Paint.Style.STROKE);
         ringPaint.setColor(Color.WHITE);
-        ringPaint.setStrokeWidth(getDimensionInPixel(10));
+        ringPaint.setStrokeWidth(getDimensionInPixel(8));
         float radius = holeradius + getDimensionInPixel(15);
         canvas.drawCircle((float) 0.5 * getWidth(), (float) 0.5 * getHeight(), radius, ringPaint);
 
