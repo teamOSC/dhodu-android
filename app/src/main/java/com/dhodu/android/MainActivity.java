@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvProfileMobile;
     TextView profileName;
     CircleImageView profilePhoto;
+    ImageView editProfile;
     Toolbar toolbar;
 
     int addressindex = 0;
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             orderStatus = (TextView) findViewById(R.id.orderStatus);
             expandCreateOrder = (ImageView) findViewById(R.id.expand);
             centerRecyclerview = (RecyclerView) findViewById(R.id.center_recyclerview);
+            editProfile = (ImageView) findViewById(R.id.edit_profile);
 
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -290,6 +292,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
+                }
+            });
+
+            editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this,ProfileActivity.class));
                 }
             });
 

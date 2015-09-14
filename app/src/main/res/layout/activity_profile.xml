@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="220dp"
-    android:background="@drawable/app_background_dark"
-    android:orientation="horizontal">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:gravity="bottom">
+        android:layout_height="250dp"
+        android:layout_marginTop="?attr/actionBarSize">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="20dp"
             android:background="?selectableItemBackgroundBorderless"
             android:orientation="vertical">
 
             <com.dhodu.android.ui.CircleImageView
                 android:id="@+id/profile_pic"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:paddingLeft="15dp"
                 android:src="@drawable/avatar_blank" />
 
@@ -39,34 +36,38 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="Tap to add your name"
                 android:textAllCaps="true"
+                android:layout_gravity="center"
                 android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/profile_mobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="3dp"
                 android:fontFamily="sans-serif-small"
-                android:gravity="bottom"
+                android:gravity="center"
                 android:text="+919891743645"
+                android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceLargeInverse"
-                android:textSize="17sp" />
+                android:textSize="19sp" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/edit_profile"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/pencil" />
-    </RelativeLayout>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/dhodu_primary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 </FrameLayout>
