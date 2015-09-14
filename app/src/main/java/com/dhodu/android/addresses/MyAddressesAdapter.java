@@ -2,14 +2,17 @@ package com.dhodu.android.addresses;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dhodu.android.R;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +82,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
     public class ItemHolder extends RecyclerView.ViewHolder {
 
         protected TextView name, flat, street, locality;
+        protected ImageView editAddress, deleteAddress;
 
         public ItemHolder(View itemView) {
             super(itemView);
@@ -87,6 +91,9 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
             flat = (TextView) itemView.findViewById(R.id.address_flat);
             locality = (TextView) itemView.findViewById(R.id.address_locality);
             street = (TextView) itemView.findViewById(R.id.address_street);
+
+            editAddress = (ImageView) itemView.findViewById(R.id.edit_address);
+            deleteAddress = (ImageView) itemView.findViewById(R.id.delete_address);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,6 +112,40 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
                     }
                 }
             });
+
+            if (editAddress != null && deleteAddress != null) {
+
+                editAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, AddAddressActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+
+                deleteAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(context)
+                                .setCancelable(true).setMessage("Are you sure you want to delete this adddress ?").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        deleteAddress(getAdapterPosition()-1);
+                                    }
+                                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        dialog.create().show();
+                    }
+                });
+            }
         }
+    }
+
+    private void deleteAddress(int index) {
+        ParseUser user = ParseUser.getCurrentUser();
     }
 }
