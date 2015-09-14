@@ -158,7 +158,21 @@
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="Submit"
+            android:text="Add address"
+            android:textColor="@android:color/white" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/dhodu_primary_dark"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="I will add later"
+            android:visibility="gone"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

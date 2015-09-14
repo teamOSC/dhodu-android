@@ -55,6 +55,7 @@ public class AddAddressActivity extends AppCompatActivity {
         pincode = (EditText) findViewById(R.id.address_pincode);
         referral = (EditText) findViewById(R.id.referral);
         AppCompatButton submit = (AppCompatButton) findViewById(R.id.submit);
+        AppCompatButton skip = (AppCompatButton) findViewById(R.id.skip);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(getIntent().getBooleanExtra("HOME_UP", true));
@@ -63,6 +64,9 @@ public class AddAddressActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Edit Address");
             submit.setText("Update");
             fillEditTexts();
+        } else if (action.equals("add_address_withskip")) {
+            getSupportActionBar().setTitle("Add Address");
+            skip.setVisibility(View.VISIBLE);
         } else {
             getSupportActionBar().setTitle("Add Address");
         }
@@ -74,6 +78,13 @@ public class AddAddressActivity extends AppCompatActivity {
                     updateUserAddress();
                 else
                     addUserAddress();
+            }
+        });
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

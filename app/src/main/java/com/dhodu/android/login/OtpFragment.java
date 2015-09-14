@@ -1,6 +1,7 @@
 package com.dhodu.android.login;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -176,17 +177,24 @@ public class OtpFragment extends Fragment {
     }
 
     private void verifyOTP(final String code) {
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Verifying OTP...");
+        pDialog.setCancelable(false);
+        pDialog.show();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("OTP");
         query.whereEqualTo("username", phone);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     if (code.equals(list.get(0).getString("otp"))) {
+                        pDialog.dismiss();
                         proceed();
                     } else {
+                        pDialog.dismiss();
                         Toast.makeText(getActivity(), "Invalid OTP", Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    pDialog.dismiss();
                     Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
@@ -195,6 +203,11 @@ public class OtpFragment extends Fragment {
     }
 
     private void proceed() {
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Please Wait...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         final String username = phone.trim();
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
@@ -208,17 +221,21 @@ public class OtpFragment extends Fragment {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
                                     startActivity(new Intent(getActivity(), MainActivity.class));
+                                    pDialog.dismiss();
                                     getActivity().finish();
                                 } else {
+                                    pDialog.dismiss();
                                     Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                                     e.printStackTrace();
                                 }
                             }
                         });
                     } else {
+                        pDialog.dismiss();
                         signUpUser(username);
                     }
                 } else {
+                    pDialog.dismiss();
                     e.printStackTrace();
                 }
             }
@@ -227,6 +244,10 @@ public class OtpFragment extends Fragment {
     }
 
     private void signUpUser(String username) {
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Signing Up...");
+        pDialog.setCancelable(false);
+        pDialog.show();
         ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(Utils.generatePassword(username));
@@ -234,12 +255,15 @@ public class OtpFragment extends Fragment {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
+                    pDialog.dismiss();
                     Intent intent = new Intent(new Intent(getActivity(), AddAddressActivity.class));
+                    intent.setAction("add_address_withskip");
                     intent.putExtra("HOME_UP", false);
                     startActivity(new Intent(getActivity(), MainActivity.class));
                     startActivity(intent);
                     getActivity().finish();
                 } else {
+                    pDialog.dismiss();
                     Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
