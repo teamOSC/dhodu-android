@@ -51,6 +51,7 @@ public class CurrentOrderFragment extends Fragment {
     private final String[] statuses = {"", "", "", "", "", ""};
     FrameLayout rootContainer;
     StepsView stepsView;
+    View loadingView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -59,6 +60,7 @@ public class CurrentOrderFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_current_order, container, false);
 
         rootContainer = (FrameLayout) view.findViewById(R.id.rootContainer);
+        loadingView = view.findViewById(R.id.loadingView);
 
         fetchCurrentOrders();
         return view;
@@ -93,6 +95,7 @@ public class CurrentOrderFragment extends Fragment {
         View cardView = inflater.inflate(layoutId, null);
         stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
         rootContainer.addView(cardView);
+        loadingView.setVisibility(View.GONE);
         setCardDetails(object, cardView);
     }
 
