@@ -57,6 +57,7 @@ public class MyAddressesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyAddressesActivity.this, AddAddressActivity.class);
+                intent.setAction("add_address");
                 startActivity(intent);
             }
         });

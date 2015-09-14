@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:gravity="center"
-            android:text="Hey there!"
+            android:text="Congratulations on saying goodbye to your laundry hassles. Welcome to Dhodu!"
             android:textColor="@color/dhodu_primary_dark"
             android:textSize="20sp" />
 
@@ -40,6 +40,8 @@
             android:layout_below="@+id/imageView"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:gravity="center"
             android:text="Pull down to schedule a pickup \n Or pull up to see your order history"
             android:textColor="@color/dhodu_primary_dark"

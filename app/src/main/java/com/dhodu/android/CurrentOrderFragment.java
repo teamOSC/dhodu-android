@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhodu.android.ui.StepsView;
+import com.dhodu.android.ui.WashingMachineView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,6 +52,7 @@ public class CurrentOrderFragment extends Fragment {
     private final String[] statuses = {"", "", "", "", "", ""};
     FrameLayout rootContainer;
     StepsView stepsView;
+    View loadingView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -59,6 +61,7 @@ public class CurrentOrderFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_current_order, container, false);
 
         rootContainer = (FrameLayout) view.findViewById(R.id.rootContainer);
+        loadingView = view.findViewById(R.id.loadingView);
 
         fetchCurrentOrders();
         return view;
@@ -93,6 +96,7 @@ public class CurrentOrderFragment extends Fragment {
         View cardView = inflater.inflate(layoutId, null);
         stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
         rootContainer.addView(cardView);
+        loadingView.setVisibility(View.GONE);
         setCardDetails(object, cardView);
     }
 
@@ -117,6 +121,7 @@ public class CurrentOrderFragment extends Fragment {
         TextView deliveryTime = (TextView) cardView.findViewById(R.id.delivery_time);
         TextView pickTime = (TextView) cardView.findViewById(R.id.pickup_time);
         TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
+        WashingMachineView washingMachineView = (WashingMachineView) cardView.findViewById(R.id.wave_view);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 
@@ -225,22 +230,24 @@ public class CurrentOrderFragment extends Fragment {
 
         if (agentName != null) {
             final ParseObject object = transaction.getParseObject("agent_pick");
-            try {
-                final String agentPhone = object.fetchIfNeeded().getString("contact");
-                agentName.setText(object.fetchIfNeeded().getString("name"));
-                agentVehicle.setText(object.fetchIfNeeded().getString("vehicle"));
-                if (agentCall != null) {
-                    agentCall.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + agentPhone));
-                            startActivity(intent);
-                        }
-                    });
+            if (object != null) {
+                try {
+                    final String agentPhone = object.fetchIfNeeded().getString("contact");
+                    agentName.setText(object.fetchIfNeeded().getString("name"));
+                    agentVehicle.setText(object.fetchIfNeeded().getString("vehicle"));
+                    if (agentCall != null) {
+                        agentCall.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + agentPhone));
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    Picasso.with(getActivity()).load(object.fetchIfNeeded().getString("agent_photo")).into(agentPhoto);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                Picasso.with(getActivity()).load(object.fetchIfNeeded().getString("agent_photo")).into(agentPhoto);
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         }
 

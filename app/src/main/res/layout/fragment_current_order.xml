@@ -5,33 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/loadingView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <TextView
+        <ProgressBar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No current order found"
-            android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/neworder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/dhodu_primary_dark"
-            android:fontFamily="sans-serif-medium"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="Create a new order"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+            android:layout_centerInParent="true"
+            android:minHeight="10dp"
+            android:indeterminate="true"
+            style="@style/Widget.AppCompat.ProgressBar"
+            />
+    </RelativeLayout>
 
 </FrameLayout>

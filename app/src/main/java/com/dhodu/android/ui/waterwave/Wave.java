@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-class Wave extends View {
+public class Wave extends View {
     public final int DEFAULT_ABOVE_WAVE_ALPHA = 150;
     public final int DEFAULT_BLOW_WAVE_ALPHA = 255;
     private final int WAVE_HEIGHT_LARGE = 46;
@@ -160,7 +160,7 @@ class Wave extends View {
     }
 
     @Override
-    protected void onWindowVisibilityChanged(int visibility) {
+    public void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
         if (View.GONE == visibility) {
             removeCallbacks(mRefreshProgressRunnable);

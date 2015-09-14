@@ -40,6 +40,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -97,11 +98,13 @@ public class MainActivity extends AppCompatActivity {
     TextView tvProfileMobile;
     TextView profileName;
     CircleImageView profilePhoto;
+    ImageView editProfile;
     Toolbar toolbar;
 
     int addressindex = 0;
     int locationShifted = 0;
     RecyclerView centerRecyclerview;
+    ProgressBar progressBar;
     private String photoPath;
     private LatLng latLng;
     private TextView orderStatus;
@@ -127,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
             orderStatus = (TextView) findViewById(R.id.orderStatus);
             expandCreateOrder = (ImageView) findViewById(R.id.expand);
             centerRecyclerview = (RecyclerView) findViewById(R.id.center_recyclerview);
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            editProfile = (ImageView) findViewById(R.id.edit_profile);
 
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -290,6 +295,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
+                }
+            });
+
+            editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this,ProfileActivity.class));
                 }
             });
 
@@ -573,6 +585,7 @@ public class MainActivity extends AppCompatActivity {
                     int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_card_order_history);
                     centerRecyclerview.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
                     centerRecyclerview.setAdapter(new CenterAdapter(MainActivity.this, list));
+                    progressBar.setVisibility(View.GONE);
                 } else {
                     e.printStackTrace();
                 }

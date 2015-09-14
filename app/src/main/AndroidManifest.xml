@@ -76,6 +76,13 @@
                 android:value="com.dhodu.android.MainActivity" />
         </activity>
         <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dhodu.android.MainActivity" />
+        </activity>
+        <activity
             android:name=".ReferActivity"
             android:label="@string/title_activity_refer"
             android:parentActivityName=".MainActivity" >
