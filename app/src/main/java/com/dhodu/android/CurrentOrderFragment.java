@@ -228,22 +228,24 @@ public class CurrentOrderFragment extends Fragment {
 
         if (agentName != null) {
             final ParseObject object = transaction.getParseObject("agent_pick");
-            try {
-                final String agentPhone = object.fetchIfNeeded().getString("contact");
-                agentName.setText(object.fetchIfNeeded().getString("name"));
-                agentVehicle.setText(object.fetchIfNeeded().getString("vehicle"));
-                if (agentCall != null) {
-                    agentCall.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + agentPhone));
-                            startActivity(intent);
-                        }
-                    });
+            if (object != null) {
+                try {
+                    final String agentPhone = object.fetchIfNeeded().getString("contact");
+                    agentName.setText(object.fetchIfNeeded().getString("name"));
+                    agentVehicle.setText(object.fetchIfNeeded().getString("vehicle"));
+                    if (agentCall != null) {
+                        agentCall.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + agentPhone));
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    Picasso.with(getActivity()).load(object.fetchIfNeeded().getString("agent_photo")).into(agentPhoto);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                Picasso.with(getActivity()).load(object.fetchIfNeeded().getString("agent_photo")).into(agentPhoto);
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         }
 
