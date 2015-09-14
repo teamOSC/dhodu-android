@@ -28,9 +28,11 @@ import com.dhodu.android.utils.Utils;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import java.util.List;
@@ -227,13 +229,26 @@ public class OtpFragment extends Fragment {
     }
 
     private void signUpUser(String username) {
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(Utils.generatePassword(username));
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
+                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    installation.put("user", user);
+                    installation.add("channels", "user");
+                    installation.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e == null){
+                                Log.d(TAG, "installation saved");
+                            }else{
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                     Intent intent = new Intent(new Intent(getActivity(), AddAddressActivity.class));
                     intent.putExtra("HOME_UP", false);
                     startActivity(new Intent(getActivity(), MainActivity.class));
