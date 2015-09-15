@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +122,7 @@ public class CurrentOrderFragment extends Fragment {
         TextView pickTime = (TextView) cardView.findViewById(R.id.pickup_time);
         TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
         WashingMachineView washingMachineView = (WashingMachineView) cardView.findViewById(R.id.wave_view);
-        AppCompatButton scheduleBooking =(AppCompatButton) cardView.findViewById(R.id.schedule_booking);
+        Button scheduleBooking =(Button) cardView.findViewById(R.id.schedule_booking);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 

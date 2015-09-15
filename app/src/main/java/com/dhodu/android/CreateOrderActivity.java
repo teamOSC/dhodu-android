@@ -1,5 +1,6 @@
 package com.dhodu.android;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -91,11 +92,16 @@ public class CreateOrderActivity extends AppCompatActivity {
         submitOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final ProgressDialog pDialog = new ProgressDialog(CreateOrderActivity.this);
+                pDialog.setMessage("Placing order...");
+                pDialog.setCancelable(false);
+                pDialog.show();
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Transaction");
                 query.countInBackground(new CountCallback() {
                     @Override
                     public void done(int count, com.parse.ParseException e) {
                         if (e != null) {
+                            pDialog.dismiss();
                             Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                         } else {
                             String serviceTypes = "";
@@ -109,6 +115,7 @@ public class CreateOrderActivity extends AppCompatActivity {
                             transaction.put("status", 0);
                             transaction.put("transaction_id", count + 1);
                             transaction.put("customer", ParseUser.getCurrentUser());
+                            //TODO pick time_pick from TimePicker
                             transaction.put("time_pick", "");
                             transaction.put("pick_date", "12-09-2015");
                             transaction.put("address_index", addressindex);
@@ -127,13 +134,16 @@ public class CreateOrderActivity extends AppCompatActivity {
                                             @Override
                                             public void done(com.parse.ParseException e) {
                                                 if (e == null) {
+                                                    pDialog.dismiss();
                                                     Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
                                                 } else {
+                                                    pDialog.dismiss();
                                                     Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                                     } else {
+                                        pDialog.dismiss();
                                         e.printStackTrace();
                                     }
                                 }
