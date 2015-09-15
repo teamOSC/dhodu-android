@@ -110,6 +110,7 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/radio_today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Today"
@@ -117,6 +118,7 @@
                 android:textColor="@android:color/black" />
 
             <RadioButton
+                android:id="@+id/radio_tomorrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tomorrow"
@@ -124,6 +126,7 @@
                 android:textColor="@android:color/black" />
 
             <RadioButton
+                android:id="@+id/radio_datomorrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Day after tomorrow"
@@ -210,7 +213,7 @@
     </ScrollView>
 
     <FrameLayout
-        android:id="@+id/submit_feedback_button"
+        android:id="@+id/submit_order"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
