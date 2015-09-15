@@ -5,25 +5,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
 
-        android:id="@+id/sliding_layout"
+    <include
+        layout="@layout/center_page"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top"
-        sothree:umanoPanelHeight="116dp"
-        sothree:umanoShadowHeight="0dp">
-
-        <include
-            layout="@layout/center_page"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <include
-            layout="@layout/drawer_top"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+        android:layout_height="match_parent" />
 
 
     <android.support.design.widget.NavigationView

@@ -33,20 +33,24 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/no_laundry" />
 
-        <TextView
-            android:id="@+id/textView2"
+
+        <Button
+            android:id="@+id/schedule_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
-            android:layout_margin="4dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:gravity="center"
-            android:text="Pull down to schedule a pickup \n Or pull up to see your order history"
-            android:textColor="@color/dhodu_primary_dark"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+            android:layout_below="@+id/imageView"
+            android:backgroundTint="@android:color/transparent"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Schedule booking"
+            android:textSize="16sp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textColor="@color/dhodu_primary_dark" />
 
     </RelativeLayout>
 

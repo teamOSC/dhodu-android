@@ -2,7 +2,6 @@ package com.dhodu.android;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,23 +18,23 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -43,23 +42,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
 import com.dhodu.android.login.LoginActivity;
 import com.dhodu.android.ui.CircleImageView;
-import com.dhodu.android.ui.SpacesItemDecoration;
 import com.google.android.gms.maps.model.LatLng;
-import com.parse.CountCallback;
-import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -70,7 +60,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -105,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     int locationShifted = 0;
     RecyclerView centerRecyclerview;
     ProgressBar progressBar;
+    View statusView;
     private String photoPath;
     private LatLng latLng;
     private TextView orderStatus;
@@ -122,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Instantiate the layouts
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            slideUpLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
             cameraContainer = (FrameLayout) findViewById(R.id.camera_container);
             topView = (LinearLayout) findViewById(R.id.topView);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -132,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             centerRecyclerview = (RecyclerView) findViewById(R.id.center_recyclerview);
             progressBar = (ProgressBar) findViewById(R.id.progressBar);
             editProfile = (ImageView) findViewById(R.id.edit_profile);
+            statusView = findViewById(R.id.statusView);
 
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -140,6 +131,15 @@ public class MainActivity extends AppCompatActivity {
 
             final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             sp.edit().putBoolean("app_first_run", false).apply();
+
+            ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+            if (viewPager != null) {
+                setupViewPager(viewPager);
+                viewPager.setOffscreenPageLimit(2);
+            }
+
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             if (navigationView != null) {
@@ -186,117 +186,117 @@ public class MainActivity extends AppCompatActivity {
 //            transaction.commit();
 
             //Setup the order pulldown screen
-            orderTime = (EditText) findViewById(R.id.order_time);
-            orderTime.setInputType(EditorInfo.TYPE_NULL);
-            orderTime.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                        // TODO Auto-generated method stub
-                        Calendar mcurrentTime = Calendar.getInstance();
-                        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                        int minute = mcurrentTime.get(Calendar.MINUTE);
-                        TimePickerDialog mTimePicker;
-                        mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                                orderTime.setText(
-                                        ((selectedHour < 10) ? "0" + selectedHour : selectedHour)
-                                                + ":" +
-                                                ((selectedMinute < 10) ? "0" + selectedMinute : selectedMinute));
-                            }
-                        }, hour, minute, true);//Yes 24 hour time
-                        mTimePicker.setTitle("Select Time");
-                        mTimePicker.show();
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            });
-
-            locationAddress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
-                    intent.setAction("chooseAddress");
-                    startActivityForResult(intent, 0);
-                }
-            });
-
-            expressSwitch = (Switch) findViewById(R.id.express_switch);
-            expressSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (b) {
-                        Toast.makeText(getBaseContext(), "Express service coming soon", Toast.LENGTH_SHORT).show();
-                        expressSwitch.setChecked(false);
-                    }
-                }
-            });
-
-            press = (CheckBox) findViewById(R.id.cb_press);
-            washPress = (CheckBox) findViewById(R.id.cb_wash_press);
-            dryclean = (CheckBox) findViewById(R.id.cb_dryclean);
-
-            submitOrder = (Button) findViewById(R.id.btn_submit_order);
-            submitOrder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Transaction");
-                    query.countInBackground(new CountCallback() {
-                        @Override
-                        public void done(int count, ParseException e) {
-                            if (e != null) {
-                                Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                            } else {
-                                String serviceTypes = "";
-                                if (press.isChecked())
-                                    serviceTypes = serviceTypes + 0;
-                                if (washPress.isChecked())
-                                    serviceTypes = serviceTypes + 1;
-                                if (dryclean.isChecked())
-                                    serviceTypes = serviceTypes + 2;
-                                final ParseObject transaction = new ParseObject("Transaction");
-                                transaction.put("status", 0);
-                                transaction.put("transaction_id", count + 1);
-                                transaction.put("customer", ParseUser.getCurrentUser());
-                                transaction.put("time_pick", orderTime.getText().toString());
-                                transaction.put("pick_date", "12-09-2015");
-                                transaction.put("address_index", addressindex);
-                                transaction.put("comments", "");
-                                ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
-                                transaction.put("location", geoPoint);
-                                transaction.put("service_type", serviceTypes);
-                                ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
-                                query.whereNear("location", geoPoint);
-                                query.getFirstInBackground(new GetCallback<ParseObject>() {
-                                    @Override
-                                    public void done(ParseObject object, ParseException e) {
-                                        if (e == null) {
-                                            transaction.put("assigned_manager", object);
-                                            transaction.saveInBackground(new SaveCallback() {
-                                                @Override
-                                                public void done(ParseException e) {
-                                                    if (e == null) {
-                                                        Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                            });
-                                        } else {
-                                            e.printStackTrace();
-                                        }
-
-                                    }
-                                });
-
-                            }
-                        }
-                    });
-                }
-            });
+//            orderTime = (EditText) findViewById(R.id.order_time);
+//            orderTime.setInputType(EditorInfo.TYPE_NULL);
+//            orderTime.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View view, MotionEvent motionEvent) {
+//                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                        // TODO Auto-generated method stub
+//                        Calendar mcurrentTime = Calendar.getInstance();
+//                        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+//                        int minute = mcurrentTime.get(Calendar.MINUTE);
+//                        TimePickerDialog mTimePicker;
+//                        mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                            @Override
+//                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                                orderTime.setText(
+//                                        ((selectedHour < 10) ? "0" + selectedHour : selectedHour)
+//                                                + ":" +
+//                                                ((selectedMinute < 10) ? "0" + selectedMinute : selectedMinute));
+//                            }
+//                        }, hour, minute, true);//Yes 24 hour time
+//                        mTimePicker.setTitle("Select Time");
+//                        mTimePicker.show();
+//                        return true;
+//                    } else {
+//                        return false;
+//                    }
+//                }
+//            });
+//
+//            locationAddress.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(MainActivity.this, MyAddressesActivity.class);
+//                    intent.setAction("chooseAddress");
+//                    startActivityForResult(intent, 0);
+//                }
+//            });
+//
+//            expressSwitch = (Switch) findViewById(R.id.express_switch);
+//            expressSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                    if (b) {
+//                        Toast.makeText(getBaseContext(), "Express service coming soon", Toast.LENGTH_SHORT).show();
+//                        expressSwitch.setChecked(false);
+//                    }
+//                }
+//            });
+//
+//            press = (CheckBox) findViewById(R.id.cb_press);
+//            washPress = (CheckBox) findViewById(R.id.cb_wash_press);
+//            dryclean = (CheckBox) findViewById(R.id.cb_dryclean);
+//
+//            submitOrder = (Button) findViewById(R.id.btn_submit_order);
+//            submitOrder.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Transaction");
+//                    query.countInBackground(new CountCallback() {
+//                        @Override
+//                        public void done(int count, ParseException e) {
+//                            if (e != null) {
+//                                Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                String serviceTypes = "";
+//                                if (press.isChecked())
+//                                    serviceTypes = serviceTypes + 0;
+//                                if (washPress.isChecked())
+//                                    serviceTypes = serviceTypes + 1;
+//                                if (dryclean.isChecked())
+//                                    serviceTypes = serviceTypes + 2;
+//                                final ParseObject transaction = new ParseObject("Transaction");
+//                                transaction.put("status", 0);
+//                                transaction.put("transaction_id", count + 1);
+//                                transaction.put("customer", ParseUser.getCurrentUser());
+//                                transaction.put("time_pick", orderTime.getText().toString());
+//                                transaction.put("pick_date", "12-09-2015");
+//                                transaction.put("address_index", addressindex);
+//                                transaction.put("comments", "");
+//                                ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+//                                transaction.put("location", geoPoint);
+//                                transaction.put("service_type", serviceTypes);
+//                                ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
+//                                query.whereNear("location", geoPoint);
+//                                query.getFirstInBackground(new GetCallback<ParseObject>() {
+//                                    @Override
+//                                    public void done(ParseObject object, ParseException e) {
+//                                        if (e == null) {
+//                                            transaction.put("assigned_manager", object);
+//                                            transaction.saveInBackground(new SaveCallback() {
+//                                                @Override
+//                                                public void done(ParseException e) {
+//                                                    if (e == null) {
+//                                                        Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+//                                                    } else {
+//                                                        Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+//                                                    }
+//                                                }
+//                                            });
+//                                        } else {
+//                                            e.printStackTrace();
+//                                        }
+//
+//                                    }
+//                                });
+//
+//                            }
+//                        }
+//                    });
+//                }
+//            });
 
             editProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -305,77 +305,77 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            surfaceView = (SurfaceView) findViewById(R.id.surface_view);
-            surfaceHolder = surfaceView.getHolder();
-            surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-                @Override
-                public void surfaceCreated(SurfaceHolder surfaceHolder) {
+//            surfaceView = (SurfaceView) findViewById(R.id.surface_view);
+//            surfaceHolder = surfaceView.getHolder();
+//            surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+//                @Override
+//                public void surfaceCreated(SurfaceHolder surfaceHolder) {
+//
+//                }
+//
+//                @Override
+//                public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+//
+//                }
+//
+//                @Override
+//                public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+//
+//                }
+//            });
 
-                }
-
-                @Override
-                public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
-                }
-            });
-
-            cameraContainer.setVisibility(View.GONE);
-
-            slideUpLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-                @Override
-                public void onPanelSlide(View view, float v) {
-                    cameraContainer.setVisibility(View.VISIBLE);
-                    cameraContainer.setAlpha(v);
-                    topView.setAlpha(1 - v);
-                }
-
-                @Override
-                public void onPanelCollapsed(View view) {
-                    topView.setVisibility(View.VISIBLE);
-                    //Stop the camera view here
-                    try {
-                        camera.stopPreview();
-                        camera.release();
-                        cameraShowing = false;
-                    } catch (Exception e) {
-                        Log.e(TAG, "onPanelCollapsed ", e);
-                    }
-                }
-
-                @Override
-                public void onPanelExpanded(View view) {
-                    //Initialise the camera view here
-                    topView.setVisibility(View.GONE);
-                    try {
-                        camera = Camera.open();
-                        Camera.Parameters params = camera.getParameters();
-                        camera.setDisplayOrientation(90);
-                        camera.setParameters(params);
-
-                        camera.setPreviewDisplay(surfaceHolder);
-                        cameraShowing = true;
-                    } catch (Exception e) {
-                        Log.e(TAG, "onPanelExpanded ", e);
-                    }
-                    camera.startPreview();
-
-                }
-
-                @Override
-                public void onPanelAnchored(View view) {
-
-                }
-
-                @Override
-                public void onPanelHidden(View view) {
-
-                }
-            });
+//            cameraContainer.setVisibility(View.GONE);
+//
+//            slideUpLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+//                @Override
+//                public void onPanelSlide(View view, float v) {
+//                    cameraContainer.setVisibility(View.VISIBLE);
+//                    cameraContainer.setAlpha(v);
+//                    topView.setAlpha(1 - v);
+//                }
+//
+//                @Override
+//                public void onPanelCollapsed(View view) {
+//                    topView.setVisibility(View.VISIBLE);
+//                    //Stop the camera view here
+//                    try {
+//                        camera.stopPreview();
+//                        camera.release();
+//                        cameraShowing = false;
+//                    } catch (Exception e) {
+//                        Log.e(TAG, "onPanelCollapsed ", e);
+//                    }
+//                }
+//
+//                @Override
+//                public void onPanelExpanded(View view) {
+//                    //Initialise the camera view here
+//                    topView.setVisibility(View.GONE);
+//                    try {
+//                        camera = Camera.open();
+//                        Camera.Parameters params = camera.getParameters();
+//                        camera.setDisplayOrientation(90);
+//                        camera.setParameters(params);
+//
+//                        camera.setPreviewDisplay(surfaceHolder);
+//                        cameraShowing = true;
+//                    } catch (Exception e) {
+//                        Log.e(TAG, "onPanelExpanded ", e);
+//                    }
+//                    camera.startPreview();
+//
+//                }
+//
+//                @Override
+//                public void onPanelAnchored(View view) {
+//
+//                }
+//
+//                @Override
+//                public void onPanelHidden(View view) {
+//
+//                }
+//            });
 
             //drawerLayout.setBackgroundResource(R.drawable.app_background_doodle);
 
@@ -384,7 +384,6 @@ public class MainActivity extends AppCompatActivity {
                 getWindow().setNavigationBarColor(getResources().getColor(R.color.dhodu_primary_dark));
             }
 
-            setUpAdapter();
             setCurrentLocation(this);
         }
 
@@ -568,30 +567,7 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
 
-    public void setUpAdapter() {
-        centerRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        fetchOrderHistory();
-    }
 
-
-    private void fetchOrderHistory() {
-        ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
-        query.whereEqualTo("customer", ParseUser.getCurrentUser());
-        query.whereEqualTo("status", 5);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if (e == null) {
-                    int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_card_order_history);
-                    centerRecyclerview.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-                    centerRecyclerview.setAdapter(new CenterAdapter(MainActivity.this, list));
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     public void setCurrentLocation(Context context) {
 
@@ -673,6 +649,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setStatusToHeader(String status, int imageId) {
+        statusView.setVisibility(View.VISIBLE);
         if (imageId != 0) {
             expandCreateOrder.setImageResource(imageId);
             expandCreateOrder.setOnClickListener(new View.OnClickListener() {
@@ -701,5 +678,40 @@ public class MainActivity extends AppCompatActivity {
         orderStatus.setText(status);
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new CurrentOrderFragment(),"Order");
+        adapter.addFragment(new OrderHistoryFragment(),"History");
+        viewPager.setAdapter(adapter);
+    }
+
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public Adapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
+    }
 
 }

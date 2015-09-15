@@ -2,4 +2,6 @@
 <resources>
     <color name="dhodu_primary_dark">#102b4b</color>
     <color name="dhodu_primary">#102b4b</color>
+
+    <color name="colorAccent">#ff4081</color>
 </resources>
