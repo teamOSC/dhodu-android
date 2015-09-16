@@ -306,6 +306,7 @@ public class CurrentOrderFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(),BillSummaryActivity.class);
+                    intent.putExtra("transaction_id",transaction.getObjectId());
                     startActivity(intent);
                 }
             });
