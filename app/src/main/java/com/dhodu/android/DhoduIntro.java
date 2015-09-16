@@ -24,10 +24,12 @@ public class DhoduIntro extends AppIntro {
     @Override
     public void onSkipPressed() {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override
     public void onDonePressed() {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }

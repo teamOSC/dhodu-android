@@ -123,6 +123,7 @@ public class CurrentOrderFragment extends Fragment {
         TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
         WashingMachineView washingMachineView = (WashingMachineView) cardView.findViewById(R.id.wave_view);
         Button scheduleBooking =(Button) cardView.findViewById(R.id.schedule_booking);
+        Button viewBill = (Button) cardView.findViewById(R.id.view_bill);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 
@@ -297,6 +298,16 @@ public class CurrentOrderFragment extends Fragment {
         if (transactiondate != null) {
             transactiondate.setText(transaction.getCreatedAt().toString());
 
+        }
+
+        if (viewBill != null) {
+            viewBill.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(),BillSummaryActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
         if (feedback != null) {
