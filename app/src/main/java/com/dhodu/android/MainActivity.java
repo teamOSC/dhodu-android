@@ -124,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_call:
                                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "7827121121")));
                                 break;
+                            case R.id.nav_rate:
+                                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("market://details?id=com.dhodu.android")));
+                                break;
                             case R.id.nav_logout:
                                 final ProgressDialog pDialog = new ProgressDialog(MainActivity.this);
                                 pDialog.setMessage("Logging out...");
