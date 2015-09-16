@@ -326,6 +326,7 @@ public class CurrentOrderFragment extends Fragment {
                 public void onClick(View view) {
                     transaction.put("rating", ratingBar.getNumStars());
                     transaction.put("feedback", feedback.getText().toString());
+                    transaction.put("status", 6);
                     transaction.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {

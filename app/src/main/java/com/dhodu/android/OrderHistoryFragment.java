@@ -49,7 +49,7 @@ public class OrderHistoryFragment extends Fragment {
     private void fetchOrderHistory() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
         query.whereEqualTo("customer", ParseUser.getCurrentUser());
-        query.whereEqualTo("status", 5);
+        query.whereEqualTo("status", 6);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
