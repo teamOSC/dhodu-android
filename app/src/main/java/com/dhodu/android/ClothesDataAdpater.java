@@ -33,6 +33,7 @@ public class ClothesDataAdpater extends RecyclerView.Adapter<ClothesDataAdpater.
             JSONObject jsonObject = arrayList.getJSONObject(position);
             holder.clothName.setText(jsonObject.getString("cloth_name"));
             holder.clothQuantity.setText(jsonObject.getString("cloth_qty"));
+            holder.serviceType.setText(getServiceTypeForCode(jsonObject.getInt("service_type")));
         } catch (JSONException e){
             e.printStackTrace();
         }
@@ -45,13 +46,26 @@ public class ClothesDataAdpater extends RecyclerView.Adapter<ClothesDataAdpater.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView clothName, clothRate, clothQuantity;
+        private TextView clothName, clothRate, clothQuantity, serviceType;
 
         public ViewHolder(View itemView) {
             super(itemView);
             clothName = (TextView) itemView.findViewById(R.id.cloth_name);
             clothRate = (TextView) itemView.findViewById(R.id.rate);
             clothQuantity = (TextView) itemView.findViewById(R.id.cloth_quantity);
+            serviceType = (TextView) itemView.findViewById(R.id.service);
         }
+    }
+
+    private String getServiceTypeForCode(int code) {
+        switch (code) {
+            case 0:
+                return "Press";
+            case 1:
+                return "Wash and Press";
+            case 2:
+                return "Dry Cleaning";
+        }
+        return "";
     }
 }
