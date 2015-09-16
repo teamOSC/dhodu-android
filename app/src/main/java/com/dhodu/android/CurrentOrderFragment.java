@@ -124,6 +124,7 @@ public class CurrentOrderFragment extends Fragment {
         WashingMachineView washingMachineView = (WashingMachineView) cardView.findViewById(R.id.wave_view);
         Button scheduleBooking =(Button) cardView.findViewById(R.id.schedule_booking);
         Button viewBill = (Button) cardView.findViewById(R.id.view_bill);
+        Button payNow = (Button) cardView.findViewById(R.id.pay_now);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 
@@ -137,7 +138,7 @@ public class CurrentOrderFragment extends Fragment {
 
         switch (statusCode) {
             case 0:
-                setStatusToHeader("Order placed. Confirmation awaited.", R.drawable.ic_cancel_white_48dp);
+                setStatusToHeader(transaction, "Order placed. Confirmation awaited.", R.drawable.ic_cancel_white_48dp);
                 GoogleMapOptions options = new GoogleMapOptions();
 
                 SupportMapFragment mapFragment = SupportMapFragment.newInstance(options);
@@ -154,19 +155,19 @@ public class CurrentOrderFragment extends Fragment {
 
                 break;
             case 1:
-                setStatusToHeader("Booking confirmed.", R.drawable.ic_cancel_white_48dp);
+                setStatusToHeader(transaction, "Booking confirmed.", R.drawable.ic_cancel_white_48dp);
                 break;
             case 2:
-                setStatusToHeader("Laundry picked. Being washed", R.drawable.ic_cancel_white_48dp);
+                setStatusToHeader(transaction, "Laundry picked. Being washed", R.drawable.ic_cancel_white_48dp);
                 break;
             case 3:
-                setStatusToHeader("Laundry ready. Ready to be delivered", 0);
+                setStatusToHeader(transaction, "Laundry ready. Ready to be delivered", 0);
                 break;
             case 4:
-                setStatusToHeader("Laundry out for delivery.", 0);
+                setStatusToHeader(transaction, "Laundry out for delivery.", 0);
                 break;
             case 5:
-                setStatusToHeader("Laundry delivered", 0);
+                setStatusToHeader(transaction, "Laundry delivered", 0);
                 break;
             default:
                 scheduleBooking.setOnClickListener(new View.OnClickListener() {
@@ -310,6 +311,15 @@ public class CurrentOrderFragment extends Fragment {
             });
         }
 
+        if(payNow != null){
+            payNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "Online payment coming soon", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
         if (feedback != null) {
             feedbackSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -372,8 +382,8 @@ public class CurrentOrderFragment extends Fragment {
         }
     }
 
-    private void setStatusToHeader(String status, int imageResId) {
-        ((MainActivity) getActivity()).setStatusToHeader(status, imageResId);
+    private void setStatusToHeader(ParseObject transaction, String status, int imageResId) {
+        ((MainActivity) getActivity()).setStatusToHeader(transaction, status, imageResId);
     }
 
     private void addToMap(LatLng latLng, GoogleMap mMap) {

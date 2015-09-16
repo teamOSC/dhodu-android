@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
 import com.dhodu.android.login.LoginActivity;
@@ -36,6 +37,7 @@ import com.dhodu.android.ui.CircleImageView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
@@ -363,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void setStatusToHeader(String status, int imageId) {
+    public void setStatusToHeader(final ParseObject transaction, String status, int imageId) {
         statusView.setVisibility(View.VISIBLE);
         if (imageId != 0) {
             expandCreateOrder.setImageResource(imageId);
@@ -376,7 +378,17 @@ public class MainActivity extends AppCompatActivity {
                     cancelDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //TODO:
+                            transaction.put("status", 13);
+                            transaction.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Toast.makeText(MainActivity.this, "Order canceled", Toast.LENGTH_SHORT).show();
+                                    } else{
+                                        Toast.makeText(MainActivity.this, "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
                     });
                     cancelDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
