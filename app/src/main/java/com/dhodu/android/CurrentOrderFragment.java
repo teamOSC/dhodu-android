@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -399,4 +401,30 @@ public class CurrentOrderFragment extends Fragment {
         mMap.animateCamera(cameraPosition);
 
     }
+
+    public void updateStatusCard() {
+        Animation slidedown    = AnimationUtils.loadAnimation(getActivity(),
+                R.anim.slide_down);
+        final View view = rootContainer.getChildAt(1);
+        slidedown.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                rootContainer.removeView(view);
+                loadingView.setVisibility(View.VISIBLE);
+                fetchCurrentOrders();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        view.startAnimation(slidedown);
+    }
+
 }
