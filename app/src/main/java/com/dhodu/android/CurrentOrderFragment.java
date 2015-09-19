@@ -271,16 +271,16 @@ public class CurrentOrderFragment extends Fragment {
             totalItems.setText(transaction.getJSONArray("clothes_data").length() + "");
         }
 
-        if (pickaddress != null) {
-            ParseUser currentuser = ParseUser.getCurrentUser();
-            JSONArray addresses = currentuser.getJSONArray("address");
-            try {
-                JSONObject address = addresses.getJSONObject(transaction.getInt("address_index"));
-                pickaddress.setText(address.getString("house") + ", " + address.getString("street"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (pickaddress != null) {
+//            ParseUser currentuser = ParseUser.getCurrentUser();
+//            JSONArray addresses = currentuser.getJSONArray("address");
+//            try {
+//                JSONObject address = addresses.getJSONObject(transaction.getInt("address_index"));
+//                pickaddress.setText(address.getString("house") + ", " + address.getString("street"));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         if (pickupTime != null) {
             pickupTime.setText(transaction.getString("time_pick") + ", " + transaction.getString("pick_date"));

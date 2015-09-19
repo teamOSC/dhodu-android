@@ -44,7 +44,7 @@ public class RateCardAdapter extends RecyclerView.Adapter<RateCardAdapter.ViewHo
                 rate = arrayList.get(position).getNumber("dry_clean_sp");
                 break;
         }
-        holder.clothRate.setText(rate == 0 ? "-" : "₹ " + rate.toString());
+        holder.clothRate.setText(rate.intValue() == 0 ? "-" : "₹ " + rate.toString());
     }
 
     @Override
