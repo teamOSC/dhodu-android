@@ -38,7 +38,7 @@
                 android:fontFamily="sans-serif-small"
                 android:hint="Name"
                 android:imeOptions="actionNext"
-                android:inputType="textPersonName"
+                android:inputType="textCapWords"
                 android:theme="@style/EditTextLightBackground" />
 
         </android.support.design.widget.TextInputLayout>
