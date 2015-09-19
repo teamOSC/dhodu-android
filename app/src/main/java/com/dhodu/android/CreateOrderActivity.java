@@ -136,6 +136,7 @@ public class CreateOrderActivity extends AppCompatActivity {
                                                 if (e == null) {
                                                     pDialog.dismiss();
                                                     Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(CreateOrderActivity.this, MainActivity.class));
                                                 } else {
                                                     pDialog.dismiss();
                                                     Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();

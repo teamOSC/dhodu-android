@@ -384,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void done(ParseException e) {
                                     if (e == null) {
                                         Toast.makeText(MainActivity.this, "Order canceled", Toast.LENGTH_SHORT).show();
+                                        MainActivity.this.recreate();
                                     } else{
                                         Toast.makeText(MainActivity.this, "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
                                     }
