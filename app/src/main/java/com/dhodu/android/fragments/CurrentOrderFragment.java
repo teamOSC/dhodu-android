@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import com.dhodu.android.BillSummaryActivity;
 import com.dhodu.android.CreateOrderActivity;
 import com.dhodu.android.MainActivity;
 import com.dhodu.android.R;
+import com.dhodu.android.RateCardActivity;
 import com.dhodu.android.ui.StepsView;
 import com.dhodu.android.ui.WashingMachineView;
 import com.google.android.gms.maps.CameraUpdate;
@@ -129,8 +131,11 @@ public class CurrentOrderFragment extends Fragment {
         TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
         WashingMachineView washingMachineView = (WashingMachineView) cardView.findViewById(R.id.wave_view);
         Button scheduleBooking =(Button) cardView.findViewById(R.id.schedule_booking);
+        Button rateCardButton = (Button) cardView.findViewById(R.id.rate_card);
         Button viewBill = (Button) cardView.findViewById(R.id.view_bill);
         Button payNow = (Button) cardView.findViewById(R.id.pay_now);
+        final CheckBox drycleanChkbox = (CheckBox) cardView.findViewById(R.id.checkbox_dry_clean);
+        final CheckBox washpressChkBox = (CheckBox) cardView.findViewById(R.id.checkbox_wash_press);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 
@@ -179,7 +184,22 @@ public class CurrentOrderFragment extends Fragment {
                 scheduleBooking.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getActivity(),CreateOrderActivity.class));
+                        String serviceType = "";
+                        if (drycleanChkbox.isChecked()) serviceType += 2;
+                        if (washpressChkBox.isChecked()) serviceType += 1;
+                        if (serviceType.length() < 1) {
+                            Toast.makeText(getActivity(), "Please select the type of service", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent i = new Intent(getActivity(),CreateOrderActivity.class);
+                            i.putExtra("servicetype", serviceType);
+                            startActivity(i);
+                        }
+                    }
+                });
+                rateCardButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getActivity(),RateCardActivity.class));
                     }
                 });
                 break;

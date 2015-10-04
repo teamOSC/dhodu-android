@@ -27,150 +27,79 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="15dp"
-                    android:src="@drawable/servicetype" />
+                <!--<ImageView-->
+                    <!--android:layout_width="25dp"-->
+                    <!--android:layout_height="25dp"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:src="@drawable/servicetype" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Select service type"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:fontFamily="sans-serif-light"-->
+                    <!--android:text="Select service type"-->
+                    <!--android:textColor="@android:color/black"-->
+                    <!--android:textSize="20sp" />-->
 
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:background="#22000000" />
-
-            <LinearLayout
-                android:id="@+id/service_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/cb_press"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorAccent"
-                    android:text="Press"
-                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                    android:textColor="@android:color/black" />
-
-                <CheckBox
-                    android:id="@+id/cb_wash_press"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:buttonTint="@color/colorAccent"
-                    android:text="Wash &amp; Press"
-                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                    android:textColor="@android:color/black" />
-
-                <CheckBox
-                    android:id="@+id/cb_dryclean"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:buttonTint="@color/colorAccent"
-                    android:text="Dryclean"
-                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                    android:textColor="@android:color/black" />
-
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="#22000000" />-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="25dp"
-                    android:src="@drawable/timetable"
-                    android:backgroundTint="#66000000"/>
+            <!--<LinearLayout-->
+                <!--android:id="@+id/service_container"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:orientation="horizontal">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="25dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Select pickup time"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                <!--<CheckBox-->
+                    <!--android:id="@+id/cb_press"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:buttonTint="@color/colorAccent"-->
+                    <!--android:text="Press"-->
+                    <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
+                    <!--android:textColor="@android:color/black" />-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:background="#22000000" />
+                <!--<CheckBox-->
+                    <!--android:id="@+id/cb_wash_press"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:buttonTint="@color/colorAccent"-->
+                    <!--android:text="Wash &amp; Press"-->
+                    <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
+                    <!--android:textColor="@android:color/black" />-->
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                <!--<CheckBox-->
+                    <!--android:id="@+id/cb_dryclean"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:buttonTint="@color/colorAccent"-->
+                    <!--android:text="Dryclean"-->
+                    <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
+                    <!--android:textColor="@android:color/black" />-->
 
-                <RadioButton
-                    android:id="@+id/radio_today"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                    android:textColor="@android:color/black" />
-
-                <RadioButton
-                    android:id="@+id/radio_tomorrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tomorrow"
-                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                    android:textColor="@android:color/black" />
-
-                <RadioButton
-                    android:id="@+id/radio_datomorrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Day after tomorrow"
-                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                    android:textColor="@android:color/black" />
-            </RadioGroup>
-
-            <TimePicker
-                android:id="@+id/timePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:timePickerMode="spinner" />
+            <!--</LinearLayout>-->
 
             <LinearLayout
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -250,6 +179,80 @@
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/black" />
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/timetable"
+                    android:backgroundTint="#66000000"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Select pickup day &amp; time"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:background="#22000000" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_today"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                    android:textColor="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/radio_tomorrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tomorrow"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                    android:textColor="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/radio_datomorrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Day after tomorrow"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                    android:textColor="@android:color/black" />
+            </RadioGroup>
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:timePickerMode="spinner" />
+
+
 
         </LinearLayout>
 

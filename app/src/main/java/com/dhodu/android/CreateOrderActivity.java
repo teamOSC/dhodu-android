@@ -41,6 +41,7 @@ public class CreateOrderActivity extends AppCompatActivity {
     CheckBox washPress;
     CheckBox dryclean;
     Switch expressSwitch;
+    String serviceType;
 
     LatLng latLng;
     int locationShifted = 0;
@@ -51,6 +52,8 @@ public class CreateOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_order);
+
+        serviceType = getIntent().getStringExtra("servicetype");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         submitOrder = findViewById(R.id.submit_order);
@@ -104,13 +107,13 @@ public class CreateOrderActivity extends AppCompatActivity {
                             pDialog.dismiss();
                             Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                         } else {
-                            String serviceTypes = "";
-                            if (press.isChecked())
-                                serviceTypes = serviceTypes + 0;
-                            if (washPress.isChecked())
-                                serviceTypes = serviceTypes + 1;
-                            if (dryclean.isChecked())
-                                serviceTypes = serviceTypes + 2;
+//                            String serviceTypes = "";
+//                            if (press.isChecked())
+//                                serviceTypes = serviceTypes + 0;
+//                            if (washPress.isChecked())
+//                                serviceTypes = serviceTypes + 1;
+//                            if (dryclean.isChecked())
+//                                serviceTypes = serviceTypes + 2;
                             final ParseObject transaction = new ParseObject("Transaction");
                             transaction.put("status", 0);
                             transaction.put("transaction_id", count + 1);
@@ -122,7 +125,7 @@ public class CreateOrderActivity extends AppCompatActivity {
                             transaction.put("comments", "");
                             ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
                             transaction.put("location", geoPoint);
-                            transaction.put("service_type", serviceTypes);
+                            transaction.put("service_type", serviceType);
                             ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
                             query.whereNear("location", geoPoint);
                             query.getFirstInBackground(new GetCallback<ParseObject>() {
