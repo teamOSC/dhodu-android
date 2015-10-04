@@ -1,4 +1,4 @@
-package com.dhodu.android;
+package com.dhodu.android.fragments;
 
 
 import android.app.Fragment;

@@ -32,6 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
+import com.dhodu.android.fragments.CurrentOrderFragment;
+import com.dhodu.android.fragments.OrderHistoryFragment;
 import com.dhodu.android.login.LoginActivity;
 import com.dhodu.android.ui.CircleImageView;
 import com.parse.LogOutCallback;

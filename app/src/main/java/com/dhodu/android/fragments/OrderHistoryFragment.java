@@ -1,4 +1,4 @@
-package com.dhodu.android;
+package com.dhodu.android.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.dhodu.android.CenterAdapter;
+import com.dhodu.android.R;
 import com.dhodu.android.ui.SpacesItemDecoration;
 import com.parse.FindCallback;
 import com.parse.ParseException;

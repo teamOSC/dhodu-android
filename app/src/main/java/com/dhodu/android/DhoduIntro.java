@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.dhodu.android.fragments.IntroFragment;
 import com.github.paolorotolo.appintro.AppIntro;
 
 /**

@@ -1,4 +1,4 @@
-package com.dhodu.android;
+package com.dhodu.android.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dhodu.android.BillSummaryActivity;
+import com.dhodu.android.CreateOrderActivity;
+import com.dhodu.android.MainActivity;
+import com.dhodu.android.R;
 import com.dhodu.android.ui.StepsView;
 import com.dhodu.android.ui.WashingMachineView;
 import com.google.android.gms.maps.CameraUpdate;
