@@ -15,10 +15,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -130,8 +130,8 @@ public class CurrentOrderFragment extends Fragment {
         Button rateCardButton = (Button) cardView.findViewById(R.id.rate_card);
         Button viewBill = (Button) cardView.findViewById(R.id.view_bill);
         Button payNow = (Button) cardView.findViewById(R.id.pay_now);
-        final CheckBox drycleanChkbox = (CheckBox) cardView.findViewById(R.id.checkbox_dry_clean);
-        final CheckBox washpressChkBox = (CheckBox) cardView.findViewById(R.id.checkbox_wash_press);
+        final LinearLayout slotWashPress = (LinearLayout) cardView.findViewById(R.id.slot1);
+        final LinearLayout slotDryClean= (LinearLayout) cardView.findViewById(R.id.slot2);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 
@@ -177,12 +177,28 @@ public class CurrentOrderFragment extends Fragment {
                 setStatusToHeader(transaction, "Laundry delivered", 0);
                 break;
             default:
+                slotWashPress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (slotWashPress.isSelected())
+                        slotWashPress.setSelected(false);
+                        else slotWashPress.setSelected(true);
+                    }
+                });
+                slotDryClean.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (slotDryClean.isSelected())
+                            slotDryClean.setSelected(false);
+                        else slotDryClean.setSelected(true);
+                    }
+                });
                 scheduleBooking.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String serviceType = "";
-                        if (drycleanChkbox.isChecked()) serviceType += 2;
-                        if (washpressChkBox.isChecked()) serviceType += 1;
+                        if (slotDryClean.isSelected()) serviceType += 2;
+                        if (slotWashPress.isSelected()) serviceType += 1;
                         if (serviceType.length() < 1) {
                             Toast.makeText(getActivity(), "Please select the type of service", Toast.LENGTH_SHORT).show();
                         } else {

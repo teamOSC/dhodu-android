@@ -27,7 +27,7 @@ public class Utils {
             protected Void doInBackground(String... strings) {
                 URL obj = null;
                 try {
-                    obj = new URL("http://128.199.128.227:9865/api/v1/otp?username=" + strings[0]);
+                    obj = new URL("http://159.203.77.189:6969/api/v1/otp?username=" + strings[0]);
                     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
                     con.setRequestMethod("GET");
                     int responseCode = con.getResponseCode();
