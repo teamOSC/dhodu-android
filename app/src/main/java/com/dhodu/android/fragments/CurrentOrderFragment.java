@@ -132,6 +132,7 @@ public class CurrentOrderFragment extends Fragment {
         Button payNow = (Button) cardView.findViewById(R.id.pay_now);
         final LinearLayout slotWashPress = (LinearLayout) cardView.findViewById(R.id.slot1);
         final LinearLayout slotDryClean= (LinearLayout) cardView.findViewById(R.id.slot2);
+        final ImageView noOrderImage = (ImageView) cardView.findViewById(R.id.imageView);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
 
@@ -212,6 +213,17 @@ public class CurrentOrderFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         startActivity(new Intent(getActivity(),RateCardActivity.class));
+                    }
+                });
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("App");
+                query.getFirstInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null && getActivity()!=null && noOrderImage != null) {
+                            String url = object.getString("image_url");
+                            if (!url.equals(""))
+                            Picasso.with(getActivity()).load(url).into(noOrderImage);
+                        }
                     }
                 });
                 break;

@@ -27,7 +27,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/no_order_text"
         android:layout_gravity="center_vertical"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         android:src="@drawable/no_laundry" />
 
 
@@ -52,7 +53,8 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:paddingRight="20.0dip"
-            android:paddingTop="5.0dip">
+            android:paddingTop="5.0dip"
+            android:layout_marginRight="2dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,7 +77,8 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:paddingRight="20.0dip"
-            android:paddingTop="5.0dip">
+            android:paddingTop="5.0dip"
+            android:layout_marginLeft="2dp">
 
             <TextView
                 android:layout_width="wrap_content"
