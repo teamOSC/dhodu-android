@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "com.dhodu.android"
+        applicationId "dhodu.android"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1

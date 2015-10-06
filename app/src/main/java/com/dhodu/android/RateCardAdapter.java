@@ -35,12 +35,9 @@ public class RateCardAdapter extends RecyclerView.Adapter<RateCardAdapter.ViewHo
         Number rate = 0;
         switch (serviceType) {
             case 0:
-                rate = arrayList.get(position).getNumber("press_sp");
-                break;
-            case 1:
                 rate = arrayList.get(position).getNumber("wash_press_sp");
                 break;
-            case 2:
+            case 1:
                 rate = arrayList.get(position).getNumber("dry_clean_sp");
                 break;
         }

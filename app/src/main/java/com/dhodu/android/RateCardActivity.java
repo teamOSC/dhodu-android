@@ -45,7 +45,7 @@ public class RateCardActivity extends AppCompatActivity {
         final Spinner category = (Spinner) findViewById(R.id.category);
 
         final String[] categories = new String[]{"MEN'S WEAR", "WOMEN WEAR", "KIDS WEAR", "HOUSEHOLD", "OTHERS"};
-        final String[] serviceTypes = new String[]{"Press", "Wash & Press", "Drycleaning"};
+        final String[] serviceTypes = new String[]{"Wash & Press", "Drycleaning"};
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Arrays.asList(categories));
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
