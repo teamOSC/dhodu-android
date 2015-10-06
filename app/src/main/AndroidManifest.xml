@@ -92,6 +92,7 @@
         </activity>
         <activity
             android:name=".CreateOrderActivity"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

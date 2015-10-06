@@ -13,10 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
@@ -36,7 +36,6 @@ public class CreateOrderActivity extends AppCompatActivity {
 
     View submitOrder;
     TextView locationAddress;
-    TimePicker timePicker;
     RadioButton today, tomorrow, datomorrow;
     CheckBox press;
     CheckBox washPress;
@@ -45,6 +44,8 @@ public class CreateOrderActivity extends AppCompatActivity {
     String serviceType;
 
     TextView terms;
+    LinearLayout slot1, slot2, slot3, slot4, slot5, slot6;
+    int selectedTimeSlot;
 
     LatLng latLng;
     int locationShifted = 0;
@@ -61,7 +62,6 @@ public class CreateOrderActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         submitOrder = findViewById(R.id.submit_order);
         locationAddress = (TextView) findViewById(R.id.location_address);
-        timePicker = (TimePicker) findViewById(R.id.timePicker);
         today = (RadioButton) findViewById(R.id.radio_today);
         tomorrow = (RadioButton) findViewById(R.id.radio_tomorrow);
         datomorrow = (RadioButton) findViewById(R.id.radio_datomorrow);
@@ -123,7 +123,7 @@ public class CreateOrderActivity extends AppCompatActivity {
                             transaction.put("transaction_id", count + 1);
                             transaction.put("customer", ParseUser.getCurrentUser());
                             //TODO pick time_pick from TimePicker
-                            transaction.put("time_pick", "");
+                            transaction.put("time_pick", getTimeslotForNumber(selectedTimeSlot));
                             transaction.put("pick_date", "12-09-2015");
                             transaction.put("address_index", addressindex);
                             transaction.put("comments", "");
@@ -173,6 +173,8 @@ public class CreateOrderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        setTimeslotOnClickListener();
 
     }
 
@@ -269,5 +271,91 @@ public class CreateOrderActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    private void setTimeslotOnClickListener() {
+
+        slot1 = (LinearLayout) findViewById(R.id.slot1);
+        slot2 = (LinearLayout) findViewById(R.id.slot2);
+        slot3 = (LinearLayout) findViewById(R.id.slot3);
+        slot4 = (LinearLayout) findViewById(R.id.slot4);
+        slot5 = (LinearLayout) findViewById(R.id.slot5);
+        slot6 = (LinearLayout) findViewById(R.id.slot6);
+        slot1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableAllTimeSlots();
+                slot1.setSelected(true);
+                selectedTimeSlot = 0;
+            }
+        });
+        slot2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableAllTimeSlots();
+                slot2.setSelected(true);
+                selectedTimeSlot = 1;
+            }
+        });
+        slot3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableAllTimeSlots();
+                slot3.setSelected(true);
+                selectedTimeSlot = 2;
+            }
+        });
+        slot4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableAllTimeSlots();
+                slot4.setSelected(true);
+                selectedTimeSlot = 3;
+            }
+        });
+        slot5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableAllTimeSlots();
+                slot5.setSelected(true);
+                selectedTimeSlot = 4;
+            }
+        });
+        slot6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableAllTimeSlots();
+                slot6.setSelected(true);
+                selectedTimeSlot = 5;
+            }
+        });
+    }
+
+    private void disableAllTimeSlots() {
+        slot1.setSelected(false);
+        slot2.setSelected(false);
+        slot3.setSelected(false);
+        slot4.setSelected(false);
+        slot5.setSelected(false);
+        slot6.setSelected(false);
+    }
+
+    private String getTimeslotForNumber(int number) {
+        switch (number) {
+            case 0:
+                return "8-10";
+            case 1:
+                return "10-12";
+            case 2:
+                return "12-2";
+            case 3:
+                return "2-4";
+            case 4:
+                return "4-6";
+            case 5:
+                return "6-8";
+            default:
+                return "8-8";
+        }
     }
 }
