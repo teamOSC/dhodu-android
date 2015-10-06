@@ -46,10 +46,6 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Date;
 
 /**
@@ -57,7 +53,7 @@ import java.util.Date;
  */
 public class CurrentOrderFragment extends Fragment {
 
-    private final String[] statuses = {"", "", "", "", "", ""};
+    private final String[] statuses = {"", "", "", ""};
     FrameLayout rootContainer;
     StepsView stepsView;
     View loadingView;
@@ -210,7 +206,7 @@ public class CurrentOrderFragment extends Fragment {
                     .setBarColorIndicator(getContext().getResources().getColor(R.color.material_blue_grey_800))
                     .setProgressColorIndicator(Color.parseColor("#FF9800"))
                     .setLabelColorIndicator(getContext().getResources().getColor(R.color.dhodu_primary_dark))
-                    .setCompletedPosition(statusCode)
+                    .setCompletedPosition(statusCode-1)
                     .drawView();
         }
 

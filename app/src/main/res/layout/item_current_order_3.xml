@@ -24,7 +24,7 @@
             android:id="@+id/stepsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:numOfSteps="5" />
+            app:numOfSteps="4" />
 
         <TextView
             android:id="@+id/order_count"
