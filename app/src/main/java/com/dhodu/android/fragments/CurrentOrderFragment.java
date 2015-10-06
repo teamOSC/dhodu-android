@@ -53,7 +53,7 @@ import java.util.Date;
  */
 public class CurrentOrderFragment extends Fragment {
 
-    private final String[] statuses = {"", "", "", ""};
+    private final String[] statuses = {"", "", "", "", ""};
     FrameLayout rootContainer;
     StepsView stepsView;
     View loadingView;

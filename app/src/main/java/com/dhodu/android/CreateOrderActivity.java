@@ -343,19 +343,19 @@ public class CreateOrderActivity extends AppCompatActivity {
     private String getTimeslotForNumber(int number) {
         switch (number) {
             case 0:
-                return "8-10";
+                return "8-10 AM";
             case 1:
-                return "10-12";
+                return "10-12 AM";
             case 2:
-                return "12-2";
+                return "12-2 PM";
             case 3:
-                return "2-4";
+                return "2-4 PM";
             case 4:
-                return "4-6";
+                return "4-6 PM";
             case 5:
-                return "6-8";
+                return "6-8 PM";
             default:
-                return "8-8";
+                return "8-8 PM";
         }
     }
 }
