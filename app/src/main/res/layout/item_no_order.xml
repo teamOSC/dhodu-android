@@ -25,11 +25,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_below="@id/no_order_text"
         android:layout_gravity="center_vertical"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
-        android:src="@drawable/no_laundry" />
+        android:src="@drawable/dhodu_icon_splash" />
 
 
     <LinearLayout
