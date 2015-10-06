@@ -55,12 +55,13 @@ public class OrderHistoryFragment extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                if (e == null) {
+                if (e == null && getActivity() != null) {
                     int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_card_order_history);
                     centerRecyclerview.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-                    centerRecyclerview.setAdapter(new CenterAdapter((AppCompatActivity)getActivity(), list));
+                    centerRecyclerview.setAdapter(new CenterAdapter((AppCompatActivity)getActivity(), list, getActivity()));
                     progressBar.setVisibility(View.GONE);
                 } else {
+                    progressBar.setVisibility(View.GONE);
                     e.printStackTrace();
                 }
             }
