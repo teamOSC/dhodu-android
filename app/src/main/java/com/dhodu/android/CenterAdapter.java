@@ -57,7 +57,7 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
             }
         }  else {
             final ParseObject object = arraylist.get(position-1);
-            holder.transactionId.setText("Order Id : "+object.getNumber("transaction_id").toString());
+            holder.transactionId.setText("Order Id : "+object.getObjectId());
 
                 String transaction_type = object.getString("service_type");
                 String serviceString = null;

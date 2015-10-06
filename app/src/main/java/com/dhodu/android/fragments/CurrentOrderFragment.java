@@ -312,7 +312,7 @@ public class CurrentOrderFragment extends Fragment {
 
 
         if (transactionId != null)
-            transactionId.setText(String.valueOf(transaction.getInt("transaction_id")));
+            transactionId.setText(transaction.getObjectId().toUpperCase());
 
         if (totalAmount != null && totalItems != null) {
             totalAmount.setText("₹ " + transaction.getNumber("amount").toString());

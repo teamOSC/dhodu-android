@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
 import com.google.android.gms.maps.model.LatLng;
-import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -109,62 +108,41 @@ public class CreateOrderActivity extends AppCompatActivity {
                 pDialog.setMessage("Placing order...");
                 pDialog.setCancelable(false);
                 pDialog.show();
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Transaction");
-                query.countInBackground(new CountCallback() {
+                final ParseObject transaction = new ParseObject("Transaction");
+                transaction.put("status", 0);
+                transaction.put("customer", ParseUser.getCurrentUser());
+                //TODO pick time_pick from TimePicker
+                transaction.put("time_pick", getTimeslotForNumber(selectedTimeSlot));
+                transaction.put("pick_date", getDate());
+                transaction.put("address_index", addressindex);
+                transaction.put("comments", "");
+                ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+                transaction.put("location", geoPoint);
+                transaction.put("service_type", serviceType);
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
+                query.whereNear("location", geoPoint);
+                query.getFirstInBackground(new GetCallback<ParseObject>() {
                     @Override
-                    public void done(int count, com.parse.ParseException e) {
-                        if (e != null) {
-                            pDialog.dismiss();
-                            Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                        } else {
-//                            String serviceTypes = "";
-//                            if (press.isChecked())
-//                                serviceTypes = serviceTypes + 0;
-//                            if (washPress.isChecked())
-//                                serviceTypes = serviceTypes + 1;
-//                            if (dryclean.isChecked())
-//                                serviceTypes = serviceTypes + 2;
-                            final ParseObject transaction = new ParseObject("Transaction");
-                            transaction.put("status", 0);
-                            transaction.put("transaction_id", count + 1);
-                            transaction.put("customer", ParseUser.getCurrentUser());
-                            //TODO pick time_pick from TimePicker
-                            transaction.put("time_pick", getTimeslotForNumber(selectedTimeSlot));
-                            transaction.put("pick_date", getDate());
-                            transaction.put("address_index", addressindex);
-                            transaction.put("comments", "");
-                            ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
-                            transaction.put("location", geoPoint);
-                            transaction.put("service_type", serviceType);
-                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
-                            query.whereNear("location", geoPoint);
-                            query.getFirstInBackground(new GetCallback<ParseObject>() {
+                    public void done(ParseObject object, com.parse.ParseException e) {
+                        if (e == null) {
+                            transaction.put("assigned_manager", object);
+                            transaction.saveInBackground(new SaveCallback() {
                                 @Override
-                                public void done(ParseObject object, com.parse.ParseException e) {
+                                public void done(com.parse.ParseException e) {
                                     if (e == null) {
-                                        transaction.put("assigned_manager", object);
-                                        transaction.saveInBackground(new SaveCallback() {
-                                            @Override
-                                            public void done(com.parse.ParseException e) {
-                                                if (e == null) {
-                                                    pDialog.dismiss();
-                                                    Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(CreateOrderActivity.this, MainActivity.class));
-                                                } else {
-                                                    pDialog.dismiss();
-                                                    Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
+                                        pDialog.dismiss();
+                                        Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(CreateOrderActivity.this, MainActivity.class));
                                     } else {
                                         pDialog.dismiss();
-                                        e.printStackTrace();
+                                        Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-
+                        } else {
+                            pDialog.dismiss();
+                            e.printStackTrace();
                         }
-
                     }
                 });
 
@@ -175,7 +153,7 @@ public class CreateOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://dhodu.com"));
+                intent.setData(Uri.parse("http://dhodu.com/terms.html"));
                 startActivity(intent);
             }
         });

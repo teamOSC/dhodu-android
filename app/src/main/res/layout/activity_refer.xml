@@ -29,7 +29,7 @@
         android:layout_below="@+id/imageView3"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Invite Friends. Give a Free Laundry worth ₹100 and earn \n ₹50 on successful delivery of their first order." />
+        android:text="Invite Friends. Give a Free Laundry worth ₹60 and earn \n ₹30 on successful delivery of their first order." />
 
     <TextView
         android:id="@+id/referral_code"
@@ -38,7 +38,7 @@
         android:layout_below="@+id/no_order_text"
         android:layout_centerHorizontal="true"
         android:layout_margin="12dp"
-        android:text="AGC45EF98"
+        android:text="Coming soon!"
         android:textColor="@color/dhodu_primary_dark"
         android:textSize="32sp" />
 
