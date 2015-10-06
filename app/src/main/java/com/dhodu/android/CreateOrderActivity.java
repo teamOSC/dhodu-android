@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,8 @@ public class CreateOrderActivity extends AppCompatActivity {
     Switch expressSwitch;
     String serviceType;
 
+    TextView terms;
+
     LatLng latLng;
     int locationShifted = 0;
 
@@ -66,6 +69,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         washPress = (CheckBox) findViewById(R.id.cb_wash_press);
         dryclean = (CheckBox) findViewById(R.id.cb_dryclean);
         expressSwitch = (Switch) findViewById(R.id.express_switch);
+        terms = (TextView) findViewById(R.id.terms);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -158,6 +162,15 @@ public class CreateOrderActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("http://dhodu.com"));
+                startActivity(intent);
             }
         });
 
