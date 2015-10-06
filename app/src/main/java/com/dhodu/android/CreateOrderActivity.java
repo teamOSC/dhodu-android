@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by naman on 16/09/15.
  */
@@ -37,6 +41,7 @@ public class CreateOrderActivity extends AppCompatActivity {
     View submitOrder;
     TextView locationAddress;
     RadioButton today, tomorrow, datomorrow;
+    RadioGroup radioGroup;
     CheckBox press;
     CheckBox washPress;
     CheckBox dryclean;
@@ -70,6 +75,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         dryclean = (CheckBox) findViewById(R.id.cb_dryclean);
         expressSwitch = (Switch) findViewById(R.id.express_switch);
         terms = (TextView) findViewById(R.id.terms);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -124,7 +130,7 @@ public class CreateOrderActivity extends AppCompatActivity {
                             transaction.put("customer", ParseUser.getCurrentUser());
                             //TODO pick time_pick from TimePicker
                             transaction.put("time_pick", getTimeslotForNumber(selectedTimeSlot));
-                            transaction.put("pick_date", "12-09-2015");
+                            transaction.put("pick_date", getDate());
                             transaction.put("address_index", addressindex);
                             transaction.put("comments", "");
                             ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
@@ -178,6 +184,34 @@ public class CreateOrderActivity extends AppCompatActivity {
 
     }
 
+
+    private String getDate() {
+        int radioButtonID = radioGroup.getCheckedRadioButtonId();
+        View radioButton = radioGroup.findViewById(radioButtonID);
+        int idx = radioGroup.indexOfChild(radioButton);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate ="";
+
+        switch (idx) {
+            case 0:
+                formattedDate = df.format(c.getTime());
+                return formattedDate;
+            case 1:
+                c.add(Calendar.DAY_OF_YEAR, 1);
+                formattedDate = df.format(c.getTime());
+                return formattedDate;
+            case 2:
+                c.add(Calendar.DAY_OF_YEAR, 2);
+                formattedDate = df.format(c.getTime());
+                return formattedDate;
+            default:
+                return "";
+        }
+
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

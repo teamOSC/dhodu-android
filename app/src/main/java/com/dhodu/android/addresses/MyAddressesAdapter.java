@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,9 @@ import com.parse.SaveCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by naman on 05/09/15.
@@ -109,7 +113,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
                         if (isChooseAddress) {
                             Intent returnIntent = new Intent();
                             returnIntent.putExtra("address_index", getAdapterPosition() - 1);
-                            returnIntent.putExtra("address_name", flat.getText().toString());
+                            returnIntent.putExtra("address_name", name.getText().toString());
                             ((Activity) context).setResult(Activity.RESULT_OK, returnIntent);
                             ((Activity) context).finish();
                         }
@@ -158,7 +162,9 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
         pDialog.show();
         ParseUser user = ParseUser.getCurrentUser();
         final JSONArray array = user.getJSONArray("address");
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT)
         array.remove(index);
+        else remove(index,array);
         user.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -167,5 +173,29 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
                 notifyDataSetChanged();
             }
         });
+    }
+
+    public static JSONArray remove(final int idx, final JSONArray from) {
+        final List<JSONObject> objs = asList(from);
+        objs.remove(idx);
+
+        final JSONArray ja = new JSONArray();
+        for (final JSONObject obj : objs) {
+            ja.put(obj);
+        }
+
+        return ja;
+    }
+
+    public static List<JSONObject> asList(final JSONArray ja) {
+        final int len = ja.length();
+        final ArrayList<JSONObject> result = new ArrayList<JSONObject>(len);
+        for (int i = 0; i < len; i++) {
+            final JSONObject obj = ja.optJSONObject(i);
+            if (obj != null) {
+                result.add(obj);
+            }
+        }
+        return result;
     }
 }
