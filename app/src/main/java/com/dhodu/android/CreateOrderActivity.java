@@ -57,6 +57,7 @@ public class CreateOrderActivity extends AppCompatActivity {
     double longitude = 0 ;
     int locationShifted = 0;
     int addressindex = 0;
+    Calendar c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,12 @@ public class CreateOrderActivity extends AppCompatActivity {
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         promoCode = (EditText) findViewById(R.id.promo_code);
         applyPromo = (Button) findViewById(R.id.apply_promo);
+        slot1 = (LinearLayout) findViewById(R.id.slot1);
+        slot2 = (LinearLayout) findViewById(R.id.slot2);
+        slot3 = (LinearLayout) findViewById(R.id.slot3);
+        slot4 = (LinearLayout) findViewById(R.id.slot4);
+        slot5 = (LinearLayout) findViewById(R.id.slot5);
+        slot6 = (LinearLayout) findViewById(R.id.slot6);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,12 +116,12 @@ public class CreateOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(locationAddress.getText().equals("Choose address")){
+                if (locationAddress.getText().equals("Choose address")) {
                     Toast.makeText(view.getContext(), "Choose valid address", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(selectedTimeSlot == -1){
+                if (selectedTimeSlot == -1) {
                     Toast.makeText(view.getContext(), "Select time slot", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -173,6 +180,30 @@ public class CreateOrderActivity extends AppCompatActivity {
             }
         });
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int radioButtonID = radioGroup.getCheckedRadioButtonId();
+                View radioButton = radioGroup.findViewById(radioButtonID);
+                if(radioGroup.indexOfChild(radioButton) == 0){
+                    c = Calendar.getInstance();
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    if(hour >= 8)
+                        slot1.setEnabled(false);
+                    if(hour >= 10)
+                        slot2.setEnabled(false);
+                    if(hour >= 12)
+                        slot3.setEnabled(false);
+                    if(hour >= 14)
+                        slot4.setEnabled(false);
+                    if(hour >= 16)
+                        slot5.setEnabled(false);
+                    if(hour >= 18)
+                        slot6.setEnabled(false);
+                }
+            }
+        });
+
         setTimeslotOnClickListener();
 
         applyPromo.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +221,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         View radioButton = radioGroup.findViewById(radioButtonID);
         int idx = radioGroup.indexOfChild(radioButton);
 
-        Calendar c = Calendar.getInstance();
+        c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate ="";
 
@@ -310,12 +341,6 @@ public class CreateOrderActivity extends AppCompatActivity {
 
     private void setTimeslotOnClickListener() {
 
-        slot1 = (LinearLayout) findViewById(R.id.slot1);
-        slot2 = (LinearLayout) findViewById(R.id.slot2);
-        slot3 = (LinearLayout) findViewById(R.id.slot3);
-        slot4 = (LinearLayout) findViewById(R.id.slot4);
-        slot5 = (LinearLayout) findViewById(R.id.slot5);
-        slot6 = (LinearLayout) findViewById(R.id.slot6);
         slot1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
