@@ -21,7 +21,7 @@
             android:fontFamily="sans-serif-condensed"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="Order number   "
+            android:text="Order Id : "
             android:textAppearance="@android:style/TextAppearance.Large.Inverse"
             android:textColor="@android:color/white"
             android:textSize="16sp" />

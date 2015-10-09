@@ -23,6 +23,7 @@ public class BillSummaryActivity extends AppCompatActivity {
     View loadingView;
     RecyclerView clothesRecyclerview;
     ClothesDataAdpater adpater;
+    TextView transactionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class BillSummaryActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Bill Sumamry");
 
         amount = (TextView) findViewById(R.id.amount);
+        transactionId = (TextView) findViewById(R.id.transaction_id);
         loadingView = findViewById(R.id.loadingView);
         clothesRecyclerview =(RecyclerView) findViewById(R.id.recyclerview_bill);
         clothesRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
@@ -48,6 +50,7 @@ public class BillSummaryActivity extends AppCompatActivity {
             @Override
             public void done(ParseObject object, ParseException e) {
                 setBillSummary(object);
+                transactionId.setText("Order Id : "+object.getObjectId());
                 loadingView.setVisibility(View.GONE);
             }
         });
