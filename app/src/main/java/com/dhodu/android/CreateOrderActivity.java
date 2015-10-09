@@ -185,26 +185,18 @@ public class CreateOrderActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int radioButtonID = radioGroup.getCheckedRadioButtonId();
                 View radioButton = radioGroup.findViewById(radioButtonID);
+                selectedTimeSlot = -1;
+                deselectAllTimeSlots();
                 if(radioGroup.indexOfChild(radioButton) == 0){
-                    c = Calendar.getInstance();
-                    int hour = c.get(Calendar.HOUR_OF_DAY);
-                    if(hour >= 8)
-                        slot1.setEnabled(false);
-                    if(hour >= 10)
-                        slot2.setEnabled(false);
-                    if(hour >= 12)
-                        slot3.setEnabled(false);
-                    if(hour >= 14)
-                        slot4.setEnabled(false);
-                    if(hour >= 16)
-                        slot5.setEnabled(false);
-                    if(hour >= 18)
-                        slot6.setEnabled(false);
+                  setTimeSlotValidation();
+                } else {
+                    enableAllTimeSlots();
                 }
             }
         });
 
         setTimeslotOnClickListener();
+        setTimeSlotValidation();
 
         applyPromo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,12 +331,33 @@ public class CreateOrderActivity extends AppCompatActivity {
 
     }
 
+    private void setTimeSlotValidation() {
+        c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        if (hour>=20 && hour<=0) {
+           disableAllTimeSlots();
+        } else {
+            if (hour >= 8)
+                slot1.setEnabled(false);
+            if (hour >= 10)
+                slot2.setEnabled(false);
+            if (hour >= 12)
+                slot3.setEnabled(false);
+            if (hour >= 14)
+                slot4.setEnabled(false);
+            if (hour >= 16)
+                slot5.setEnabled(false);
+            if (hour >= 18)
+                slot6.setEnabled(false);
+        }
+    }
+
     private void setTimeslotOnClickListener() {
 
         slot1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableAllTimeSlots();
+                deselectAllTimeSlots();
                 slot1.setSelected(true);
                 selectedTimeSlot = 0;
             }
@@ -352,7 +365,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         slot2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableAllTimeSlots();
+                deselectAllTimeSlots();
                 slot2.setSelected(true);
                 selectedTimeSlot = 1;
             }
@@ -360,7 +373,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         slot3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableAllTimeSlots();
+                deselectAllTimeSlots();
                 slot3.setSelected(true);
                 selectedTimeSlot = 2;
             }
@@ -368,7 +381,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         slot4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableAllTimeSlots();
+                deselectAllTimeSlots();
                 slot4.setSelected(true);
                 selectedTimeSlot = 3;
             }
@@ -376,7 +389,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         slot5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableAllTimeSlots();
+                deselectAllTimeSlots();
                 slot5.setSelected(true);
                 selectedTimeSlot = 4;
             }
@@ -384,20 +397,38 @@ public class CreateOrderActivity extends AppCompatActivity {
         slot6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableAllTimeSlots();
+                deselectAllTimeSlots();
                 slot6.setSelected(true);
                 selectedTimeSlot = 5;
             }
         });
     }
 
-    private void disableAllTimeSlots() {
+    private void deselectAllTimeSlots() {
         slot1.setSelected(false);
         slot2.setSelected(false);
         slot3.setSelected(false);
         slot4.setSelected(false);
         slot5.setSelected(false);
         slot6.setSelected(false);
+    }
+
+    private void enableAllTimeSlots() {
+        slot1.setEnabled(true);
+        slot2.setEnabled(true);
+        slot3.setEnabled(true);
+        slot4.setEnabled(true);
+        slot5.setEnabled(true);
+        slot6.setEnabled(true);
+    }
+
+    private void disableAllTimeSlots() {
+        slot1.setEnabled(false);
+        slot2.setEnabled(false);
+        slot3.setEnabled(false);
+        slot4.setEnabled(false);
+        slot5.setEnabled(false);
+        slot6.setEnabled(false);
     }
 
     private String getTimeslotForNumber(int number) {
