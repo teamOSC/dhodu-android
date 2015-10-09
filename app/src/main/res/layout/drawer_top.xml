@@ -255,8 +255,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_expand_more_white_36dp" />
+                    android:layout_marginRight="20dp" />
 
             </RelativeLayout>
         </LinearLayout>
