@@ -27,12 +27,6 @@ public class SplashActivity extends AppCompatActivity {
     ImageView imageSplash;
 
     public void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
-        if(!(sp.getBoolean("app_first_run", true)))
-        {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            SplashActivity.this.finish();
-        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.RGBA_8888);

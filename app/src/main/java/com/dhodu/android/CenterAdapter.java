@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.parse.ParseObject;
@@ -86,6 +87,8 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
             Format formatter = new SimpleDateFormat("dd MMM yyyy   HH:mm");
             holder.transactionDate.setText(formatter.format(date).toString());
 
+            holder.ratingBar.setRating(object.getNumber("rating").floatValue());
+
             holder.viewBill.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -113,6 +116,7 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
 
         TextView transactionId, transactionDate, orderCount, orderType, orderAmount;
         Button viewBill;
+        RatingBar ratingBar;
 
         public ItemHolder(View itemView) {
             super(itemView);
@@ -122,6 +126,7 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
             orderType = (TextView) itemView.findViewById(R.id.order_type);
             orderAmount = (TextView) itemView.findViewById(R.id.order_amount);
             viewBill = (Button) itemView.findViewById(R.id.view_bill);
+            ratingBar = (RatingBar) itemView.findViewById(R.id.rating);
         }
     }
 

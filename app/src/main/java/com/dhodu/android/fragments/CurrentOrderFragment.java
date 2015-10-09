@@ -1,5 +1,6 @@
 package com.dhodu.android.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +9,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,14 +30,6 @@ import com.dhodu.android.R;
 import com.dhodu.android.RateCardActivity;
 import com.dhodu.android.ui.StepsView;
 import com.dhodu.android.ui.WashingMachineView;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -118,7 +110,6 @@ public class CurrentOrderFragment extends Fragment {
         TextView agentName = (TextView) cardView.findViewById(R.id.agentName);
         TextView agentVehicle = (TextView) cardView.findViewById(R.id.agentVehicle);
         ImageView agentPhoto = (ImageView) cardView.findViewById(R.id.profile_pic);
-        TextView pickaddress = (TextView) cardView.findViewById(R.id.pick_address);
         TextView serviceType = (TextView) cardView.findViewById(R.id.service_type);
         ImageView agentCall = (ImageView) cardView.findViewById(R.id.call_agent);
         TextView pickupTime = (TextView) cardView.findViewById(R.id.eta_pick);
@@ -145,23 +136,6 @@ public class CurrentOrderFragment extends Fragment {
         final RatingBar ratingBar = (RatingBar) cardView.findViewById(R.id.rating);
 
         switch (statusCode) {
-            case 0:
-                setStatusToHeader(transaction, "Order placed. Confirmation awaited.", R.drawable.ic_cancel_white_48dp);
-                GoogleMapOptions options = new GoogleMapOptions();
-
-                SupportMapFragment mapFragment = SupportMapFragment.newInstance(options);
-
-                FragmentManager fragmentManager = getChildFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.map, mapFragment).commitAllowingStateLoss();
-
-                mapFragment.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        addToMap(new LatLng(28.542, 77.259), googleMap);
-                    }
-                });
-
-                break;
             case 1:
                 setStatusToHeader(transaction, "Booking confirmed.", R.drawable.ic_cancel_white_48dp);
                 break;
@@ -374,25 +348,34 @@ public class CurrentOrderFragment extends Fragment {
             if(ratingBar.getRating() < 1.0){
                 Toast.makeText(getActivity(), "Please rate your transaction", Toast.LENGTH_SHORT).show();
             }
-            feedbackSubmit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    transaction.put("rating", ratingBar.getRating());
-                    transaction.put("feedback", feedback.getText().toString());
-                    transaction.put("status", 6);
-                    transaction.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null) {
-                                Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+            else{
+                feedbackSubmit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        transaction.put("rating", ratingBar.getRating());
+                        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+                        pDialog.setMessage("Submitting Feedback...");
+                        pDialog.setCancelable(false);
+                        pDialog.show();
+                        transaction.put("rating", ratingBar.getNumStars());
+                        transaction.put("feedback", feedback.getText().toString());
+                        transaction.put("status", 6);
+                        transaction.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
+                                    pDialog.dismiss();
+                                } else {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                                    pDialog.dismiss();
+                                }
                             }
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
+            }
         }
 
 
@@ -406,8 +389,6 @@ public class CurrentOrderFragment extends Fragment {
 
     private int getLayoutIdForStatus(int statusCode) {
         switch (statusCode) {
-            case 0:
-                return R.layout.item_current_order_0;
             case 1:
                 return R.layout.item_current_order_1;
             case 2:
@@ -438,18 +419,6 @@ public class CurrentOrderFragment extends Fragment {
 
     private void setStatusToHeader(ParseObject transaction, String status, int imageResId) {
         ((MainActivity) getActivity()).setStatusToHeader(transaction, status, imageResId);
-    }
-
-    private void addToMap(LatLng latLng, GoogleMap mMap) {
-
-        MarkerOptions markerOptions;
-        markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        mMap.addMarker(markerOptions);
-
-        CameraUpdate cameraPosition = CameraUpdateFactory.newLatLngZoom(latLng, 13.0f);
-        mMap.animateCamera(cameraPosition);
-
     }
 
     public void updateStatusCard() {

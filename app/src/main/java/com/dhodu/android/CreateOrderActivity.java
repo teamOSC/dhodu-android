@@ -23,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
-import com.google.android.gms.maps.model.LatLng;
 import com.parse.GetCallback;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -53,7 +52,9 @@ public class CreateOrderActivity extends AppCompatActivity {
     EditText promoCode;
     Button applyPromo;
     int selectedTimeSlot = -1;
-    LatLng latLng;
+
+    double latitude = 0;
+    double longitude = 0 ;
     int locationShifted = 0;
     int addressindex = 0;
 
@@ -125,12 +126,11 @@ public class CreateOrderActivity extends AppCompatActivity {
                 final ParseObject transaction = new ParseObject("Transaction");
                 transaction.put("status", 0);
                 transaction.put("customer", ParseUser.getCurrentUser());
-                //TODO pick time_pick from TimePicker
                 transaction.put("time_pick", getTimeslotForNumber(selectedTimeSlot));
                 transaction.put("pick_date", getDate());
                 transaction.put("address_index", addressindex);
                 transaction.put("comments", "");
-                ParseGeoPoint geoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+                ParseGeoPoint geoPoint = new ParseGeoPoint(latitude, longitude);
                 transaction.put("location", geoPoint);
                 transaction.put("service_type", serviceType);
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
@@ -146,7 +146,8 @@ public class CreateOrderActivity extends AppCompatActivity {
                                     if (e == null) {
                                         pDialog.dismiss();
                                         Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(CreateOrderActivity.this, MainActivity.class));
+                                        startActivity(new Intent(CreateOrderActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                        finish();
                                     } else {
                                         pDialog.dismiss();
                                         Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
@@ -229,7 +230,6 @@ public class CreateOrderActivity extends AppCompatActivity {
 
     public void setCurrentLocation(Context context) {
 
-        latLng = new LatLng(0, 0);
         final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         try {
@@ -238,7 +238,8 @@ public class CreateOrderActivity extends AppCompatActivity {
                     new LocationListener() {
                         @Override
                         public void onLocationChanged(Location location) {
-                            latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
                             locationShifted++;
                             if (locationShifted > 2) {
                                 try {
@@ -274,7 +275,8 @@ public class CreateOrderActivity extends AppCompatActivity {
                     1000, 0, new LocationListener() {
                         @Override
                         public void onLocationChanged(Location location) {
-                            latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
                             locationShifted++;
                             if (locationShifted > 2) {
                                 try {

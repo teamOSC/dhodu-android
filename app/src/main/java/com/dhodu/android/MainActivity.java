@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
     private void saveImageToParse(String path) {
@@ -380,14 +381,20 @@ public class MainActivity extends AppCompatActivity {
                     cancelDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            final ProgressDialog pDialog = new ProgressDialog(MainActivity.this);
+                            pDialog.setMessage("Canceling order...");
+                            pDialog.setCancelable(false);
+                            pDialog.show();
                             transaction.put("status", 13);
                             transaction.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
                                     if (e == null) {
                                         Toast.makeText(MainActivity.this, "Order canceled", Toast.LENGTH_SHORT).show();
+                                        pDialog.dismiss();
                                         MainActivity.this.recreate();
                                     } else{
+                                        pDialog.dismiss();
                                         Toast.makeText(MainActivity.this, "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
