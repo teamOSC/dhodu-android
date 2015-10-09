@@ -239,7 +239,6 @@ public class CurrentOrderFragment extends Fragment {
         }
 
         if (ratingBar != null) {
-            ratingBar.setRating(4);
             LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
             stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.dhodu_primary_dark), PorterDuff.Mode.SRC_ATOP);
         }
@@ -371,11 +370,14 @@ public class CurrentOrderFragment extends Fragment {
             });
         }
 
-        if (feedback != null) {
+        if (feedback != null && ratingBar != null) {
+            if(ratingBar.getRating() < 1.0){
+                Toast.makeText(getActivity(), "Please rate your transaction", Toast.LENGTH_SHORT).show();
+            }
             feedbackSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    transaction.put("rating", ratingBar.getNumStars());
+                    transaction.put("rating", ratingBar.getRating());
                     transaction.put("feedback", feedback.getText().toString());
                     transaction.put("status", 6);
                     transaction.saveInBackground(new SaveCallback() {

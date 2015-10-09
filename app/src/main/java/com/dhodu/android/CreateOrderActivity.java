@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -46,14 +48,13 @@ public class CreateOrderActivity extends AppCompatActivity {
     CheckBox dryclean;
     Switch expressSwitch;
     String serviceType;
-
     TextView terms;
     LinearLayout slot1, slot2, slot3, slot4, slot5, slot6;
-    int selectedTimeSlot;
-
+    EditText promoCode;
+    Button applyPromo;
+    int selectedTimeSlot = -1;
     LatLng latLng;
     int locationShifted = 0;
-
     int addressindex = 0;
 
     @Override
@@ -75,6 +76,8 @@ public class CreateOrderActivity extends AppCompatActivity {
         expressSwitch = (Switch) findViewById(R.id.express_switch);
         terms = (TextView) findViewById(R.id.terms);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        promoCode = (EditText) findViewById(R.id.promo_code);
+        applyPromo = (Button) findViewById(R.id.apply_promo);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,6 +107,17 @@ public class CreateOrderActivity extends AppCompatActivity {
         submitOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(locationAddress.getText().equals("Choose address")){
+                    Toast.makeText(view.getContext(), "Choose valid address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(selectedTimeSlot == -1){
+                    Toast.makeText(view.getContext(), "Select time slot", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 final ProgressDialog pDialog = new ProgressDialog(CreateOrderActivity.this);
                 pDialog.setMessage("Placing order...");
                 pDialog.setCancelable(false);
@@ -159,6 +173,13 @@ public class CreateOrderActivity extends AppCompatActivity {
         });
 
         setTimeslotOnClickListener();
+
+        applyPromo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Invalid promo code", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
