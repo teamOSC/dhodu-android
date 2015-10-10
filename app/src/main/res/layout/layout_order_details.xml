@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="Delivery time"
+                    android:text="Estimated delivery time"
                     android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />

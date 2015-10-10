@@ -350,7 +350,12 @@ public class CurrentOrderFragment extends Fragment {
         }
 
         if (deliveryTime != null) {
-            deliveryTime.setText(transaction.getString("drop_date"));
+//            deliveryTime.setText(transaction.getString("drop_date"));
+//            set pickup time + 48 hours for now
+            String date = transaction.getString("pick_date");
+            String increaseddate =  String.valueOf( Integer.parseInt(date.substring(0, 2)) + 2);
+            deliveryTime.setText(transaction.getString("time_pick") + ", " +
+                    increaseddate +date.substring(2, date.length() )) ;
         }
 
         if (dropTime != null) {

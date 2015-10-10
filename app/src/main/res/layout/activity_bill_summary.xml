@@ -39,7 +39,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="58dp"
+        android:layout_marginBottom="68dp"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical">
 
@@ -68,45 +68,41 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="68dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="@color/dhodu_primary_dark"
         android:clickable="true"
         android:focusable="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/amount_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center_vertical"
-                android:text="Total amount - "
-                android:textAllCaps="true"
-                android:textColor="#fff"
-                android:textSize="16sp" />
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/amount_text"
+                android:paddingTop="10dp"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-medium"
-                android:gravity="center_vertical"
-                android:textAllCaps="true"
                 android:textColor="#fff"
+                android:textAllCaps="true"
                 android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tax_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="3dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#fff"
+                android:textSize="11sp" />
 
-        </RelativeLayout>
+        </LinearLayout>
     </FrameLayout>
 
 </FrameLayout>

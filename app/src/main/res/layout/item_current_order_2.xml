@@ -45,7 +45,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:text="Your laundry have been picked and is currently being washed."
+            android:text="Your laundry has been picked and is being washed! Hurray."
             android:textAppearance="@android:style/TextAppearance.Small.Inverse"
             android:textColor="@android:color/black" />
 

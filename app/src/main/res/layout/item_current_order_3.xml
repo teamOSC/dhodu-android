@@ -33,7 +33,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:text="Your laundry have been washed and is ready to be delivered."
+            android:text="Your laundry has been washed. And is ready to be delivered! "
             android:textAppearance="@android:style/TextAppearance.Small.Inverse"
             android:textColor="@android:color/black" />
 

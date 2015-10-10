@@ -54,7 +54,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:text="Our agent has confirmed your booking and will be picking up your laundry shortly."
+            android:text="Hi! I'm your Dhodu agent. I will be picking up your laundry shortly. Feel free to call me for anything. "
             android:textAppearance="@android:style/TextAppearance.Small.Inverse"
             android:textColor="@android:color/black" />
 

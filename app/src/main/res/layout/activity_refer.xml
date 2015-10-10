@@ -36,7 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Invite Friends. Give a Free Laundry worth ₹60 and earn \n ₹30 on successful delivery of their first order." />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="Invite your friends and gift them a free laundry worth Rs ₹60 \nwhile you get a free laundry worth Rs ₹30 too!" />
 
             <TextView
                 android:id="@+id/referral_code"
