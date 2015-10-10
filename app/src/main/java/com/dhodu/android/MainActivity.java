@@ -151,38 +151,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-            //Setup the order pulldown screen
-//            orderTime = (EditText) findViewById(R.id.order_time);
-//            orderTime.setInputType(EditorInfo.TYPE_NULL);
-//            orderTime.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View view, MotionEvent motionEvent) {
-//                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                        // TODO Auto-generated method stub
-//                        Calendar mcurrentTime = Calendar.getInstance();
-//                        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-//                        int minute = mcurrentTime.get(Calendar.MINUTE);
-//                        TimePickerDialog mTimePicker;
-//                        mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
-//                            @Override
-//                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-//                                orderTime.setText(
-//                                        ((selectedHour < 10) ? "0" + selectedHour : selectedHour)
-//                                                + ":" +
-//                                                ((selectedMinute < 10) ? "0" + selectedMinute : selectedMinute));
-//                            }
-//                        }, hour, minute, true);//Yes 24 hour time
-//                        mTimePicker.setTitle("Select Time");
-//                        mTimePicker.show();
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
-//                }
-//            });
-//
-
-
             editProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
