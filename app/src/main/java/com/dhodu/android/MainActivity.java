@@ -369,7 +369,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setStatusToHeader(final ParseObject transaction, String status, int imageId) {
-        statusView.setVisibility(View.VISIBLE);
+        if(transaction == null && status == null && imageId == 0)
+            statusView.setVisibility(View.GONE);
+        else
+            statusView.setVisibility(View.VISIBLE);
         if (imageId != 0) {
             expandCreateOrder.setImageResource(imageId);
             expandCreateOrder.setOnClickListener(new View.OnClickListener() {

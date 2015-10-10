@@ -222,9 +222,24 @@ public class OtpFragment extends Fragment {
                         ParseUser.logInInBackground(username, Utils.generatePassword(username), new LogInCallback() {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
-                                    startActivity(new Intent(getActivity(), MainActivity.class));
-                                    pDialog.dismiss();
-                                    getActivity().finish();
+                                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                                    installation.put("user", user);
+                                    installation.addUnique("channels", "user");
+                                    installation.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e == null) {
+                                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                                pDialog.dismiss();
+                                                getActivity().finish();
+                                            } else {
+                                                pDialog.dismiss();
+                                                Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+
                                 } else {
                                     pDialog.dismiss();
                                     Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
@@ -260,24 +275,28 @@ public class OtpFragment extends Fragment {
                 if (e == null) {
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                     installation.put("user", user);
-                    installation.add("channels", "user");
+                    installation.addUnique("channels", "user");
                     installation.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if(e == null){
+                            if (e == null) {
                                 Log.d(TAG, "installation saved");
-                            }else{
+                                pDialog.dismiss();
+                                Intent intent = new Intent(new Intent(getActivity(), AddAddressActivity.class));
+                                intent.setAction("add_address_withskip");
+                                intent.putExtra("HOME_UP", false);
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                startActivity(intent);
+                                getActivity().finish();
+                            } else {
+                                e.printStackTrace();
+                                pDialog.dismiss();
+                                Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
                     });
-                    pDialog.dismiss();
-                    Intent intent = new Intent(new Intent(getActivity(), AddAddressActivity.class));
-                    intent.setAction("add_address_withskip");
-                    intent.putExtra("HOME_UP", false);
-                    startActivity(new Intent(getActivity(), MainActivity.class));
-                    startActivity(intent);
-                    getActivity().finish();
+
                 } else {
                     pDialog.dismiss();
                     Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();

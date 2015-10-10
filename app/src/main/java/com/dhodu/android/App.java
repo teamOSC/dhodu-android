@@ -2,7 +2,6 @@ package com.dhodu.android;
 
 import android.app.Application;
 
-import com.dhodu.android.utils.LifeCycleHandler;
 import com.parse.Parse;
 
 /**
@@ -13,7 +12,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        registerActivityLifecycleCallbacks(new LifeCycleHandler());
+//        registerActivityLifecycleCallbacks(new LifeCycleHandler());
         Parse.initialize(this, "8hl3wDwaozzqWEGdkN8aCaLdWOLNnAxPlXXj53d0", "ado3ZoaVnQgpTixUIWiomvwzYcoPqAijSMWGISMM");
     }
 }

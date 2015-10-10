@@ -12,13 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,10 +39,6 @@ public class CreateOrderActivity extends AppCompatActivity {
     TextView locationAddress;
     RadioButton today, tomorrow, datomorrow;
     RadioGroup radioGroup;
-    CheckBox press;
-    CheckBox washPress;
-    CheckBox dryclean;
-    Switch expressSwitch;
     String serviceType;
     TextView terms;
     LinearLayout slot1, slot2, slot3, slot4, slot5, slot6;
@@ -72,10 +65,6 @@ public class CreateOrderActivity extends AppCompatActivity {
         today = (RadioButton) findViewById(R.id.radio_today);
         tomorrow = (RadioButton) findViewById(R.id.radio_tomorrow);
         datomorrow = (RadioButton) findViewById(R.id.radio_datomorrow);
-        press = (CheckBox) findViewById(R.id.cb_press);
-        washPress = (CheckBox) findViewById(R.id.cb_wash_press);
-        dryclean = (CheckBox) findViewById(R.id.cb_dryclean);
-        expressSwitch = (Switch) findViewById(R.id.express_switch);
         terms = (TextView) findViewById(R.id.terms);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         promoCode = (EditText) findViewById(R.id.promo_code);
@@ -92,16 +81,6 @@ public class CreateOrderActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("New order");
 
         setCurrentLocation(this);
-
-        expressSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    Toast.makeText(getBaseContext(), "Express service coming soon", Toast.LENGTH_SHORT).show();
-                    expressSwitch.setChecked(false);
-                }
-            }
-        });
 
         locationAddress.setOnClickListener(new View.OnClickListener() {
             @Override

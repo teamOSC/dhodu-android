@@ -16,8 +16,8 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission android:protectionLevel="signature"
-        android:name="com.dhodu.android.permission.C2D_MESSAGE" />
-    <uses-permission android:name="com.dhodu.android.permission.C2D_MESSAGE" />
+        android:name="dhodu.android.permission.C2D_MESSAGE" />
+    <uses-permission android:name="dhodu.android.permission.C2D_MESSAGE" />
 
     <application
         android:name=".App"
@@ -119,10 +119,9 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.dhodu.android" />
+                <category android:name="dhodu.android" />
             </intent-filter>
         </receiver>
-
 
     </application>
 

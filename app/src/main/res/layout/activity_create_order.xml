@@ -145,41 +145,6 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
-            <LinearLayout
-                android:id="@+id/switch_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Normal"
-                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                    android:textColor="@android:color/black" />
-
-                <Switch
-                    android:id="@+id/express_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:textOff="NORMAL"
-                    android:textOn="EXPRESS" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Express"
-                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"

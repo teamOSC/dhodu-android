@@ -3,12 +3,15 @@ package com.dhodu.android.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ import com.dhodu.android.ui.WashingMachineView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePushBroadcastReceiver;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -49,6 +53,8 @@ public class CurrentOrderFragment extends Fragment {
     FrameLayout rootContainer;
     StepsView stepsView;
     View loadingView;
+    ParsePushBroadcastReceiver pushReceiver = null;
+    IntentFilter intentFilter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -60,7 +66,38 @@ public class CurrentOrderFragment extends Fragment {
         loadingView = view.findViewById(R.id.loadingView);
 
         fetchCurrentOrders();
+
+        pushReceiver = new ParsePushBroadcastReceiver() {
+
+            @Override
+            protected void onPushReceive(Context context, Intent intent) {
+                updateStatusCard();
+            }
+        };
+
+        intentFilter = new IntentFilter("com.parse.push.intent.RECEIVE");
+        getActivity().registerReceiver(pushReceiver, intentFilter);
+
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (pushReceiver != null) {
+            try {
+                getActivity().unregisterReceiver(pushReceiver);
+            } catch (Exception e) {
+                Log.e("Current Order", "onPause ", e);
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (pushReceiver != null)
+            getActivity().registerReceiver(pushReceiver, intentFilter);
     }
 
     private void fetchCurrentOrders() {
@@ -121,6 +158,7 @@ public class CurrentOrderFragment extends Fragment {
         Button rateCardButton = (Button) cardView.findViewById(R.id.rate_card);
         Button viewBill = (Button) cardView.findViewById(R.id.view_bill);
         Button payNow = (Button) cardView.findViewById(R.id.pay_now);
+        TextView totalAmount5 = (TextView) cardView.findViewById(R.id.total_amount_5);
         final LinearLayout slotWashPress = (LinearLayout) cardView.findViewById(R.id.slot1);
         final LinearLayout slotDryClean= (LinearLayout) cardView.findViewById(R.id.slot2);
         final ImageView noOrderImage = (ImageView) cardView.findViewById(R.id.imageView);
@@ -212,7 +250,7 @@ public class CurrentOrderFragment extends Fragment {
                     .drawView();
         }
 
-        if (ratingBar != null) {
+        if (ratingBar != null && Build.VERSION.SDK_INT >= 21) {
             LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
             stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.dhodu_primary_dark), PorterDuff.Mode.SRC_ATOP);
         }
@@ -344,35 +382,42 @@ public class CurrentOrderFragment extends Fragment {
             });
         }
 
+        if(totalAmount5 != null){
+            totalAmount5.setText("Total = ₹ " + transaction.getNumber("amount").toString());
+        }
+
         if (feedback != null && ratingBar != null) {
-            if(ratingBar.getRating() < 1.0){
-                Toast.makeText(getActivity(), "Please rate your transaction", Toast.LENGTH_SHORT).show();
-            }
-            else{
                 feedbackSubmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        transaction.put("rating", ratingBar.getRating());
-                        final ProgressDialog pDialog = new ProgressDialog(getActivity());
-                        pDialog.setMessage("Submitting Feedback...");
-                        pDialog.setCancelable(false);
-                        pDialog.show();
-                        transaction.put("rating", ratingBar.getNumStars());
-                        transaction.put("feedback", feedback.getText().toString());
-                        transaction.put("status", 6);
-                        transaction.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e == null) {
-                                    Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
-                                    pDialog.dismiss();
-                                } else {
-                                    e.printStackTrace();
-                                    Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
-                                    pDialog.dismiss();
+                        if(ratingBar.getRating() < 1.0){
+                            Toast.makeText(getActivity(), "Please rate your transaction", Toast.LENGTH_SHORT).show();
+                        }else {
+                            transaction.put("rating", ratingBar.getRating());
+                            final ProgressDialog pDialog = new ProgressDialog(getActivity());
+                            pDialog.setMessage("Submitting Feedback...");
+                            pDialog.setCancelable(false);
+                            pDialog.show();
+                            transaction.put("rating", ratingBar.getNumStars());
+                            transaction.put("feedback", feedback.getText().toString());
+                            transaction.put("status", 6);
+                            transaction.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
+                                        updateStatusCard();
+                                        pDialog.dismiss();
+                                        setStatusToHeader(null, null, 0);
+                                    } else {
+                                        e.printStackTrace();
+                                        Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                                        pDialog.dismiss();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+
                     }
                 });
             }
@@ -385,7 +430,6 @@ public class CurrentOrderFragment extends Fragment {
 //            agentdetails.setText(manager.getString("name"));
 //        }
 
-    }
 
     private int getLayoutIdForStatus(int statusCode) {
         switch (statusCode) {
