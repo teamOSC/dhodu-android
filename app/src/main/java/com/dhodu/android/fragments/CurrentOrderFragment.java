@@ -487,7 +487,8 @@ public class CurrentOrderFragment extends Fragment {
 
             }
         });
-        view.startAnimation(slidedown);
+        if(view != null)
+            view.startAnimation(slidedown);
     }
 
 }
