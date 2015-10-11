@@ -341,6 +341,11 @@ public class MainActivity extends AppCompatActivity {
             statusView.setVisibility(View.GONE);
         else
             statusView.setVisibility(View.VISIBLE);
+
+        if (transaction!=null && transaction.getNumber("status").intValue() >1) {
+            expandCreateOrder.setVisibility(View.GONE);
+        }
+
         if (imageId != 0) {
             expandCreateOrder.setImageResource(imageId);
             expandCreateOrder.setOnClickListener(new View.OnClickListener() {
