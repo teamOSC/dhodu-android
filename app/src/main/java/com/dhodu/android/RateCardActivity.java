@@ -101,7 +101,7 @@ public class RateCardActivity extends AppCompatActivity {
                 if (e == null) {
                     clothesList = objects;
                     recyclerView.setAdapter(new RateCardAdapter(clothesList, serviceType.getSelectedItemPosition()));
-                } else{
+                } else {
                     e.printStackTrace();
                     Toast.makeText(RateCardActivity.this, "Error fetching rate list", Toast.LENGTH_SHORT).show();
                 }

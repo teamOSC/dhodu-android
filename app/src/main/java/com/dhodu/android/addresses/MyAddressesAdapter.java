@@ -39,6 +39,30 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
         this.isChooseAddress = isChooseAddress;
     }
 
+    public static JSONArray remove(final int idx, final JSONArray from) {
+        final List<JSONObject> objs = asList(from);
+        objs.remove(idx);
+
+        final JSONArray ja = new JSONArray();
+        for (final JSONObject obj : objs) {
+            ja.put(obj);
+        }
+
+        return ja;
+    }
+
+    public static List<JSONObject> asList(final JSONArray ja) {
+        final int len = ja.length();
+        final ArrayList<JSONObject> result = new ArrayList<JSONObject>(len);
+        for (int i = 0; i < len; i++) {
+            final JSONObject obj = ja.optJSONObject(i);
+            if (obj != null) {
+                result.add(obj);
+            }
+        }
+        return result;
+    }
+
     @Override
     public MyAddressesAdapter.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
@@ -86,6 +110,26 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
         this.array = array;
     }
 
+    private void deleteAddress(int index) {
+        final ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Deleting address...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        ParseUser user = ParseUser.getCurrentUser();
+        final JSONArray array = user.getJSONArray("address");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            array.remove(index);
+        else remove(index, array);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                pDialog.dismiss();
+                updateDataSet(array);
+                notifyDataSetChanged();
+            }
+        });
+    }
+
     public class ItemHolder extends RecyclerView.ViewHolder {
 
         protected TextView name, flat, street, locality;
@@ -128,7 +172,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
                     public void onClick(View v) {
                         Intent intent = new Intent(context, AddAddressActivity.class);
                         intent.setAction("edit_address");
-                        intent.putExtra("address_index",getAdapterPosition()-1);
+                        intent.putExtra("address_index", getAdapterPosition() - 1);
                         context.startActivity(intent);
                     }
                 });
@@ -140,7 +184,7 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
                                 .setCancelable(true).setMessage("Are you sure you want to delete this adddress ?").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        deleteAddress(getAdapterPosition()-1);
+                                        deleteAddress(getAdapterPosition() - 1);
                                     }
                                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                     @Override
@@ -153,49 +197,5 @@ public class MyAddressesAdapter extends RecyclerView.Adapter<MyAddressesAdapter.
                 });
             }
         }
-    }
-
-    private void deleteAddress(int index) {
-        final ProgressDialog pDialog = new ProgressDialog(context);
-        pDialog.setMessage("Deleting address...");
-        pDialog.setCancelable(false);
-        pDialog.show();
-        ParseUser user = ParseUser.getCurrentUser();
-        final JSONArray array = user.getJSONArray("address");
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT)
-        array.remove(index);
-        else remove(index,array);
-        user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                pDialog.dismiss();
-                updateDataSet(array);
-                notifyDataSetChanged();
-            }
-        });
-    }
-
-    public static JSONArray remove(final int idx, final JSONArray from) {
-        final List<JSONObject> objs = asList(from);
-        objs.remove(idx);
-
-        final JSONArray ja = new JSONArray();
-        for (final JSONObject obj : objs) {
-            ja.put(obj);
-        }
-
-        return ja;
-    }
-
-    public static List<JSONObject> asList(final JSONArray ja) {
-        final int len = ja.length();
-        final ArrayList<JSONObject> result = new ArrayList<JSONObject>(len);
-        for (int i = 0; i < len; i++) {
-            final JSONObject obj = ja.optJSONObject(i);
-            if (obj != null) {
-                result.add(obj);
-            }
-        }
-        return result;
     }
 }

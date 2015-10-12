@@ -47,7 +47,7 @@ public class CreateOrderActivity extends AppCompatActivity {
     int selectedTimeSlot = -1;
 
     double latitude = 0;
-    double longitude = 0 ;
+    double longitude = 0;
     int locationShifted = 0;
     int addressindex = 0;
     Calendar c;
@@ -153,7 +153,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         terms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(Intent.ACTION_VIEW);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("http://dhodu.com/terms.html"));
                 startActivity(intent);
             }
@@ -166,8 +166,8 @@ public class CreateOrderActivity extends AppCompatActivity {
                 View radioButton = radioGroup.findViewById(radioButtonID);
                 selectedTimeSlot = -1;
                 deselectAllTimeSlots();
-                if(radioGroup.indexOfChild(radioButton) == 0){
-                  setTimeSlotValidation();
+                if (radioGroup.indexOfChild(radioButton) == 0) {
+                    setTimeSlotValidation();
                 } else {
                     enableAllTimeSlots();
                 }
@@ -194,7 +194,7 @@ public class CreateOrderActivity extends AppCompatActivity {
 
         c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate ="";
+        String formattedDate = "";
 
         switch (idx) {
             case 0:
@@ -313,8 +313,8 @@ public class CreateOrderActivity extends AppCompatActivity {
     private void setTimeSlotValidation() {
         c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
-        if (hour>=20 && hour<=0) {
-           disableAllTimeSlots();
+        if (hour >= 20 && hour <= 0) {
+            disableAllTimeSlots();
         } else {
             if (hour >= 8)
                 slot1.setEnabled(false);

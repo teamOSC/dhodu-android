@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void saveImageToParse(String path) {
@@ -337,12 +337,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setStatusToHeader(final ParseObject transaction, String status, int imageId) {
-        if(transaction == null && status == null && imageId == 0)
+        if (transaction == null && status == null && imageId == 0)
             statusView.setVisibility(View.GONE);
         else
             statusView.setVisibility(View.VISIBLE);
 
-        if (transaction!=null && transaction.getNumber("status").intValue() >1) {
+        if (transaction != null && transaction.getNumber("status").intValue() > 1) {
             expandCreateOrder.setVisibility(View.GONE);
         }
 
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.makeText(MainActivity.this, "Order canceled", Toast.LENGTH_SHORT).show();
                                         pDialog.dismiss();
                                         MainActivity.this.recreate();
-                                    } else{
+                                    } else {
                                         pDialog.dismiss();
                                         Toast.makeText(MainActivity.this, "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
                                     }

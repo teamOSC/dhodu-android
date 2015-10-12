@@ -39,8 +39,8 @@ public class BillSummaryActivity extends AppCompatActivity {
         taxAmount = (TextView) findViewById(R.id.tax_amount);
         transactionId = (TextView) findViewById(R.id.transaction_id);
         loadingView = findViewById(R.id.loadingView);
-        clothesRecyclerview =(RecyclerView) findViewById(R.id.recyclerview_bill);
-        clothesRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        clothesRecyclerview = (RecyclerView) findViewById(R.id.recyclerview_bill);
+        clothesRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         fetchBillSummary();
     }
@@ -51,16 +51,16 @@ public class BillSummaryActivity extends AppCompatActivity {
             @Override
             public void done(ParseObject object, ParseException e) {
                 setBillSummary(object);
-                transactionId.setText("Order Id : "+object.getObjectId());
+                transactionId.setText("Order Id : " + object.getObjectId());
                 loadingView.setVisibility(View.GONE);
             }
         });
     }
 
     private void setBillSummary(ParseObject transaction) {
-        amount.setText("Total Amount : ₹ "+String.valueOf(transaction.getNumber("amount")));
+        amount.setText("Total Amount : ₹ " + String.valueOf(transaction.getNumber("amount")));
         setTaxAmount();
-        clothesRecyclerview.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
+        clothesRecyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         adpater = new ClothesDataAdpater(transaction.getJSONArray("clothes_data"));
         clothesRecyclerview.setAdapter(adpater);
 
@@ -73,8 +73,8 @@ public class BillSummaryActivity extends AppCompatActivity {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
                     taxAmount.setText("including ₹ "
-                            + String.valueOf(object.getNumber("shipment"))+" delivery charges and "
-                            +String.valueOf(object.getNumber("tax"))+"% tax");
+                            + String.valueOf(object.getNumber("shipment")) + " delivery charges and "
+                            + String.valueOf(object.getNumber("tax")) + "% tax");
                 }
             }
         });

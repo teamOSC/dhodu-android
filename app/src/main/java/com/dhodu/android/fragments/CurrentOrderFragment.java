@@ -154,13 +154,13 @@ public class CurrentOrderFragment extends Fragment {
         TextView pickTime = (TextView) cardView.findViewById(R.id.pickup_time);
         TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
         WashingMachineView washingMachineView = (WashingMachineView) cardView.findViewById(R.id.wave_view);
-        Button scheduleBooking =(Button) cardView.findViewById(R.id.schedule_booking);
+        Button scheduleBooking = (Button) cardView.findViewById(R.id.schedule_booking);
         Button rateCardButton = (Button) cardView.findViewById(R.id.rate_card);
         Button viewBill = (Button) cardView.findViewById(R.id.view_bill);
         Button payNow = (Button) cardView.findViewById(R.id.pay_now);
         TextView totalAmount5 = (TextView) cardView.findViewById(R.id.total_amount_5);
         final LinearLayout slotWashPress = (LinearLayout) cardView.findViewById(R.id.slot1);
-        final LinearLayout slotDryClean= (LinearLayout) cardView.findViewById(R.id.slot2);
+        final LinearLayout slotDryClean = (LinearLayout) cardView.findViewById(R.id.slot2);
         final ImageView noOrderImage = (ImageView) cardView.findViewById(R.id.imageView);
 
         final TextView noOrderText = (TextView) cardView.findViewById(R.id.no_order_text);
@@ -194,7 +194,7 @@ public class CurrentOrderFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (slotWashPress.isSelected())
-                        slotWashPress.setSelected(false);
+                            slotWashPress.setSelected(false);
                         else slotWashPress.setSelected(true);
                     }
                 });
@@ -215,7 +215,7 @@ public class CurrentOrderFragment extends Fragment {
                         if (serviceType.length() < 1) {
                             Toast.makeText(getActivity(), "Please select the type of service", Toast.LENGTH_SHORT).show();
                         } else {
-                            Intent i = new Intent(getActivity(),CreateOrderActivity.class);
+                            Intent i = new Intent(getActivity(), CreateOrderActivity.class);
                             i.putExtra("servicetype", serviceType);
                             startActivity(i);
                         }
@@ -224,17 +224,17 @@ public class CurrentOrderFragment extends Fragment {
                 rateCardButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(getActivity(),RateCardActivity.class));
+                        startActivity(new Intent(getActivity(), RateCardActivity.class));
                     }
                 });
                 ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("App");
                 query.getFirstInBackground(new GetCallback<ParseObject>() {
                     @Override
                     public void done(ParseObject object, ParseException e) {
-                        if (e == null && getActivity()!=null && noOrderImage != null) {
+                        if (e == null && getActivity() != null && noOrderImage != null) {
                             String url = object.getString("image_url");
                             if (!url.equals(""))
-                            Picasso.with(getActivity()).load(url).into(noOrderImage);
+                                Picasso.with(getActivity()).load(url).into(noOrderImage);
                         }
                     }
                 });
@@ -246,7 +246,7 @@ public class CurrentOrderFragment extends Fragment {
                     .setBarColorIndicator(getContext().getResources().getColor(R.color.material_blue_grey_800))
                     .setProgressColorIndicator(Color.parseColor("#FF9800"))
                     .setLabelColorIndicator(getContext().getResources().getColor(R.color.dhodu_primary_dark))
-                    .setCompletedPosition(statusCode-1)
+                    .setCompletedPosition(statusCode - 1)
                     .drawView();
         }
 
@@ -276,7 +276,7 @@ public class CurrentOrderFragment extends Fragment {
             serviceType.setText(serviceString);
         }
 
-        if(noOrderText != null){
+        if (noOrderText != null) {
             ParseQuery<ParseObject> query = new ParseQuery<>("Transaction");
             query.whereEqualTo("customer", ParseUser.getCurrentUser());
             query.orderByDescending("updatedAt");
@@ -286,12 +286,11 @@ public class CurrentOrderFragment extends Fragment {
                     if (e == null) {
                         Date today = new Date();
                         Date orderPlaced = object.getCreatedAt();
-                        long diffInDays = (today.getTime() - orderPlaced.getTime())/(24 * 60 * 60 * 1000);  //FIXME
+                        long diffInDays = (today.getTime() - orderPlaced.getTime()) / (24 * 60 * 60 * 1000);  //FIXME
                         noOrderText.setText("Hey there! Looks like you haven't done your laundry in " + diffInDays + " days.");
-                    } else if(e.getCode() == ParseException.OBJECT_NOT_FOUND){
+                    } else if (e.getCode() == ParseException.OBJECT_NOT_FOUND) {
                         noOrderText.setText("Congratulations on saying goodbye to your laundry hassles. Welcome to Dhodu!");
-                    }
-                    else {
+                    } else {
                         e.printStackTrace();
                     }
                 }
@@ -353,9 +352,9 @@ public class CurrentOrderFragment extends Fragment {
 //            deliveryTime.setText(transaction.getString("drop_date"));
 //            set pickup time + 48 hours for now
             String date = transaction.getString("pick_date");
-            String increaseddate =  String.valueOf( Integer.parseInt(date.substring(0, 2)) + 2);
+            String increaseddate = String.valueOf(Integer.parseInt(date.substring(0, 2)) + 2);
             deliveryTime.setText(transaction.getString("time_pick") + ", " +
-                    increaseddate +date.substring(2, date.length() )) ;
+                    increaseddate + date.substring(2, date.length()));
         }
 
         if (dropTime != null) {
@@ -371,14 +370,14 @@ public class CurrentOrderFragment extends Fragment {
             viewBill.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(),BillSummaryActivity.class);
-                    intent.putExtra("transaction_id",transaction.getObjectId());
+                    Intent intent = new Intent(getActivity(), BillSummaryActivity.class);
+                    intent.putExtra("transaction_id", transaction.getObjectId());
                     startActivity(intent);
                 }
             });
         }
 
-        if(payNow != null){
+        if (payNow != null) {
             payNow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -387,46 +386,46 @@ public class CurrentOrderFragment extends Fragment {
             });
         }
 
-        if(totalAmount5 != null){
+        if (totalAmount5 != null) {
             totalAmount5.setText("Total = ₹ " + transaction.getNumber("amount").toString());
         }
 
         if (feedback != null && ratingBar != null) {
-                feedbackSubmit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(ratingBar.getRating() < 1.0){
-                            Toast.makeText(getActivity(), "Please rate your transaction", Toast.LENGTH_SHORT).show();
-                        }else {
-                            transaction.put("rating", ratingBar.getRating());
-                            final ProgressDialog pDialog = new ProgressDialog(getActivity());
-                            pDialog.setMessage("Submitting Feedback...");
-                            pDialog.setCancelable(false);
-                            pDialog.show();
-                            transaction.put("rating", ratingBar.getNumStars());
-                            transaction.put("feedback", feedback.getText().toString());
-                            transaction.put("status", 6);
-                            transaction.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e == null) {
-                                        Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
-                                        updateStatusCard();
-                                        pDialog.dismiss();
-                                        setStatusToHeader(null, null, 0);
-                                    } else {
-                                        e.printStackTrace();
-                                        Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
-                                        pDialog.dismiss();
-                                    }
+            feedbackSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (ratingBar.getRating() < 1.0) {
+                        Toast.makeText(getActivity(), "Please rate your transaction", Toast.LENGTH_SHORT).show();
+                    } else {
+                        transaction.put("rating", ratingBar.getRating());
+                        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+                        pDialog.setMessage("Submitting Feedback...");
+                        pDialog.setCancelable(false);
+                        pDialog.show();
+                        transaction.put("rating", ratingBar.getNumStars());
+                        transaction.put("feedback", feedback.getText().toString());
+                        transaction.put("status", 6);
+                        transaction.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
+                                    updateStatusCard();
+                                    pDialog.dismiss();
+                                    setStatusToHeader(null, null, 0);
+                                } else {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                                    pDialog.dismiss();
                                 }
-                            });
-                        }
-
+                            }
+                        });
                     }
-                });
-            }
+
+                }
+            });
         }
+    }
 
 
 //        if (agentdetails!=null){
@@ -471,7 +470,7 @@ public class CurrentOrderFragment extends Fragment {
     }
 
     public void updateStatusCard() {
-        Animation slidedown    = AnimationUtils.loadAnimation(getActivity(),
+        Animation slidedown = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.slide_down);
         final View view = rootContainer.getChildAt(1);
         slidedown.setAnimationListener(new Animation.AnimationListener() {
@@ -492,7 +491,7 @@ public class CurrentOrderFragment extends Fragment {
 
             }
         });
-        if(view != null)
+        if (view != null)
             view.startAnimation(slidedown);
     }
 

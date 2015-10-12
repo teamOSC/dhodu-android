@@ -39,7 +39,7 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
         if (viewType == 0) {
             View v0 = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_history, parent, false);
             return new ItemHolder(v0);
-        }else {
+        } else {
             View v2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order, parent, false);
             return new ItemHolder(v2);
         }
@@ -56,31 +56,31 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
                     holder.orderCount.setText("1 order placed");
                 else holder.orderCount.setText(arraylist.size() + " orders placed");
             }
-        }  else {
-            final ParseObject object = arraylist.get(position-1);
-            holder.transactionId.setText("Order Id : "+object.getObjectId());
+        } else {
+            final ParseObject object = arraylist.get(position - 1);
+            holder.transactionId.setText("Order Id : " + object.getObjectId());
 
-                String transaction_type = object.getString("service_type");
-                String serviceString = null;
-                if (transaction_type.contains("0")) {
-                    serviceString = getServiceForType(0);
-                }
-                if (transaction_type.contains("1")) {
-                    if (serviceString != null)
-                        serviceString = serviceString + ", " + getServiceForType(1);
-                    else
-                        serviceString = getServiceForType(1);
-                }
-                if (transaction_type.contains("2")) {
-                    if (serviceString != null)
-                        serviceString = serviceString + ", " + getServiceForType(2);
-                    else
-                        serviceString = getServiceForType(2);
-                }
+            String transaction_type = object.getString("service_type");
+            String serviceString = null;
+            if (transaction_type.contains("0")) {
+                serviceString = getServiceForType(0);
+            }
+            if (transaction_type.contains("1")) {
+                if (serviceString != null)
+                    serviceString = serviceString + ", " + getServiceForType(1);
+                else
+                    serviceString = getServiceForType(1);
+            }
+            if (transaction_type.contains("2")) {
+                if (serviceString != null)
+                    serviceString = serviceString + ", " + getServiceForType(2);
+                else
+                    serviceString = getServiceForType(2);
+            }
 
             holder.orderType.setText(serviceString);
             if (object.getNumber("amount") != null) {
-                holder.orderAmount.setText("Order amount : ₹ "+object.getNumber("amount").toString());
+                holder.orderAmount.setText("Order amount : ₹ " + object.getNumber("amount").toString());
             } else holder.orderAmount.setVisibility(View.GONE);
 
             Date date = object.getCreatedAt();
@@ -92,8 +92,8 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
             holder.viewBill.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,BillSummaryActivity.class);
-                    intent.putExtra("transaction_id",object.getObjectId());
+                    Intent intent = new Intent(context, BillSummaryActivity.class);
+                    intent.putExtra("transaction_id", object.getObjectId());
                     context.startActivity(intent);
                 }
             });
@@ -112,6 +112,19 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
         else return 1;
     }
 
+    private String getServiceForType(int type) {
+        switch (type) {
+            case 0:
+                return "Press";
+            case 1:
+                return "Wash and Press";
+            case 2:
+                return "Dry Cleaning";
+            default:
+                return "";
+        }
+    }
+
     public class ItemHolder extends RecyclerView.ViewHolder {
 
         TextView transactionId, transactionDate, orderCount, orderType, orderAmount;
@@ -127,19 +140,6 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemHolder
             orderAmount = (TextView) itemView.findViewById(R.id.order_amount);
             viewBill = (Button) itemView.findViewById(R.id.view_bill);
             ratingBar = (RatingBar) itemView.findViewById(R.id.rating);
-        }
-    }
-
-    private String getServiceForType(int type) {
-        switch (type) {
-            case 0:
-                return "Press";
-            case 1:
-                return "Wash and Press";
-            case 2:
-                return "Dry Cleaning";
-            default:
-                return "";
         }
     }
 }

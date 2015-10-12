@@ -54,6 +54,13 @@ public class WashingMachineView extends LinearLayout {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 
+    public WaterWave getWaterWave() {
+        return waterWave;
+    }
+
+    //machineview(middle view) extends FrameLayout and has two views-WaterWave and Overlay.
+    //Overlay consists of a transparent hole from which water waves are visible
+
     public class TopView extends View {
 
         Paint paint = new Paint();
@@ -92,9 +99,6 @@ public class WashingMachineView extends LinearLayout {
         }
     }
 
-    //machineview(middle view) extends FrameLayout and has two views-WaterWave and Overlay.
-    //Overlay consists of a transparent hole from which water waves are visible
-
     public class BottomView extends View {
 
         Paint paint = new Paint();
@@ -127,15 +131,11 @@ public class WashingMachineView extends LinearLayout {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mMiddleviewHeight);
             setLayoutParams(params);
 
-            waterWave = new WaterWave(context,attrs);
+            waterWave = new WaterWave(context, attrs);
             addView(waterWave);
             addView(new OverlayView(context, attrs));
         }
 
 
-    }
-
-    public WaterWave getWaterWave() {
-        return waterWave;
     }
 }

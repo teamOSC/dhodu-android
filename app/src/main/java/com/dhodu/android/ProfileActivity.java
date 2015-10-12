@@ -144,7 +144,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-         if (requestCode == 69) {
+        if (requestCode == 69) {
             if (resultCode == RESULT_CANCELED) {
                 File photoFile = new File(photoPath);
                 if (photoFile.exists())

@@ -2,7 +2,6 @@
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="-20dp">
@@ -25,38 +24,38 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
         android:layout_below="@id/no_order_text"
         android:layout_gravity="center_vertical"
-        android:scaleType="fitXY"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         android:src="@drawable/dhodu_icon_splash" />
 
 
     <LinearLayout
+        android:id="@+id/options_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
-        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="15dp"
-        android:id="@+id/options_container">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/slot1"
             android:layout_width="150dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="2dp"
             android:background="@drawable/radio_checked_left"
+            android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="5.0dip"
             android:paddingLeft="20.0dip"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:paddingRight="20.0dip"
-            android:paddingTop="5.0dip"
-            android:layout_marginRight="2dp">
+            android:paddingTop="5.0dip">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,15 +71,15 @@
             android:id="@+id/slot2"
             android:layout_width="150dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2dp"
             android:background="@drawable/radio_checked_middle"
+            android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="5.0dip"
             android:paddingLeft="20.0dip"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:paddingRight="20.0dip"
-            android:paddingTop="5.0dip"
-            android:layout_marginLeft="2dp">
+            android:paddingTop="5.0dip">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,8 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="15dp"
-            android:layout_marginTop="20dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@color/dhodu_primary_dark"
             android:fontFamily="sans-serif-light"
@@ -131,12 +130,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="15dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@color/dhodu_primary_dark"
             android:fontFamily="sans-serif-light"
             android:paddingBottom="15dp"
-            android:layout_marginLeft="5dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="15dp"

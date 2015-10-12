@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -14,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginBottom="5dp"
             android:background="?selectableItemBackgroundBorderless"
+            android:gravity="center"
             android:orientation="vertical">
 
             <com.dhodu.android.ui.CircleImageView
@@ -32,11 +33,11 @@
                 android:id="@+id/profie_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="Tap to add your name"
                 android:textAllCaps="true"
-                android:layout_gravity="center"
                 android:textAppearance="@android:style/TextAppearance.Large.Inverse"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -51,8 +52,8 @@
                 android:fontFamily="sans-serif-small"
                 android:gravity="center"
                 android:text="+919891743645"
-                android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceLargeInverse"
+                android:textColor="@android:color/black"
                 android:textSize="19sp" />
 
         </LinearLayout>

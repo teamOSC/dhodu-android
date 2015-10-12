@@ -21,16 +21,15 @@
             android:layout_gravity="center_horizontal"
             app:above_wave_color="#303F9F"
             app:blow_wave_color="#303F9F"
+            app:bottom_view_height="15dp"
+            app:holeRadius="30dp"
+            app:machineColor="#009688"
+            app:middle_view_height="140dp"
             app:progress="55"
+            app:top_view_height="25dp"
             app:wave_height="large"
             app:wave_hz="fast"
-            app:wave_length="middle"
-            app:top_view_height="25dp"
-            app:bottom_view_height="15dp"
-            app:middle_view_height="140dp"
-            app:machineColor="#009688"
-            app:holeRadius="30dp"
-            />
+            app:wave_length="middle" />
 
         <com.dhodu.android.ui.StepsView
             android:id="@+id/stepsView"

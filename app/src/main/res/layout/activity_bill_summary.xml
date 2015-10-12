@@ -47,13 +47,13 @@
             android:id="@+id/transaction_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="sans-serif-light"/>
+            android:fontFamily="sans-serif-light"
+            android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
 
 
         <android.support.v7.widget.RecyclerView
@@ -85,20 +85,21 @@
                 android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="#fff"
+                android:paddingTop="10dp"
                 android:textAllCaps="true"
+                android:textColor="#fff"
                 android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/tax_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="3dp"
                 android:fontFamily="sans-serif-medium"
+                android:paddingBottom="3dp"
+                android:paddingTop="5dp"
                 android:textColor="#fff"
                 android:textSize="11sp" />
 

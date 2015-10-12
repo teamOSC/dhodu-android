@@ -1,6 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,80 +27,80 @@
             android:orientation="vertical">
 
             <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal">-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
 
-                <!--<ImageView-->
-                    <!--android:layout_width="25dp"-->
-                    <!--android:layout_height="25dp"-->
-                    <!--android:layout_marginLeft="20dp"-->
-                    <!--android:layout_marginTop="15dp"-->
-                    <!--android:src="@drawable/servicetype" />-->
+            <!--<ImageView-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:src="@drawable/servicetype" />-->
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_marginTop="15dp"-->
-                    <!--android:fontFamily="sans-serif-light"-->
-                    <!--android:text="Select service type"-->
-                    <!--android:textColor="@android:color/black"-->
-                    <!--android:textSize="20sp" />-->
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:fontFamily="sans-serif-light"-->
+            <!--android:text="Select service type"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:textSize="20sp" />-->
 
             <!--</LinearLayout>-->
 
 
             <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="15dp"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:background="#22000000" />-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="#22000000" />-->
 
             <!--<LinearLayout-->
-                <!--android:id="@+id/service_container"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_marginTop="15dp"-->
-                <!--android:orientation="horizontal">-->
+            <!--android:id="@+id/service_container"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:orientation="horizontal">-->
 
-                <!--<CheckBox-->
-                    <!--android:id="@+id/cb_press"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:buttonTint="@color/colorAccent"-->
-                    <!--android:text="Press"-->
-                    <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
-                    <!--android:textColor="@android:color/black" />-->
+            <!--<CheckBox-->
+            <!--android:id="@+id/cb_press"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:buttonTint="@color/colorAccent"-->
+            <!--android:text="Press"-->
+            <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
+            <!--android:textColor="@android:color/black" />-->
 
-                <!--<CheckBox-->
-                    <!--android:id="@+id/cb_wash_press"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:buttonTint="@color/colorAccent"-->
-                    <!--android:text="Wash &amp; Press"-->
-                    <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
-                    <!--android:textColor="@android:color/black" />-->
+            <!--<CheckBox-->
+            <!--android:id="@+id/cb_wash_press"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:buttonTint="@color/colorAccent"-->
+            <!--android:text="Wash &amp; Press"-->
+            <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
+            <!--android:textColor="@android:color/black" />-->
 
-                <!--<CheckBox-->
-                    <!--android:id="@+id/cb_dryclean"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:buttonTint="@color/colorAccent"-->
-                    <!--android:text="Dryclean"-->
-                    <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
-                    <!--android:textColor="@android:color/black" />-->
+            <!--<CheckBox-->
+            <!--android:id="@+id/cb_dryclean"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:buttonTint="@color/colorAccent"-->
+            <!--android:text="Dryclean"-->
+            <!--android:textAppearance="@android:style/TextAppearance.Small.Inverse"-->
+            <!--android:textColor="@android:color/black" />-->
 
             <!--</LinearLayout>-->
 
             <LinearLayout
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -149,16 +148,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
-                    android:src="@drawable/timetable"
-                    android:backgroundTint="#66000000"/>
+                    android:backgroundTint="#66000000"
+                    android:src="@drawable/timetable" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -179,19 +178,19 @@
                 android:background="#22000000" />
 
             <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:id="@+id/radioGroup">
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/radio_today"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
                     android:checked="true"
+                    android:text="Today"
                     android:textAppearance="@android:style/TextAppearance.Small.Inverse"
                     android:textColor="@android:color/black" />
 
@@ -212,32 +211,32 @@
                     android:textColor="@android:color/black" />
             </RadioGroup>
 
-            <include layout="@layout/layout_time_slots"/>
+            <include layout="@layout/layout_time_slots" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:hintTextAppearance="@style/TextAppearance.AppCompat"
-                    android:hint="Have a Promo Code ?"
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_marginBottom="5dp"
-                    android:layout_gravity="center_horizontal|center_vertical">
+                    android:hint="Have a Promo Code ?"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
                     <EditText
                         android:id="@+id/promo_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
                         android:fontFamily="sans-serif-small"
                         android:hint="Have a Promo Code ?"
                         android:imeOptions="actionDone"
-                        android:layout_gravity="center_horizontal|center_vertical"
                         android:theme="@style/EditTextLightBackground" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -247,14 +246,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginLeft="10dp"
                     android:backgroundTint="@color/dhodu_primary_dark"
                     android:fontFamily="sans-serif-medium"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:layout_marginLeft="10dp"
                     android:text="Apply"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -262,21 +261,20 @@
                 android:id="@+id/terms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/agree_terms"
-                android:textSize="16sp"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                />
+                android:gravity="center_horizontal"
+                android:text="@string/agree_terms"
+                android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="8sp"
-                android:text="Delivery time : 24-48 hours"
-                android:id="@+id/textView"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:text="Delivery time : 24-48 hours"
+                android:textSize="8sp" />
 
 
         </LinearLayout>

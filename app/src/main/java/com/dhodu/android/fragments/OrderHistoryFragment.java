@@ -35,7 +35,7 @@ public class OrderHistoryFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_order_history, container, false);
         centerRecyclerview = (RecyclerView) view.findViewById(R.id.center_recyclerview);
-        progressBar=(ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         setUpAdapter();
 
@@ -58,7 +58,7 @@ public class OrderHistoryFragment extends Fragment {
                 if (e == null && getActivity() != null) {
                     int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_card_order_history);
                     centerRecyclerview.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-                    centerRecyclerview.setAdapter(new CenterAdapter((AppCompatActivity)getActivity(), list, getActivity()));
+                    centerRecyclerview.setAdapter(new CenterAdapter((AppCompatActivity) getActivity(), list, getActivity()));
                     progressBar.setVisibility(View.GONE);
                 } else {
                     progressBar.setVisibility(View.GONE);
