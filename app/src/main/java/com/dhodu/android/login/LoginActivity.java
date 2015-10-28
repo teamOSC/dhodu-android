@@ -1,6 +1,5 @@
 package com.dhodu.android.login;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,10 +24,6 @@ public class LoginActivity extends AppCompatActivity {
             LoginFragment newFragment = new LoginFragment();
             transaction.add(R.id.login_container, newFragment, "LoginFragment").commit();
 
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.dhodu_primary_dark));
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.dhodu_primary_dark));
         }
 
     }

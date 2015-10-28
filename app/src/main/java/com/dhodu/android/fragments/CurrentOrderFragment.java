@@ -344,10 +344,6 @@ public class CurrentOrderFragment extends Fragment {
             pickupTime.setText(transaction.getString("time_pick") + ", " + transaction.getString("pick_date"));
         }
 
-        if (pickTime != null) {
-            pickTime.setText(transaction.getString("time_pick") + ", " + transaction.getString("pick_date"));
-        }
-
         if (deliveryTime != null) {
 //            deliveryTime.setText(transaction.getString("drop_date"));
 //            set pickup time + 48 hours for now

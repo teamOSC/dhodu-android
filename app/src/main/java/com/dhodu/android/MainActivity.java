@@ -158,12 +158,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().setStatusBarColor(getResources().getColor(R.color.dhodu_primary_dark));
-                getWindow().setNavigationBarColor(getResources().getColor(R.color.dhodu_primary_dark));
-            }
-
         }
 
     }

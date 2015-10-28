@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/dhodu_primary</item>
         <item name="colorPrimaryDark">@color/dhodu_primary_dark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/dhodu_primary_dark</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:listViewStyle">@style/TransparentListView</item>
         <item name="android:expandableListViewStyle">@style/TransparentExpandableListView</item>

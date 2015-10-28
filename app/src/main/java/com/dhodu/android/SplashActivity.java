@@ -5,14 +5,12 @@ import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -27,15 +25,9 @@ public class SplashActivity extends AppCompatActivity {
     ImageView imageSplash;
 
     public void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.RGBA_8888);
         setContentView(R.layout.activity_splash);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.dhodu_primary_dark));
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.dhodu_primary_dark));
-        }
 
         imageSplash = (ImageView) findViewById(R.id.loader_image);
         final TextView tagline = (TextView) findViewById(R.id.tagline);

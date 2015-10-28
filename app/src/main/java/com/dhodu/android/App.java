@@ -12,7 +12,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        registerActivityLifecycleCallbacks(new LifeCycleHandler());
         Parse.initialize(this, "8hl3wDwaozzqWEGdkN8aCaLdWOLNnAxPlXXj53d0", "ado3ZoaVnQgpTixUIWiomvwzYcoPqAijSMWGISMM");
     }
 }
