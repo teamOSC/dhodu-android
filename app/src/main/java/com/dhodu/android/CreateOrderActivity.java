@@ -1,7 +1,9 @@
 package com.dhodu.android;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -174,8 +176,16 @@ public class CreateOrderActivity extends AppCompatActivity {
             }
         });
 
+        c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        if (hour >= 20) {
+            radioGroup.check(R.id.radio_tomorrow);
+        }else{
+            radioGroup.check(R.id.radio_today);
+            setTimeSlotValidation();
+        }
+
         setTimeslotOnClickListener();
-        setTimeSlotValidation();
 
         applyPromo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -313,8 +323,17 @@ public class CreateOrderActivity extends AppCompatActivity {
     private void setTimeSlotValidation() {
         c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
-        if (hour >= 20 && hour <= 0) {
+        if (hour >= 20) {
             disableAllTimeSlots();
+            final AlertDialog.Builder alert = new AlertDialog.Builder(CreateOrderActivity.this);
+            alert.setMessage("Uhoh! We are done with today. How about we show up tomorrow?");
+            alert.setCancelable(true);
+            alert.setNegativeButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        }
+                    });
+            alert.show();
         } else {
             if (hour >= 8)
                 slot1.setEnabled(false);

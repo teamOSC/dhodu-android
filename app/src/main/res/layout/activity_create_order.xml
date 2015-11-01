@@ -189,7 +189,6 @@
                     android:id="@+id/radio_today"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:text="Today"
                     android:textAppearance="@android:style/TextAppearance.Small.Inverse"
                     android:textColor="@android:color/black" />
