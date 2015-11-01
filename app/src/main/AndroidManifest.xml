@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -30,14 +31,15 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="locked"></activity>
+            android:screenOrientation="locked"/>
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".SplashActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,13 +49,13 @@
         </activity>
         <activity
             android:name=".DhoduIntro"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name"/>
         <activity
             android:name=".addresses.MyAddressesActivity"
-            android:label="@string/title_activity_my_addresses"></activity>
+            android:label="@string/title_activity_my_addresses"/>
         <activity
             android:name=".addresses.AddAddressActivity"
-            android:label="Add Address"></activity>
+            android:label="Add Address"/>
         <activity
             android:name=".RateCardActivity"
             android:label="@string/title_activity_rate_card"

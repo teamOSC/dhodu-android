@@ -214,8 +214,9 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     parseUser.put("photo", parseFile.getUrl());
-                    parseUser.saveInBackground();
+                    parseUser.saveEventually();
                 } else {
+                    Toast.makeText(getApplicationContext(), "Error saving photo", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
@@ -300,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     photoFile = createImageFile();
                 } catch (IOException ex) {
-
+                    ex.printStackTrace();
                 }
                 // Continue only if the File was successfully created
                 if (photoFile != null) {
