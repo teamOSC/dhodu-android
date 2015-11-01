@@ -28,6 +28,10 @@
                 android:icon="@drawable/star"
                 android:title="Rate Us" />
             <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/star"
+                android:title="About Dhodu" />
+            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/logout"
                 android:title="Logout" />

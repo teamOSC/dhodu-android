@@ -134,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_rate:
                                 startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("market://details?id=dhodu.android")));
                                 break;
+                            case R.id.nav_about:
+                                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                                break;
                             case R.id.nav_logout:
                                 final ProgressDialog pDialog = new ProgressDialog(MainActivity.this);
                                 pDialog.setMessage("Logging out...");
