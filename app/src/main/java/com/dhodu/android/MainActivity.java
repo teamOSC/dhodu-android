@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -22,6 +21,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     LinearLayout topView;
 
-    TextView tvProfileMobile;
+    TextView profileMobile;
     TextView profileName;
     CircleImageView profilePhoto;
     ImageView editProfile;
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             orderStatus = (TextView) findViewById(R.id.orderStatus);
             expandCreateOrder = (ImageView) findViewById(R.id.expand);
-            editProfile = (ImageView) findViewById(R.id.edit_profile);
             statusView = findViewById(R.id.statusView);
 
             setSupportActionBar(toolbar);
@@ -108,8 +107,12 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.setupWithViewPager(viewPager);
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            View header = LayoutInflater.from(this).inflate(R.layout.nav_header, null);
             if (navigationView != null) {
-                setUpProfileView();
+
+                navigationView.addHeaderView(header);
+                setUpProfileView(header);
+
                 navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -150,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
+            editProfile = (ImageView) header.findViewById(R.id.edit_profile);
 
             editProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -242,15 +246,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setUpProfileView() {
-        tvProfileMobile = (TextView) findViewById(R.id.profile_mobile);
-        profileName = (TextView) findViewById(R.id.profie_name);
-        profilePhoto = (CircleImageView) findViewById(R.id.profile_pic);
+    private void setUpProfileView(View header) {
+
+        profileMobile = (TextView) header.findViewById(R.id.profile_mobile);
+        profileName = (TextView) header.findViewById(R.id.profie_name);
+        profilePhoto = (CircleImageView) header.findViewById(R.id.profile_pic);
 
         final ParseUser pUser = ParseUser.getCurrentUser();
         if (pUser != null) {
-            tvProfileMobile.setText(pUser.getUsername()
-            );
+            profileMobile.setText(pUser.getUsername());
             if (pUser.getString("photo") != null)
                 Picasso.with(this).load(pUser.getString("photo")).placeholder(R.drawable.avatar_blank).into(profilePhoto);
             if (pUser.getString("name") != null)

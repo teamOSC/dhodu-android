@@ -13,6 +13,7 @@
         android:gravity="bottom">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -58,15 +59,14 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/edit_profile"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/pencil" />
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/edit_profile"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="25dp"
+        android:src="@drawable/pencil" />
 
 </FrameLayout>
