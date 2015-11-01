@@ -25,9 +25,11 @@ import com.dhodu.android.MainActivity;
 import com.dhodu.android.R;
 import com.dhodu.android.addresses.AddAddressActivity;
 import com.dhodu.android.utils.SMSReceiver;
-import com.dhodu.android.utils.Utils;
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -36,6 +38,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class OtpFragment extends Fragment {
@@ -113,7 +116,7 @@ public class OtpFragment extends Fragment {
         resendOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.requestOtp(getActivity(), phone);
+                requestOtp(phone);
                 Toast.makeText(getActivity(), "We've re sent you an OTP", Toast.LENGTH_SHORT).show();
             }
         });
@@ -175,7 +178,7 @@ public class OtpFragment extends Fragment {
         otpIntentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
         otpIntentFilter.setPriority(999);
         getActivity().registerReceiver(smsReceiver, otpIntentFilter);
-        Utils.requestOtp(getActivity(), phone);
+        requestOtp(phone);
     }
 
     private void verifyOTP(final String code) {
@@ -185,10 +188,11 @@ public class OtpFragment extends Fragment {
         pDialog.show();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("OTP");
         query.whereEqualTo("username", phone);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> list, ParseException e) {
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    if (code.equals(list.get(0).getString("otp"))) {
+                    if (code.equals(object.getString("otp"))) {
                         pDialog.dismiss();
                         proceed();
                     } else {
@@ -219,7 +223,7 @@ public class OtpFragment extends Fragment {
                 if (e == null) {
 
                     if (objects.size() > 0) {
-                        ParseUser.logInInBackground(username, Utils.generatePassword(username), new LogInCallback() {
+                        ParseUser.logInInBackground(username, "dhodu", new LogInCallback() {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
                                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
@@ -268,7 +272,7 @@ public class OtpFragment extends Fragment {
         pDialog.setCancelable(false);
         pDialog.show();
         user.setUsername(username);
-        user.setPassword(Utils.generatePassword(username));
+        user.setPassword("dhodu");
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
@@ -305,5 +309,19 @@ public class OtpFragment extends Fragment {
             }
         });
 
+    }
+
+    private void requestOtp(String phone){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("number", phone);
+        ParseCloud.callFunctionInBackground("sendOTP", params, new FunctionCallback<Object>() {
+            @Override
+            public void done(Object object, ParseException e) {
+                if (e != null) {
+                    Toast.makeText(getActivity(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
