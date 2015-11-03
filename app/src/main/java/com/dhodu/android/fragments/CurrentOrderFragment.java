@@ -1,7 +1,9 @@
 package com.dhodu.android.fragments;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -18,23 +20,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhodu.android.BillSummaryActivity;
 import com.dhodu.android.CreateOrderActivity;
 import com.dhodu.android.CreateOrderDialog;
-import com.dhodu.android.MainActivity;
 import com.dhodu.android.R;
 import com.dhodu.android.RateCardActivity;
 import com.dhodu.android.ui.StepsView;
 import com.dhodu.android.ui.WashingMachineView;
+import com.dhodu.android.utils.OrderSpinnerAdapter;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -45,6 +49,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +65,7 @@ public class CurrentOrderFragment extends Fragment {
     ParsePushBroadcastReceiver pushReceiver = null;
     IntentFilter intentFilter;
     FloatingActionButton createFab;
+    Spinner orderSpinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -71,6 +77,8 @@ public class CurrentOrderFragment extends Fragment {
         loadingView = view.findViewById(R.id.loadingView);
         createFab = (FloatingActionButton) view.findViewById(R.id.neworder_fab);
         createFab.setVisibility(View.GONE);
+
+        orderSpinner = (Spinner) view.findViewById(R.id.orders_spinner);
 
         fetchCurrentOrders();
 
@@ -124,19 +132,49 @@ public class CurrentOrderFragment extends Fragment {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null && objects.size() != 0) {
-                    for (int i = 0; i < objects.size(); i++) {
-                        setUpOrderCard(objects.get(i));
-                        createFab.setVisibility(View.VISIBLE);
+                    if (objects.size()==1) {
+                        orderSpinner.setVisibility(View.GONE);
+                        setUpOrderCard(objects.get(0));
+                    } else {
+                        orderSpinner.setVisibility(View.VISIBLE);
+                        setupSpinner(objects);
                     }
+                    createFab.setVisibility(View.VISIBLE);
+                    loadingView.setVisibility(View.GONE);
                 } else {
                     createFab.setVisibility(View.GONE);
                     setUpOrderCard(null);
+                    loadingView.setVisibility(View.GONE);
                 }
             }
         });
     }
 
+    private void setupSpinner(final List<ParseObject> objects) {
+        List<String> orderIds = new ArrayList<>();
+        for (ParseObject object: objects) {
+            orderIds.add(object.getObjectId());
+        }
+        String[] ids = new String[orderIds.size()];
+        ids = orderIds.toArray(ids);
+        OrderSpinnerAdapter adapter = new OrderSpinnerAdapter(getActivity(),R.layout.item_order_spinner,ids,objects);
+        orderSpinner.setAdapter(adapter);
+
+        orderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setUpOrderCard(objects.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     private void setUpOrderCard(ParseObject object) {
+        rootContainer.removeAllViews();
         int layoutId;
         if (object != null)
             layoutId = getLayoutIdForStatus(object.getInt("status"));
@@ -147,7 +185,6 @@ public class CurrentOrderFragment extends Fragment {
         View cardView = inflater.inflate(layoutId, null);
         stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
         rootContainer.addView(cardView);
-        loadingView.setVisibility(View.GONE);
         setCardDetails(object, cardView);
     }
 
@@ -193,19 +230,54 @@ public class CurrentOrderFragment extends Fragment {
 
         switch (statusCode) {
             case 1:
-                setStatusToHeader(transaction, "Booking confirmed.", R.drawable.ic_cancel_white_48dp);
+                ImageView cancelOrder = (ImageView) cardView.findViewById(R.id.cancel_order);
+                cancelOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final AlertDialog.Builder cancelDialog = new AlertDialog.Builder(getActivity());
+                        cancelDialog.setTitle("Cancel Booking");
+                        cancelDialog.setCancelable(true);
+                        cancelDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                final ProgressDialog pDialog = new ProgressDialog(getActivity());
+                                pDialog.setMessage("Canceling order...");
+                                pDialog.setCancelable(false);
+                                pDialog.show();
+                                transaction.put("status", 13);
+                                transaction.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            Toast.makeText(getActivity(), "Order canceled", Toast.LENGTH_SHORT).show();
+                                            pDialog.dismiss();
+                                            updateStatusCard();
+                                        } else {
+                                            pDialog.dismiss();
+                                            Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        cancelDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        cancelDialog.setMessage("Are you sure you want to cancel the booking?");
+                        cancelDialog.show();
+                    }
+                });
                 break;
             case 2:
-                setStatusToHeader(transaction, "Laundry picked. Being washed", R.drawable.ic_cancel_white_48dp);
                 break;
             case 3:
-                setStatusToHeader(transaction, "Laundry ready. Ready to be delivered", 0);
                 break;
             case 4:
-                setStatusToHeader(transaction, "Laundry out for delivery.", 0);
                 break;
             case 5:
-                setStatusToHeader(transaction, "Laundry delivered", 0);
                 break;
             default:
                 slotWashPress.setOnClickListener(new View.OnClickListener() {
@@ -426,7 +498,6 @@ public class CurrentOrderFragment extends Fragment {
                                     Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
                                     updateStatusCard();
                                     pDialog.dismiss();
-                                    setStatusToHeader(null, null, 0);
                                 } else {
                                     e.printStackTrace();
                                     Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
@@ -479,9 +550,6 @@ public class CurrentOrderFragment extends Fragment {
         }
     }
 
-    private void setStatusToHeader(ParseObject transaction, String status, int imageResId) {
-        ((MainActivity) getActivity()).setStatusToHeader(transaction, status, imageResId);
-    }
 
     public void updateStatusCard() {
         Animation slidedown = AnimationUtils.loadAnimation(getActivity(),

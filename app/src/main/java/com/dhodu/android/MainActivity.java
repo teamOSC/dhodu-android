@@ -80,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             topView = (LinearLayout) findViewById(R.id.topView);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
-            orderStatus = (TextView) findViewById(R.id.orderStatus);
-            expandCreateOrder = (ImageView) findViewById(R.id.expand);
-            statusView = findViewById(R.id.statusView);
 
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -6,41 +6,56 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/rootContainer"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/loadingView"
+            <Spinner
+                android:id="@+id/orders_spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="400dp"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:visibility="gone"/>
 
-                <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/progressBar"
-                    style="@style/Widget.AppCompat.ProgressBar"
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rootContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/loadingView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_height="400dp"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:indeterminate="true"
-                    android:minHeight="10dp" />
-            </RelativeLayout>
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
-        </FrameLayout>
+                    <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/progressBar"
+                        style="@style/Widget.AppCompat.ProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:indeterminate="true"
+                        android:minHeight="10dp" />
+                </RelativeLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/neworder_fab"
         style="@style/FabStyle"
-        android:src="@drawable/plus"
-        android:layout_gravity="bottom|right|end" />
+        android:layout_gravity="bottom|right|end"
+        android:src="@drawable/plus" />
 
 </FrameLayout>
