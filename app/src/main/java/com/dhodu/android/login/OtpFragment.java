@@ -187,10 +187,10 @@ public class OtpFragment extends Fragment {
         smsReceiver = new SMSReceiver() {
             @Override
             protected void smsReceived(String code) {
-//                password.setText(code);
-//                verifyManual.setVisibility(View.GONE);
-//                verifyOTP(code);
-//                getActivity().unregisterReceiver(this);
+                password.setText(code);
+                verifyManual.setVisibility(View.GONE);
+                verifyOTP(code);
+                getActivity().unregisterReceiver(this);
             }
         };
         otpIntentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
