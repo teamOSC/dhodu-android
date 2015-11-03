@@ -122,7 +122,7 @@
         android:layout_height="25dp"
         android:layout_gravity="top|left"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_cancel_white_48dp"
+        android:src="@drawable/ic_cancel_black_48dp"
         android:background="?selectableItemBackgroundBorderless"/>
 
     <ImageView
