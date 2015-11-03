@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-small"
-                android:hint="Name"
+                android:hint="Label"
                 android:imeOptions="actionNext"
                 android:inputType="textCapWords"
                 android:theme="@style/EditTextLightBackground" />

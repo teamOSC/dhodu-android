@@ -164,14 +164,15 @@ public class CreateOrderActivity extends AppCompatActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                int radioButtonID = radioGroup.getCheckedRadioButtonId();
-                View radioButton = radioGroup.findViewById(radioButtonID);
+                View radioButton = radioGroup.findViewById(i);
                 selectedTimeSlot = -1;
                 deselectAllTimeSlots();
-                if (radioGroup.indexOfChild(radioButton) == 0) {
-                    setTimeSlotValidation();
-                } else {
-                    enableAllTimeSlots();
+                if (((RadioButton) radioButton).isChecked()) {
+                    if (radioGroup.indexOfChild(radioButton) == 0) {
+                        setTimeSlotValidation();
+                    } else {
+                        enableAllTimeSlots();
+                    }
                 }
             }
         });
@@ -180,7 +181,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         int hour = c.get(Calendar.HOUR_OF_DAY);
         if (hour >= 20) {
             radioGroup.check(R.id.radio_tomorrow);
-        }else{
+        } else {
             radioGroup.check(R.id.radio_today);
             setTimeSlotValidation();
         }
@@ -331,6 +332,7 @@ public class CreateOrderActivity extends AppCompatActivity {
             alert.setNegativeButton("Ok",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
+                            radioGroup.check(R.id.radio_tomorrow);
                         }
                     });
             alert.show();

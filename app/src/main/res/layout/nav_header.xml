@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
+    android:layout_height="130dp"
     android:background="@drawable/app_background_dark"
     android:orientation="horizontal">
 
@@ -9,64 +9,76 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:gravity="bottom">
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="20dp"
             android:background="?selectableItemBackgroundBorderless"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <com.dhodu.android.ui.CircleImageView
                 android:id="@+id/profile_pic"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="bottom"
                 android:gravity="bottom"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:src="@drawable/avatar_blank" />
 
-            <TextView
-                android:id="@+id/profie_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Tap to add your name"
-                android:textAllCaps="true"
-                android:textAppearance="@android:style/TextAppearance.Large.Inverse"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/profile_mobile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="3dp"
-                android:fontFamily="sans-serif-small"
-                android:gravity="bottom"
-                android:text="+919891743645"
-                android:textAppearance="?android:attr/textAppearanceLargeInverse"
-                android:textSize="17sp" />
+                <TextView
+                    android:id="@+id/profie_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Tap to add your name"
+                    android:textAllCaps="true"
+                    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/profile_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="sans-serif-small"
+                    android:gravity="bottom"
+                    android:text="+919891743645"
+                    android:textAppearance="?android:attr/textAppearanceLargeInverse"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/edit_profile"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="15dp"
+            android:src="@drawable/pencil" />
+
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/edit_profile"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="right|bottom"
-        android:layout_margin="25dp"
-        android:src="@drawable/pencil" />
 
 </FrameLayout>
