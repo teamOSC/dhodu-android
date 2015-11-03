@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.setupWithViewPager(viewPager);
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            View header = LayoutInflater.from(this).inflate(R.layout.nav_header, null);
+            View header = LayoutInflater.from(this).inflate(R.layout.nav_header, navigationView, false);
             if (navigationView != null) {
 
                 navigationView.addHeaderView(header);
