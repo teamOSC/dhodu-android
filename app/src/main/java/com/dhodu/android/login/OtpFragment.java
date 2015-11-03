@@ -5,8 +5,10 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,7 +52,7 @@ public class OtpFragment extends Fragment {
 
     EditText password;
     String phone;
-    TextView verifying, resendOtp, noOtp;
+    TextView verifying, resendOtp, noOtp, timer;
     Button verifyManual;
 
     public static OtpFragment newInstance(String phone) {
@@ -74,6 +76,7 @@ public class OtpFragment extends Fragment {
         verifyManual = (Button) view.findViewById(R.id.verify_manual);
         noOtp = (TextView) view.findViewById(R.id.no_otp);
         resendOtp = (TextView) view.findViewById(R.id.resend_otp);
+        timer = (TextView) view.findViewById(R.id.timer);
 
         verifying.setText("We have sent an SMS with an activation code to +91- " + phone + " ...");
 
@@ -116,6 +119,21 @@ public class OtpFragment extends Fragment {
         resendOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new CountDownTimer(30000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        resendOtp.setEnabled(false);
+                        resendOtp.setTextColor(Color.parseColor("#22ffffff"));
+                        timer.setVisibility(View.VISIBLE);
+                        timer.setText(millisUntilFinished / 1000 + "");
+                    }
+
+                    public void onFinish() {
+                        timer.setVisibility(View.GONE);
+                        resendOtp.setTextColor(Color.parseColor("#ffffff"));
+                        resendOtp.setEnabled(true);
+                    }
+                }.start();
                 requestOtp(phone);
                 Toast.makeText(getActivity(), "We've re sent you an OTP", Toast.LENGTH_SHORT).show();
             }

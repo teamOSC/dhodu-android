@@ -141,4 +141,15 @@
         android:textColor="#ffffff"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/resend_otp"
+        android:layout_toEndOf="@+id/resend_otp"
+        android:layout_toRightOf="@+id/resend_otp"
+        android:text="30"
+        android:textColor="#ffffff"
+        android:visibility="gone" />
+
 </RelativeLayout>
