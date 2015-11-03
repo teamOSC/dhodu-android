@@ -10,6 +10,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,11 +29,13 @@ import android.widget.Toast;
 
 import com.dhodu.android.BillSummaryActivity;
 import com.dhodu.android.CreateOrderActivity;
+import com.dhodu.android.CreateOrderDialog;
 import com.dhodu.android.MainActivity;
 import com.dhodu.android.R;
 import com.dhodu.android.RateCardActivity;
 import com.dhodu.android.ui.StepsView;
 import com.dhodu.android.ui.WashingMachineView;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -43,6 +46,7 @@ import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by naman on 06/09/15.
@@ -55,6 +59,7 @@ public class CurrentOrderFragment extends Fragment {
     View loadingView;
     ParsePushBroadcastReceiver pushReceiver = null;
     IntentFilter intentFilter;
+    FloatingActionButton createFab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -64,6 +69,8 @@ public class CurrentOrderFragment extends Fragment {
 
         rootContainer = (FrameLayout) view.findViewById(R.id.rootContainer);
         loadingView = view.findViewById(R.id.loadingView);
+        createFab = (FloatingActionButton) view.findViewById(R.id.neworder_fab);
+        createFab.setVisibility(View.GONE);
 
         fetchCurrentOrders();
 
@@ -77,6 +84,14 @@ public class CurrentOrderFragment extends Fragment {
 
         intentFilter = new IntentFilter("com.parse.push.intent.RECEIVE");
         getActivity().registerReceiver(pushReceiver, intentFilter);
+
+        createFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateOrderDialog createOrderDialog = new CreateOrderDialog();
+                createOrderDialog.show(getChildFragmentManager(), "Dialog fragment");
+            }
+        });
 
         return view;
     }
@@ -105,13 +120,16 @@ public class CurrentOrderFragment extends Fragment {
         query.whereEqualTo("customer", ParseUser.getCurrentUser());
         query.include("Agent");
         query.whereLessThanOrEqualTo("status", 5);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                    setUpOrderCard(object);
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null && objects.size() != 0) {
+                    for (int i = 0; i < objects.size(); i++) {
+                        setUpOrderCard(objects.get(i));
+                        createFab.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    e.printStackTrace();
+                    createFab.setVisibility(View.GONE);
                     setUpOrderCard(null);
                 }
             }

@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rootContainer"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/loadingView"
-            android:layout_width="wrap_content"
-            android:layout_height="400dp"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:visibility="visible">
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rootContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
-            <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/progressBar"
-                style="@style/Widget.AppCompat.ProgressBar"
+            <RelativeLayout
+                android:id="@+id/loadingView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_height="400dp"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:indeterminate="true"
-                android:minHeight="10dp" />
-        </RelativeLayout>
+                android:orientation="vertical"
+                android:visibility="visible">
 
-    </FrameLayout>
-</ScrollView>
+                <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/progressBar"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:indeterminate="true"
+                    android:minHeight="10dp" />
+            </RelativeLayout>
+
+        </FrameLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/neworder_fab"
+        style="@style/FabStyle"
+        android:src="@drawable/plus"
+        android:layout_gravity="bottom|right|end" />
+
+</FrameLayout>

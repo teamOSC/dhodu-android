@@ -78,37 +78,51 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000" />
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
-            android:paddingBottom="15dp"
-            android:paddingLeft="20dp"
-            android:paddingTop="15dp"
-            android:text="Privacy Policy"
-            android:textSize="17sp" />
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#22000000" />
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+            <TextView
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                android:text="Privacy Policy"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
-            android:paddingBottom="15dp"
-            android:paddingLeft="20dp"
-            android:paddingTop="15dp"
-            android:text="Terms &amp; Conditions"
-            android:textSize="17sp" />
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#22000000" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackgroundBorderless"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                android:text="Terms &amp; Conditions"
+                android:textSize="17sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
