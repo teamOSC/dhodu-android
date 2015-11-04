@@ -122,8 +122,8 @@
         android:layout_height="25dp"
         android:layout_gravity="top|left"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_cancel_black_48dp"
-        android:background="?selectableItemBackgroundBorderless"/>
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_cancel_black_48dp" />
 
     <ImageView
         android:id="@+id/call_agent"
