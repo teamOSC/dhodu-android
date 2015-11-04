@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -30,6 +31,7 @@ public class RateCardFragment extends Fragment {
     public static final String MENS_WEAR = "MEN'S WEAR";
     public static final String WOMEN_WEAR = "WOMEN WEAR";
     public static final String HOUSEHOLD = "HOUSEHOLD";
+    private List<ParseObject> clothesList;
 
 
     public RateCardFragment() {
@@ -62,18 +64,31 @@ public class RateCardFragment extends Fragment {
         servicesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         serviceType.setAdapter(servicesAdapter);
 
+        clothesList = new ArrayList<>();
+
+        serviceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                recyclerView.setAdapter(new RateCardAdapter(clothesList, i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         ParseQuery<ParseObject> query = new ParseQuery<>("Clothes");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 progressBar.setVisibility(View.GONE);
                 if (e == null) {
-                    List<ParseObject> list = new ArrayList<>();
                     for (ParseObject cloth : objects) {
                         if (cloth.getString("category").equals(getArguments().getString("category")))
-                            list.add(cloth);
+                            clothesList.add(cloth);
                     }
-                    recyclerView.setAdapter(new RateCardAdapter(list, serviceType.getSelectedItemPosition()));
+                    recyclerView.setAdapter(new RateCardAdapter(clothesList, serviceType.getSelectedItemPosition()));
                 } else {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Error fetching rate list", Toast.LENGTH_SHORT).show();

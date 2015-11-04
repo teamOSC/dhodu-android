@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@color/dhodu_primary"
-        android:elevation="5dp"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />

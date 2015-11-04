@@ -22,10 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhodu.android.addresses.MyAddressesActivity;
-import com.parse.GetCallback;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -107,48 +105,31 @@ public class CreateOrderActivity extends AppCompatActivity {
                     return;
                 }
 
-                final ProgressDialog pDialog = new ProgressDialog(CreateOrderActivity.this);
-                pDialog.setMessage("Placing order...");
-                pDialog.setCancelable(false);
-                pDialog.show();
-                final ParseObject transaction = new ParseObject("Transaction");
-                transaction.put("status", 0);
-                transaction.put("customer", ParseUser.getCurrentUser());
-                transaction.put("time_pick", getTimeslotForNumber(selectedTimeSlot));
-                transaction.put("pick_date", getDate());
-                transaction.put("address_index", addressindex);
-                transaction.put("comments", "");
-                ParseGeoPoint geoPoint = new ParseGeoPoint(latitude, longitude);
-                transaction.put("location", geoPoint);
-                transaction.put("service_type", serviceType);
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Manager");
-                query.whereNear("location", geoPoint);
-                query.getFirstInBackground(new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject object, com.parse.ParseException e) {
-                        if (e == null) {
-                            transaction.put("assigned_manager", object);
-                            transaction.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(com.parse.ParseException e) {
-                                    if (e == null) {
-                                        pDialog.dismiss();
-                                        Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(CreateOrderActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                        finish();
-                                    } else {
-                                        pDialog.dismiss();
-                                        Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                                    }
+                if(ParseUser.getCurrentUser().get("name") != ""){
+                    placeOrder();
+                }else{
+                    final AlertDialog.Builder alert = new AlertDialog.Builder(CreateOrderActivity.this);
+                    final EditText name = new EditText(CreateOrderActivity.this);
+                    name.setHint("James Bond");
+                    alert.setView(name);
+                    alert.setMessage("What do we call you?");
+                    alert.setCancelable(true);
+                    alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String userName = name.getText().toString().trim();
+                            ParseUser pUser = ParseUser.getCurrentUser();
+                            pUser.put("name", userName);
+                            pUser.saveInBackground();
+                            placeOrder();
+                        }
+                    });
+                    alert.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
                                 }
                             });
-                        } else {
-                            pDialog.dismiss();
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
+                    alert.show();
+                }
             }
         });
 
@@ -448,5 +429,36 @@ public class CreateOrderActivity extends AppCompatActivity {
             default:
                 return "8-8 PM";
         }
+    }
+
+    private void placeOrder(){
+        final ProgressDialog pDialog = new ProgressDialog(CreateOrderActivity.this);
+        pDialog.setMessage("Placing order...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        final ParseObject transaction = new ParseObject("Transaction");
+        transaction.put("status", 0);
+        transaction.put("customer", ParseUser.getCurrentUser());
+        transaction.put("time_pick", getTimeslotForNumber(selectedTimeSlot));
+        transaction.put("pick_date", getDate());
+        transaction.put("address_index", addressindex);
+        transaction.put("comments", "");
+        ParseGeoPoint geoPoint = new ParseGeoPoint(latitude, longitude);
+        transaction.put("location", geoPoint);
+        transaction.put("service_type", serviceType);
+        transaction.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(com.parse.ParseException e) {
+                if (e == null) {
+                    pDialog.dismiss();
+                    Toast.makeText(getBaseContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CreateOrderActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
+                } else {
+                    pDialog.dismiss();
+                    Toast.makeText(getBaseContext(), "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
