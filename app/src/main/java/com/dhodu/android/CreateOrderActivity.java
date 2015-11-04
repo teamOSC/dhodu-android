@@ -97,8 +97,7 @@ public class CreateOrderActivity extends AppCompatActivity {
                     Toast.makeText(view.getContext(), "Select time slot", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                if (ParseUser.getCurrentUser().get("name") != "") {
+                if(ParseUser.getCurrentUser().getString("name") != null){
                     placeOrder();
                 } else {
                     final AlertDialog.Builder alert = new AlertDialog.Builder(CreateOrderActivity.this);
