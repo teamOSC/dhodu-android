@@ -48,6 +48,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.branch.referral.Branch;
+
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                                 ParseUser.logOutInBackground(new LogOutCallback() {
                                     @Override
                                     public void done(ParseException e) {
+                                        Branch.getInstance().logout();
                                         pDialog.dismiss();
                                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                                     }

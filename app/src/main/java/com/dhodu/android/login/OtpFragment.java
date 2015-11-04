@@ -43,6 +43,8 @@ import com.parse.SignUpCallback;
 import java.util.HashMap;
 import java.util.List;
 
+import io.branch.referral.Branch;
+
 public class OtpFragment extends Fragment {
 
     public static final String TAG = "OtpFragment";
@@ -245,6 +247,7 @@ public class OtpFragment extends Fragment {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
                                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                                    Branch.getInstance().setIdentity(user.getObjectId());
                                     installation.put("user", user);
                                     installation.addUnique("channels", "user");
                                     installation.saveInBackground(new SaveCallback() {
@@ -295,6 +298,7 @@ public class OtpFragment extends Fragment {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
+                    Branch.getInstance().setIdentity(user.getObjectId());
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                     installation.put("user", user);
                     installation.addUnique("channels", "user");
