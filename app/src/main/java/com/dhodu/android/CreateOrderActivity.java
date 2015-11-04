@@ -2,12 +2,8 @@ package com.dhodu.android;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +22,8 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,9 +44,6 @@ public class CreateOrderActivity extends AppCompatActivity {
     Button applyPromo;
     int selectedTimeSlot = -1;
 
-    double latitude = 0;
-    double longitude = 0;
-    int locationShifted = 0;
     int addressindex = 0;
     Calendar c;
 
@@ -80,8 +75,6 @@ public class CreateOrderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("New order");
 
-        setCurrentLocation(this);
-
         locationAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,10 +97,9 @@ public class CreateOrderActivity extends AppCompatActivity {
                     Toast.makeText(view.getContext(), "Select time slot", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if(ParseUser.getCurrentUser().getString("name") != null){
                     placeOrder();
-                }else{
+                } else {
                     final AlertDialog.Builder alert = new AlertDialog.Builder(CreateOrderActivity.this);
                     final EditText name = new EditText(CreateOrderActivity.this);
                     name.setHint("James Bond");
@@ -222,85 +214,6 @@ public class CreateOrderActivity extends AppCompatActivity {
 
     }
 
-    public void setCurrentLocation(Context context) {
-
-        final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
-        try {
-            locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 1000, 0,
-                    new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                            locationShifted++;
-                            if (locationShifted > 2) {
-                                try {
-                                    locationManager.removeUpdates(this);
-                                } catch (SecurityException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                        }
-
-                        @Override
-                        public void onProviderEnabled(String provider) {
-
-                        }
-
-                        @Override
-                        public void onProviderDisabled(String provider) {
-
-                        }
-                    });
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-
-        try {
-
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    1000, 0, new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                            locationShifted++;
-                            if (locationShifted > 2) {
-                                try {
-                                    locationManager.removeUpdates(this);
-                                } catch (SecurityException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                        }
-
-                        @Override
-                        public void onProviderEnabled(String provider) {
-
-                        }
-
-                        @Override
-                        public void onProviderDisabled(String provider) {
-
-                        }
-                    });
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void setTimeSlotValidation() {
         c = Calendar.getInstance();
@@ -431,7 +344,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         }
     }
 
-    private void placeOrder(){
+    private void placeOrder() {
         final ProgressDialog pDialog = new ProgressDialog(CreateOrderActivity.this);
         pDialog.setMessage("Placing order...");
         pDialog.setCancelable(false);
@@ -443,6 +356,18 @@ public class CreateOrderActivity extends AppCompatActivity {
         transaction.put("pick_date", getDate());
         transaction.put("address_index", addressindex);
         transaction.put("comments", "");
+
+        ParseUser currentuser = ParseUser.getCurrentUser();
+        JSONArray address = currentuser.getJSONArray("address");
+        double latitude, longitude;
+        try {
+            latitude = address.getJSONObject(addressindex).getDouble("latitude");
+            longitude = address.getJSONObject(addressindex).getDouble("longitude");
+        } catch (Exception e) {
+            e.printStackTrace();
+            latitude = 0;
+            longitude = 0;
+        }
         ParseGeoPoint geoPoint = new ParseGeoPoint(latitude, longitude);
         transaction.put("location", geoPoint);
         transaction.put("service_type", serviceType);

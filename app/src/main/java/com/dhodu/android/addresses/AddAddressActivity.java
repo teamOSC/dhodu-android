@@ -2,6 +2,12 @@ package com.dhodu.android.addresses;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -10,11 +16,22 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhodu.android.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -23,20 +40,36 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
-public class AddAddressActivity extends AppCompatActivity {
+
+public class AddAddressActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private Toolbar toolbar;
     private EditText name;
     private EditText flat;
     private EditText street;
-    private EditText locality;
+    private AutoCompleteTextView locality;
     private EditText city;
     private EditText pincode;
     private EditText referral;
+    private View currentLocation;
 
     private String action;
     private int addressIndex;
+
+    protected GoogleApiClient mGoogleApiClient;
+    private PlaceAutoCompleteAdapter mAdapter;
+
+    private LatLng coordinates;
+    double latitude = 0;
+    double longitude = 0;
+    int locationShifted = 0;
+
+    private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-57.965341647205726, 144.9987719580531),
+            new LatLng(72.77492067739843, -9.998857788741589));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +83,11 @@ public class AddAddressActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.name);
         flat = (EditText) findViewById(R.id.address_flat);
         street = (EditText) findViewById(R.id.address_street);
-        locality = (EditText) findViewById(R.id.address_locality);
+        locality = (AutoCompleteTextView) findViewById(R.id.address_locality);
         city = (EditText) findViewById(R.id.address_city);
         pincode = (EditText) findViewById(R.id.address_pincode);
         referral = (EditText) findViewById(R.id.referral);
+        currentLocation = findViewById(R.id.currentLocation);
         AppCompatButton submit = (AppCompatButton) findViewById(R.id.submit);
         AppCompatButton skip = (AppCompatButton) findViewById(R.id.skip);
 
@@ -101,6 +135,15 @@ public class AddAddressActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        currentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    setCurrentLocation(AddAddressActivity.this);
+            }
+        });
+
+        setupLocation();
     }
 
     @Override
@@ -136,6 +179,8 @@ public class AddAddressActivity extends AppCompatActivity {
                     address.put("city", city.getText().toString());
                     address.put("pin", pincode.getText().toString());
                     address.put("name", name.getText().toString());
+                    address.put("latitude", latitude);
+                    address.put("longitude", longitude);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -185,5 +230,156 @@ public class AddAddressActivity extends AppCompatActivity {
         array.remove(addressIndex);
         addUserAddress();
 
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    private void setupLocation() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        mGoogleApiClient.connect();
+
+        mAdapter = new PlaceAutoCompleteAdapter(this, android.R.layout.simple_list_item_1,
+                mGoogleApiClient, BOUNDS, null);
+
+        locality.setAdapter(mAdapter);
+
+        locality.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final PlaceAutoCompleteAdapter.PlaceAutocomplete item = mAdapter.getItem(position);
+                final String placeId = String.valueOf(item.placeId);
+
+                PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                        .getPlaceById(mGoogleApiClient, placeId);
+                placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                    @Override
+                    public void onResult(PlaceBuffer places) {
+                        if (!places.getStatus().isSuccess()) {
+                            places.release();
+                            return;
+                        }
+
+                        final Place place = places.get(0);
+
+                        coordinates = place.getLatLng();
+                        latitude = coordinates.latitude;
+                        longitude = coordinates.longitude;
+                    }
+                });
+
+            }
+        });
+    }
+
+    public void setCurrentLocation(Context context) {
+
+        final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        try {
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, 1000, 0,
+                    new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            locationShifted++;
+                            getAddressFromLatlng(latitude,longitude);
+                            if (locationShifted > 2) {
+                                try {
+                                    locationManager.removeUpdates(this);
+                                } catch (SecurityException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+
+                        }
+                    });
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000, 0, new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            locationShifted++;
+                            getAddressFromLatlng(latitude,longitude);
+                            if (locationShifted > 2) {
+                                try {
+                                    locationManager.removeUpdates(this);
+                                } catch (SecurityException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+
+                        }
+                    });
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void getAddressFromLatlng(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if(null!=listAddresses&&listAddresses.size()>0){
+                String address = listAddresses.get(0).getAddressLine(0);
+                locality.setText(address);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
