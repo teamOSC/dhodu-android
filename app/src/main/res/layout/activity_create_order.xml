@@ -267,13 +267,23 @@
                 android:text="@string/agree_terms"
                 android:textSize="16sp" />
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Delivery time : 24-48 hours"
+                android:textSize="8sp" />
+
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
-                android:text="Delivery time : 24-48 hours"
+                android:text="Shipping charge Rs 40 for order amount below Rs. 120"
                 android:textSize="8sp" />
 
 
