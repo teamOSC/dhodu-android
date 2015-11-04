@@ -26,6 +26,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -132,7 +134,7 @@ public class CurrentOrderFragment extends Fragment {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null && objects.size() != 0) {
-                    if (objects.size()==1) {
+                    if (objects.size() == 1) {
                         orderSpinner.setVisibility(View.GONE);
                         setUpOrderCard(objects.get(0));
                     } else {
@@ -240,24 +242,8 @@ public class CurrentOrderFragment extends Fragment {
                         cancelDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                final ProgressDialog pDialog = new ProgressDialog(getActivity());
-                                pDialog.setMessage("Canceling order...");
-                                pDialog.setCancelable(false);
-                                pDialog.show();
-                                transaction.put("status", 13);
-                                transaction.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        if (e == null) {
-                                            Toast.makeText(getActivity(), "Order canceled", Toast.LENGTH_SHORT).show();
-                                            pDialog.dismiss();
-                                            updateStatusCard();
-                                        } else {
-                                            pDialog.dismiss();
-                                            Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                                dialog.cancel();
+                                createCancelFeedbackDialog(transaction);
                             }
                         });
                         cancelDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -575,6 +561,47 @@ public class CurrentOrderFragment extends Fragment {
         });
         if (view != null)
             view.startAnimation(slidedown);
+    }
+
+    private void createCancelFeedbackDialog(final ParseObject transaction){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_cancel_order, null);
+        dialogBuilder.setView(dialogView);
+        final RadioGroup radioGroup = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
+        dialogBuilder.setTitle("Tell us why");
+        dialogBuilder.setCancelable(true);
+        dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                final ProgressDialog pDialog = new ProgressDialog(getActivity());
+                pDialog.setMessage("Canceling order...");
+                pDialog.setCancelable(false);
+                pDialog.show();
+                transaction.put("status", 13);
+                transaction.put("feedback", ((RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString());
+                transaction.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Toast.makeText(getActivity(), "Order canceled", Toast.LENGTH_SHORT).show();
+                            pDialog.dismiss();
+                            updateStatusCard();
+                        } else {
+                            pDialog.dismiss();
+                            Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        dialogBuilder.show();
     }
 
 }
