@@ -31,6 +31,5 @@ public class AboutActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
     }
 }

@@ -247,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:backgroundTint="@color/dhodu_primary_dark"
+                    android:background="@color/dhodu_primary_dark"
                     android:fontFamily="sans-serif-medium"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"

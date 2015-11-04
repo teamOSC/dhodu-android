@@ -7,13 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -326,10 +326,10 @@ public class CurrentOrderFragment extends Fragment {
                     .drawView();
         }
 
-        if (ratingBar != null && Build.VERSION.SDK_INT >= 21) {
-            LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-            stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.dhodu_primary_dark), PorterDuff.Mode.SRC_ATOP);
-        }
+//        if (ratingBar != null) {
+//            LayerDrawable stars = (LayerDrawable) DrawableCompat.unwrap(ratingBar.getProgressDrawable());
+//            DrawableCompat.setTint(stars, getResources().getColor(R.color.colorAccent));
+//        }
 
         if (serviceType != null) {
             String transaction_type = transaction.getString("service_type");
