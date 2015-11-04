@@ -154,12 +154,12 @@ public class CurrentOrderFragment extends Fragment {
 
     private void setupSpinner(final List<ParseObject> objects) {
         List<String> orderIds = new ArrayList<>();
-        for (ParseObject object: objects) {
+        for (ParseObject object : objects) {
             orderIds.add(object.getObjectId());
         }
         String[] ids = new String[orderIds.size()];
         ids = orderIds.toArray(ids);
-        OrderSpinnerAdapter adapter = new OrderSpinnerAdapter(getActivity(),R.layout.item_order_spinner,ids,objects);
+        OrderSpinnerAdapter adapter = new OrderSpinnerAdapter(getActivity(), R.layout.item_order_spinner, ids, objects);
         orderSpinner.setAdapter(adapter);
 
         orderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -182,12 +182,16 @@ public class CurrentOrderFragment extends Fragment {
             layoutId = getLayoutIdForStatus(object.getInt("status"));
         else
             layoutId = getLayoutIdForStatus(-1);
-        LayoutInflater inflater = (LayoutInflater) getActivity()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View cardView = inflater.inflate(layoutId, null);
-        stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
-        rootContainer.addView(cardView);
-        setCardDetails(object, cardView);
+        try {
+            LayoutInflater inflater = (LayoutInflater) getActivity()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View cardView = inflater.inflate(layoutId, null);
+            stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
+            rootContainer.addView(cardView);
+            setCardDetails(object, cardView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setCardDetails(final ParseObject transaction, View cardView) {
@@ -571,7 +575,7 @@ public class CurrentOrderFragment extends Fragment {
             view.startAnimation(slidedown);
     }
 
-    private void createCancelFeedbackDialog(final ParseObject transaction){
+    private void createCancelFeedbackDialog(final ParseObject transaction) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_cancel_order, null);
