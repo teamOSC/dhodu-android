@@ -481,9 +481,17 @@ public class CurrentOrderFragment extends Fragment {
                             @Override
                             public void done(ParseException e) {
                                 if (e == null) {
-                                    Toast.makeText(getActivity(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
                                     updateStatusCard();
                                     pDialog.dismiss();
+                                    final AlertDialog.Builder feedbackDialog = new AlertDialog.Builder(getActivity());
+                                    feedbackDialog.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+                                    feedbackDialog.setMessage("Thanks for your feedback!");
+                                    feedbackDialog.show();
                                 } else {
                                     e.printStackTrace();
                                     Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
