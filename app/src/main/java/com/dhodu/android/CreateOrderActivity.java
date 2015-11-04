@@ -105,7 +105,7 @@ public class CreateOrderActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(ParseUser.getCurrentUser().get("name") != ""){
+                if(ParseUser.getCurrentUser().getString("name") != null){
                     placeOrder();
                 }else{
                     final AlertDialog.Builder alert = new AlertDialog.Builder(CreateOrderActivity.this);
