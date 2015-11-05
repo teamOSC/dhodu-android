@@ -16,10 +16,12 @@
         android:layout_marginTop="30dp">
 
         <com.vinaygaba.creditcardview.CreditCardView
-            android:id="@+id/card1"
+            android:id="@+id/credit_card"
             android:layout_width="fill_parent"
             android:layout_height="225dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/cardbackground_world"
             app:cardName="Vinay Gaba"
@@ -30,10 +32,44 @@
             app:expiryDate="02/22"
             app:expiryDateTextColor="#cccccc"
             app:hintTextColor="#cccccc"
-            app:isEditable="true"
+            app:isEditable="false"
             app:putChip="false"
             app:type="auto"
             app:validTillTextColor="#cccccc" />
+
+        <FrameLayout
+            android:id="@+id/add_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/app_background_dark">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_plus_white_48dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add a new card"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:paddingTop="10dp"/>
+
+            </LinearLayout>
+        </FrameLayout>
 
     </FrameLayout>
 
