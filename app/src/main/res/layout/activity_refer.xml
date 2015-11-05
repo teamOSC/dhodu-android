@@ -46,9 +46,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:gravity="center"
-                android:text="Coming soon!"
                 android:textColor="@color/dhodu_primary_dark"
                 android:textSize="32sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credits"
+                android:id="@+id/credits"
+                android:layout_gravity="center_horizontal" />
 
             <Button
                 android:id="@+id/share_code"
@@ -56,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
-                android:text="Share your code" />
+                android:text="Share referral URL" />
 
 
         </LinearLayout>

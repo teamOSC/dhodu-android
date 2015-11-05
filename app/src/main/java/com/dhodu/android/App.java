@@ -18,8 +18,11 @@ public class App extends Application {
         super.onCreate();
         Parse.initialize(this, "8hl3wDwaozzqWEGdkN8aCaLdWOLNnAxPlXXj53d0", "ado3ZoaVnQgpTixUIWiomvwzYcoPqAijSMWGISMM");
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        if(ParseUser.getCurrentUser() != null)
-            installation.put("user", ParseUser.getCurrentUser());
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        if(parseUser != null){
+            installation.put("user", parseUser);
+            Branch.getInstance(this).setIdentity(parseUser.getObjectId());
+        }
         installation.addUnique("channels", "user");
         installation.saveInBackground();
         Branch.getAutoInstance(this);
