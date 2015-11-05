@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral()
+    maven {
+        url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
+    }
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -46,4 +53,5 @@ dependencies {
     compile "com.google.android.gms:play-services-location:7.5.0"
     compile 'com.vinaygaba:creditcardview:1.0.3'
     compile 'io.branch.sdk.android:library:1.+'
+    compile 'in.juspay:godel:0.6.4'
 }
