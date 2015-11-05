@@ -57,7 +57,7 @@ public class CardsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(),AddCardActivity.class);
-
+                    startActivity(intent);
                 }
             });
         }

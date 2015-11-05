@@ -53,4 +53,52 @@
         <attr name="android:maxHeight" />
     </declare-styleable>
 
+    <declare-styleable name="CreditCardView">
+        <attr name="cardNumber" format="string" />
+        <attr name="cardNumberTextColor" format="color" />
+        <attr name="cardNumberFormat" format="enum">
+            <enum name="all_digits" value="0" />
+            <enum name="masked_all_but_last_four" value="1" />
+            <enum name="only_last_four" value="2" />
+            <enum name="masked_all" value="3" />
+        </attr>
+
+        <attr name="cardName" format="string" />
+        <attr name="cardNameTextColor" format="color" />
+
+        <attr name="type" format="enum">
+            <enum name="visa" value="0" />
+            <enum name="mastercard" value="1" />
+            <enum name="american_express" value="2" />
+            <enum name="discover" value="3" />
+            <enum name="auto" value="4" />
+            <enum name="none" value="5" />
+        </attr>
+
+        <attr name="expiryDate" format="string" />
+        <attr name="expiryDateTextColor" format="color" />
+
+        <attr name="brandLogo" format="reference" />
+        <!--<attr name="brandLogoPosition" format="enum" >
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>-->
+
+        <attr name="putChip" format="boolean" />
+
+        <attr name="isEditable" format="boolean" />
+        <attr name="isCardNumberEditable" format="boolean" />
+        <attr name="isCardNameEditable" format="boolean" />
+        <attr name="isExpiryDateEditable" format="boolean" />
+        <attr name="isCvvEditable" format="boolean" />
+
+        <attr name="validTillTextColor" format="color" />
+        <attr name="hintTextColor" format="color" />
+        <attr name="isFlippable" format="boolean"/>
+
+        <attr name="cvv" format="string"/>
+        <attr name="cvvTextColor" format="color" />
+        <attr name="cardBackBackground" format="reference" />
+    </declare-styleable>
+
 </resources>

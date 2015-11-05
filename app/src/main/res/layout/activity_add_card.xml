@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,7 +16,36 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <com.vinaygaba.creditcardview.CreditCardView
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_card_debit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Debit Card"
+            android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+            android:textColor="@android:color/black" />
+
+        <RadioButton
+            android:id="@+id/radio_card_credit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Credit Card"
+            android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+            android:textColor="@android:color/black" />
+
+    </RadioGroup>
+
+    <com.dhodu.android.ui.card.CreditCardView
         android:id="@+id/credit_card"
         android:layout_width="fill_parent"
         android:layout_height="225dp"
@@ -24,17 +54,14 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/cardbackground_world"
-        app:cardName="Vinay Gaba"
-        app:cardNameTextColor="#cccccc"
-        app:cardNumber="5500005555555559"
-        app:cardNumberFormat="masked_all_but_last_four"
-        app:cardNumberTextColor="#cccccc"
-        app:expiryDate="02/22"
-        app:expiryDateTextColor="#cccccc"
+        app:cardNameTextColor="#ffffff"
+        app:cardNumberFormat="all_digits"
+        app:cardNumberTextColor="#ffffff"
+        app:expiryDateTextColor="#ffffff"
         app:hintTextColor="#cccccc"
         app:isEditable="true"
         app:putChip="false"
         app:type="auto"
-        app:validTillTextColor="#cccccc" />
+        app:validTillTextColor="#ffffff" />
 
 </LinearLayout>

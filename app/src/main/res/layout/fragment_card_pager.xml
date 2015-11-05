@@ -15,7 +15,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="30dp">
 
-        <com.vinaygaba.creditcardview.CreditCardView
+        <com.dhodu.android.ui.card.CreditCardView
             android:id="@+id/credit_card"
             android:layout_width="fill_parent"
             android:layout_height="225dp"
@@ -24,36 +24,32 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/cardbackground_world"
-            app:cardName="Vinay Gaba"
-            app:cardNameTextColor="#cccccc"
-            app:cardNumber="5500005555555559"
+            app:cardNameTextColor="#ffffff"
             app:cardNumberFormat="masked_all_but_last_four"
-            app:cardNumberTextColor="#cccccc"
-            app:expiryDate="02/22"
-            app:expiryDateTextColor="#cccccc"
+            app:cardNumberTextColor="#ffffff"
+            app:expiryDateTextColor="#ffffff"
             app:hintTextColor="#cccccc"
             app:isEditable="false"
             app:putChip="false"
             app:type="auto"
-            app:validTillTextColor="#cccccc" />
+            app:validTillTextColor="#ffffff" />
 
         <FrameLayout
             android:id="@+id/add_card"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="225dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginLeft="26dp"
-            android:layout_marginRight="26dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/app_background_dark">
+            android:background="@drawable/cardbackground_world">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="50dp"
@@ -63,10 +59,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
                     android:text="Add a new card"
-                    android:textSize="16sp"
                     android:textColor="#ffffff"
-                    android:paddingTop="10dp"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
         </FrameLayout>

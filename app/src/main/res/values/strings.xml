@@ -16,6 +16,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_login">LoginActivity</string>
 
+    <string name="cvv_hint">cvv</string>
+    <string name="authorized_signature">Authorized Signature</string>
+
     <string name="day_prompt">day</string>
     <string-array name="day_selector">
         <item>today</item>
