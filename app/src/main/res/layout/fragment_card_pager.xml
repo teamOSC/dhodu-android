@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:id="@+id/vg_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="30dp">
+
+        <com.vinaygaba.creditcardview.CreditCardView
+            android:id="@+id/card1"
+            android:layout_width="fill_parent"
+            android:layout_height="225dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/cardbackground_world"
+            app:cardName="Vinay Gaba"
+            app:cardNameTextColor="#cccccc"
+            app:cardNumber="5500005555555559"
+            app:cardNumberFormat="masked_all_but_last_four"
+            app:cardNumberTextColor="#cccccc"
+            app:expiryDate="02/22"
+            app:expiryDateTextColor="#cccccc"
+            app:hintTextColor="#cccccc"
+            app:isEditable="true"
+            app:putChip="false"
+            app:type="auto"
+            app:validTillTextColor="#cccccc" />
+
+    </FrameLayout>
+
+</RelativeLayout>

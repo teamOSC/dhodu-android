@@ -35,6 +35,7 @@ import com.dhodu.android.CreateOrderActivity;
 import com.dhodu.android.CreateOrderDialog;
 import com.dhodu.android.R;
 import com.dhodu.android.RateCardActivity;
+import com.dhodu.android.payments.PayNowActivity;
 import com.dhodu.android.ui.StepsView;
 import com.dhodu.android.ui.WashingMachineView;
 import com.dhodu.android.utils.OrderSpinnerAdapter;
@@ -90,8 +91,8 @@ public class CurrentOrderFragment extends Fragment {
                 Bundle mBundle = intent.getExtras();
                 String mData = mBundle.getString("com.parse.Data");
 
-                if (mData!=null && !mData.toLowerCase().contains("canceled"))
-                updateStatusCard();
+                if (mData != null && !mData.toLowerCase().contains("canceled"))
+                    updateStatusCard();
             }
         };
 
@@ -460,10 +461,12 @@ public class CurrentOrderFragment extends Fragment {
         if (payNow != null) {
             payNow.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    Toast.makeText(getActivity(), "Online payment coming soon", Toast.LENGTH_SHORT).show();
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), PayNowActivity.class);
+                    startActivity(intent);
                 }
             });
+
         }
 
         if (totalAmount5 != null) {

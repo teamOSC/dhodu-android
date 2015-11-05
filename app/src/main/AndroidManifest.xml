@@ -149,6 +149,14 @@
                 android:value="com.dhodu.android.MainActivity" />
         </activity>
 
+        <activity
+            android:name=".payments.PayNowActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dhodu.android.MainActivity" />
+        </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAp_ugCSgdhbQq-1OmNTviscHHu5qrDTro" />
