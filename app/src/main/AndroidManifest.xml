@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dhodu.android">
+    package="com.dhodu.android" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -20,7 +20,6 @@
     <permission
         android:name="dhodu.android.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-
     <permission
         android:name="dhodu.android.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -32,8 +31,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -41,16 +39,16 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="locked"/>
+            android:screenOrientation="locked" />
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="locked">
+            android:screenOrientation="locked" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,32 +56,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <data android:scheme="dhodu" android:host="open" />
+                <data
+                    android:host="open"
+                    android:scheme="dhodu" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
         <activity
             android:name=".DhoduIntro"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
         <activity
             android:name=".addresses.MyAddressesActivity"
-            android:label="@string/title_activity_my_addresses"/>
+            android:label="@string/title_activity_my_addresses" />
         <activity
             android:name=".addresses.AddAddressActivity"
-            android:label="Add Address"/>
+            android:label="Add Address" />
         <activity
             android:name=".RateCardActivity"
             android:label="@string/title_activity_rate_card"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
         </activity>
         <activity
             android:name=".ProfileActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
@@ -91,7 +93,7 @@
         <activity
             android:name=".ReferActivity"
             android:label="@string/title_activity_refer"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
@@ -99,14 +101,14 @@
         <activity
             android:name=".CreateOrderActivity"
             android:parentActivityName=".MainActivity"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
         </activity>
         <activity
             android:name=".BillSummaryActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
@@ -115,7 +117,7 @@
         <!-- Parse Push stuff -->
         <service android:name="com.parse.PushService" />
 
-        <receiver android:name="com.parse.ParseBroadcastReceiver">
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -123,7 +125,7 @@
         </receiver>
         <receiver
             android:name="com.parse.ParsePushBroadcastReceiver"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
                 <action android:name="com.parse.push.intent.DELETE" />
@@ -132,7 +134,7 @@
         </receiver>
         <receiver
             android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
@@ -143,15 +145,14 @@
 
         <activity
             android:name=".AboutActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
         </activity>
-
         <activity
             android:name=".payments.PayNowActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
@@ -170,16 +171,28 @@
             android:value="AIzaSyAp_ugCSgdhbQq-1OmNTviscHHu5qrDTro" />
 
         <!-- Set to true to use Branch_Test_Key -->
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_test_ghiGJTBiM6MV6JCTr8KKBecgAte44GyU" />
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_live_ahgHPJqpN6JGXGrGu0JOBjhhFxo2YTx7" />
+        <meta-data
+            android:name="io.branch.sdk.TestMode"
+            android:value="false" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_test_ghiGJTBiM6MV6JCTr8KKBecgAte44GyU" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey.test"
+            android:value="key_live_ahgHPJqpN6JGXGrGu0JOBjhhFxo2YTx7" />
 
-        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+        <receiver
+            android:name="io.branch.referral.InstallListener"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name="in.juspay.godel.PaymentActivity"
+            android:label="Processing your payment" >
+        </activity>
     </application>
 
 </manifest>
