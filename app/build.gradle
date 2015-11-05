@@ -52,6 +52,7 @@ dependencies {
     compile 'com.github.paolorotolo:appintro:3.2.0'
     compile "com.google.android.gms:play-services-location:7.5.0"
     compile 'com.vinaygaba:creditcardview:1.0.3'
+    compile 'com.nineoldandroids:library:2.4.0'
     compile 'io.branch.sdk.android:library:1.+'
     compile 'in.juspay:godel:0.6.4'
 }
