@@ -111,7 +111,7 @@ public class SplashActivity extends AppCompatActivity {
                     Log.i("BranchConfigTest", "deep link data: " + referringParams.toString());
                 }
             }
-        }, this.getIntent().getData(), this);
+        }, true, this.getIntent().getData(), this);
     }
 
     @Override

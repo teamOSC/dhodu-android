@@ -4,12 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+
 public class ReferActivity extends AppCompatActivity {
+
+    public static final String TAG = "ReferActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +26,23 @@ public class ReferActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        final Branch branch = Branch.getInstance(getApplicationContext());
+
         Button shareCode = (Button) findViewById(R.id.share_code);
         final TextView code = (TextView) findViewById(R.id.referral_code);
+        final TextView credits = (TextView) findViewById(R.id.credits);
+
+        credits.setText(branch.getCredits() + "");
+        branch.loadRewards(new Branch.BranchReferralStateChangedListener() {
+            @Override
+            public void onStateChanged(boolean changed, BranchError error) {
+                if (error == null && changed)
+                    credits.setText(branch.getCredits() + "");
+                else if(error != null) {
+                    Log.d(TAG, error.getMessage());
+                }
+            }
+        });
 
         shareCode.setOnClickListener(new View.OnClickListener() {
             @Override
