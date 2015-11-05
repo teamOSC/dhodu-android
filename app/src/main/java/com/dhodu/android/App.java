@@ -17,6 +17,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Parse.initialize(this, "8hl3wDwaozzqWEGdkN8aCaLdWOLNnAxPlXXj53d0", "ado3ZoaVnQgpTixUIWiomvwzYcoPqAijSMWGISMM");
+        Branch.getAutoInstance(this);
+
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         ParseUser parseUser = ParseUser.getCurrentUser();
         if(parseUser != null){
@@ -25,6 +27,5 @@ public class App extends Application {
         }
         installation.addUnique("channels", "user");
         installation.saveInBackground();
-        Branch.getAutoInstance(this);
     }
 }

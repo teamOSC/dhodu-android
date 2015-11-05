@@ -162,7 +162,7 @@
             android:value="AIzaSyAp_ugCSgdhbQq-1OmNTviscHHu5qrDTro" />
 
         <!-- Set to true to use Branch_Test_Key -->
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
+        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
         <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_test_ghiGJTBiM6MV6JCTr8KKBecgAte44GyU" />
         <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_live_ahgHPJqpN6JGXGrGu0JOBjhhFxo2YTx7" />
 
