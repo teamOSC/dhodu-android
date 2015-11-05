@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
+import io.branch.referral.BranchShortLinkBuilder;
 
 public class ReferActivity extends AppCompatActivity {
 
@@ -38,8 +39,21 @@ public class ReferActivity extends AppCompatActivity {
             public void onStateChanged(boolean changed, BranchError error) {
                 if (error == null && changed)
                     credits.setText(branch.getCredits() + "");
-                else if(error != null) {
+                else if (error != null) {
                     Log.d(TAG, error.getMessage());
+                }
+            }
+        });
+
+        BranchShortLinkBuilder shortUrlBuilder = new BranchShortLinkBuilder(ReferActivity.this);
+        shortUrlBuilder.generateShortUrl(new Branch.BranchLinkCreateListener() {
+            @Override
+            public void onLinkCreate(String url, BranchError error) {
+                if (error != null) {
+                    Toast.makeText(ReferActivity.this, "Error generating referral URL", Toast.LENGTH_SHORT).show();
+                    Log.e("Branch Error", "Branch create short url failed. Caused by -" + error.getMessage());
+                } else {
+                    code.setText(url);
                 }
             }
         });
