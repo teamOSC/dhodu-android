@@ -170,7 +170,7 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
         pDialog.show();
         ParseUser user = ParseUser.getCurrentUser();
         if (user != null) {
-            if (!name.getText().toString().equals("") && !flat.getText().toString().equals("") && !street.getText().toString().equals("")) {
+            if (!name.getText().toString().equals("") && !flat.getText().toString().equals("") && !street.getText().toString().equals("") && !locality.getText().toString().equals("")) {
                 JSONObject address = new JSONObject();
                 try {
                     address.put("house", flat.getText().toString());
@@ -185,27 +185,30 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
                     e.printStackTrace();
                 }
                 user.addUnique("address", address);
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            pDialog.dismiss();
+                            finish();
+                        } else {
+                            Toast.makeText(AddAddressActivity.this, "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
+                });
             } else {
+                pDialog.dismiss();
                 if (name.getText().toString().equals(""))
                     name.setError("Required");
                 if (flat.getText().toString().equals(""))
                     flat.setError("Required");
                 if (street.getText().toString().equals(""))
                     street.setError("Required");
+                if (locality.getText().toString().equals(""))
+                    locality.setError("Required");
             }
 
-            user.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        pDialog.dismiss();
-                        finish();
-                    } else {
-                        Toast.makeText(AddAddressActivity.this, "Oops! Something went wrong", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }
-            });
         }
 
     }

@@ -7,13 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,8 +66,10 @@ public class CurrentOrderFragment extends Fragment {
     FloatingActionButton createFab;
     Spinner orderSpinner;
 
+    private int statusCardId = 123243344;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_current_order, container, false);
@@ -88,6 +87,10 @@ public class CurrentOrderFragment extends Fragment {
 
             @Override
             protected void onPushReceive(Context context, Intent intent) {
+                Bundle mBundle = intent.getExtras();
+                String mData = mBundle.getString("com.parse.Data");
+
+                if (mData!=null && !mData.toLowerCase().contains("canceled"))
                 updateStatusCard();
             }
         };
@@ -186,6 +189,7 @@ public class CurrentOrderFragment extends Fragment {
             LayoutInflater inflater = (LayoutInflater) getActivity()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View cardView = inflater.inflate(layoutId, null);
+            cardView.setId(statusCardId);
             stepsView = (StepsView) cardView.findViewById(R.id.stepsView);
             rootContainer.addView(cardView);
             setCardDetails(object, cardView);
@@ -552,7 +556,7 @@ public class CurrentOrderFragment extends Fragment {
     public void updateStatusCard() {
         Animation slidedown = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.slide_down);
-        final View view = rootContainer.getChildAt(1);
+        final View view = rootContainer.findViewById(statusCardId);
         slidedown.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
