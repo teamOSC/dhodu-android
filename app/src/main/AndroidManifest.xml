@@ -157,10 +157,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
         </activity>
-
         <activity
             android:name=".payments.AddCardActivity"
-            android:parentActivityName=".payments.PayNowActivity">
+            android:parentActivityName=".payments.PayNowActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.MainActivity" />
@@ -188,6 +187,12 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ParseTextActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dhodu.android.AboutActivity" />
+        </activity>
     </application>
 
 </manifest>

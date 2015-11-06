@@ -60,6 +60,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/about_dhodu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
@@ -68,6 +69,12 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 
@@ -79,6 +86,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/privacy_policy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
@@ -102,9 +110,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/terms_conditions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?selectableItemBackgroundBorderless"
+            android:background="?selectableItemBackground"
             android:orientation="vertical">
 
             <View
@@ -116,7 +125,7 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackgroundBorderless"
+                android:background="?selectableItemBackground"
                 android:paddingBottom="15dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="15dp"
