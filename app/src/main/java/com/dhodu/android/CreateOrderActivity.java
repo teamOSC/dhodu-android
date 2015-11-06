@@ -195,8 +195,33 @@ public class CreateOrderActivity extends AppCompatActivity {
             default:
                 return "";
         }
+    }
 
+    private String getDropDate() {
+        int radioButtonID = radioGroup.getCheckedRadioButtonId();
+        View radioButton = radioGroup.findViewById(radioButtonID);
+        int idx = radioGroup.indexOfChild(radioButton);
 
+        c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, 2);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = "";
+
+        switch (idx) {
+            case 0:
+                formattedDate = df.format(c.getTime());
+                return formattedDate;
+            case 1:
+                c.add(Calendar.DAY_OF_YEAR, 1);
+                formattedDate = df.format(c.getTime());
+                return formattedDate;
+            case 2:
+                c.add(Calendar.DAY_OF_YEAR, 2);
+                formattedDate = df.format(c.getTime());
+                return formattedDate;
+            default:
+                return "";
+        }
     }
 
     @Override
@@ -354,6 +379,8 @@ public class CreateOrderActivity extends AppCompatActivity {
         transaction.put("customer", ParseUser.getCurrentUser());
         transaction.put("time_pick", getTimeslotForNumber(selectedTimeSlot));
         transaction.put("pick_date", getDate());
+        transaction.put("time_drop", getTimeslotForNumber(selectedTimeSlot));
+        transaction.put("drop_date", getDropDate());
         transaction.put("address_index", addressindex);
         transaction.put("comments", "");
 

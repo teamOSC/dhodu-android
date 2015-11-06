@@ -46,15 +46,36 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:gravity="center"
-                android:textColor="@color/dhodu_primary_dark"
-                android:textSize="32sp" />
+                android:paddingTop="15dp"
+                android:singleLine="true"
+                android:text="Getting your referal link..."
+                android:textSize="20sp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Credits"
-                android:id="@+id/credits"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/credits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/dhodu_primary_dark"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="5dp"
+                    android:text="credits"
+                    android:textColor="@color/dhodu_primary_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/share_code"

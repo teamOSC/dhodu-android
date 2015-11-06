@@ -46,7 +46,7 @@ import static com.vinaygaba.creditcardview.CardType.VISA;
 @SuppressLint("DefaultLocale")
 public class CreditCardView extends RelativeLayout {
 
-    @IntDef({VISA, MASTERCARD, AMERICAN_EXPRESS, DISCOVER, AUTO})
+    @IntDef({-1,VISA, MASTERCARD, AMERICAN_EXPRESS, DISCOVER, AUTO})
     @Retention(RetentionPolicy.SOURCE)
     public @interface CreditCardType {
     }
@@ -370,6 +370,7 @@ public class CreditCardView extends RelativeLayout {
                 // Change card type to auto to dynamically detect the card type based on the card
                 // number
                 mType = AUTO;
+                type.setBackgroundResource(getLogo(mType));
             }
 
             @Override
@@ -621,10 +622,7 @@ public class CreditCardView extends RelativeLayout {
     }
 
     public void setType(@CreditCardType int type) {
-        if (type < 0 | type > 4) {
-            throw new UnsupportedOperationException("CardType: " + type + "  is not supported. " +
-                    "Use `CardType.*` or `CardType.AUTO` if unknown");
-        }
+
         mType = type;
         this.type.setBackgroundResource(getLogo(mType));
         redrawViews();
@@ -750,6 +748,9 @@ public class CreditCardView extends RelativeLayout {
             case AUTO:
                 return findCardType();
 
+            case -1:
+                return 0;
+
             default:
                 throw new UnsupportedOperationException("CardType: " + type + "  is not supported" +
                         ". Use `CardType.*` or `CardType.AUTO` if unknown");
@@ -793,12 +794,17 @@ public class CreditCardView extends RelativeLayout {
     @DrawableRes
     private int findCardType() {
 
-        int type = VISA;
+        int type = -1;
+        Log.d("lol","dsyggsdhs");
         if (cardNumber.length() > 0) {
 
-            final String cardNumber = getCardNumber().replaceAll("\\s+", "");
+            final String cardNumber = this.cardNumber.getText().toString().replaceAll("\\s+", "");
 
-            if (Pattern.compile(CardType.PATTERN_MASTER_CARD).matcher(cardNumber).matches()) {
+            if (Pattern.compile(CardType.PATTERN_VISA).matcher(cardNumber).matches()) {
+                Log.d("lol","hereas");
+                type = VISA;
+            }
+            else if (Pattern.compile(CardType.PATTERN_MASTER_CARD).matcher(cardNumber).matches()) {
                 type = MASTERCARD;
             } else if (Pattern.compile(CardType.PATTERN_AMERICAN_EXPRESS).matcher(cardNumber)
                     .matches()) {
