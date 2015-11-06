@@ -432,10 +432,7 @@ public class CurrentOrderFragment extends Fragment {
         if (deliveryTime != null) {
 //            deliveryTime.setText(transaction.getString("drop_date"));
 //            set pickup time + 48 hours for now
-            String date = transaction.getString("pick_date");
-            String increaseddate = String.valueOf(Integer.parseInt(date.substring(0, 2)) + 2);
-            deliveryTime.setText(transaction.getString("time_pick") + ", " +
-                    increaseddate + date.substring(2, date.length()));
+           deliveryTime.setText(transaction.getString("time_drop") + ", " + transaction.getString("drop_date"));
         }
 
         if (dropTime != null) {
@@ -480,12 +477,11 @@ public class CurrentOrderFragment extends Fragment {
                     if (ratingBar.getRating() < 1.0) {
                         Toast.makeText(getActivity(), "Please rate your transaction", Toast.LENGTH_SHORT).show();
                     } else {
-                        transaction.put("rating", ratingBar.getRating());
                         final ProgressDialog pDialog = new ProgressDialog(getActivity());
                         pDialog.setMessage("Submitting Feedback...");
                         pDialog.setCancelable(false);
                         pDialog.show();
-                        transaction.put("rating", ratingBar.getNumStars());
+                        transaction.put("rating", ratingBar.getRating());
                         transaction.put("feedback", feedback.getText().toString());
                         transaction.put("status", 6);
                         transaction.saveInBackground(new SaveCallback() {
