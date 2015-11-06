@@ -188,11 +188,6 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name="in.juspay.godel.PaymentActivity"
-            android:label="Processing your payment" >
-        </activity>
     </application>
 
 </manifest>
