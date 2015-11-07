@@ -78,77 +78,36 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <FrameLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-15dp"
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="18dp"
+            android:padding="5dp">
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="20dp"
-                android:backgroundTint="#66000000"
-                android:src="@drawable/ic_location_city_black_48dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:fontFamily="sans-serif-light"
-                android:text="Landmark/Locality"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:background="#22000000" />
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/currentLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:foreground="?selectableItemBackgroundBorderless"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
+            <AutoCompleteTextView
+                android:id="@+id/address_locality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:fontFamily="sans-serif-small"
+                android:hint="Enter landmark/locality"
+                android:imeOptions="actionNext"
+                android:inputType="textPostalAddress"
+                android:singleLine="true"
+                android:paddingRight="40dp"
+                android:theme="@style/EditTextLightBackground" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Use current location"
-                    android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/currentLocation"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="3dp"
+                android:src="@drawable/ic_my_location_black_48dp" />
 
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-
-        <AutoCompleteTextView
-            android:id="@+id/address_locality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-small"
-            android:hint="Enter landmark/locality"
-            android:imeOptions="actionNext"
-            android:inputType="textPostalAddress"
-            android:theme="@style/EditTextLightBackground" />
+        </FrameLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

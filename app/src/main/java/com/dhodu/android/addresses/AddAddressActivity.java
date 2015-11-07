@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +58,7 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
     private EditText city;
     private EditText pincode;
     private EditText referral;
-    private View currentLocation;
+    private ImageView currentLocation;
 
     private String action;
     private int addressIndex;
@@ -67,6 +70,8 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
     double latitude = 0;
     double longitude = 0;
     int locationShifted = 0;
+
+    String localityValidation;
 
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-57.965341647205726, 144.9987719580531),
             new LatLng(72.77492067739843, -9.998857788741589));
@@ -87,7 +92,7 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
         city = (EditText) findViewById(R.id.address_city);
         pincode = (EditText) findViewById(R.id.address_pincode);
         referral = (EditText) findViewById(R.id.referral);
-        currentLocation = findViewById(R.id.currentLocation);
+        currentLocation = (ImageView) findViewById(R.id.currentLocation);
         AppCompatButton submit = (AppCompatButton) findViewById(R.id.submit);
         AppCompatButton skip = (AppCompatButton) findViewById(R.id.skip);
 
@@ -108,10 +113,14 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (action.equals("edit_address"))
-                    updateUserAddress();
-                else
-                    addUserAddress();
+                if (localityValidation == null ) {
+                  locality.setError("Select a locality");
+                } else {
+                    if (action.equals("edit_address"))
+                        updateUserAddress();
+                    else
+                        addUserAddress();
+                }
             }
         });
 
@@ -266,6 +275,7 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                localityValidation = mAdapter.getItem(position).toString();
                 final PlaceAutoCompleteAdapter.PlaceAutocomplete item = mAdapter.getItem(position);
                 final String placeId = String.valueOf(item.placeId);
 
@@ -286,6 +296,23 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
                         longitude = coordinates.longitude;
                     }
                 });
+
+            }
+        });
+
+        locality.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                localityValidation = null;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
@@ -380,6 +407,7 @@ public class AddAddressActivity extends AppCompatActivity implements GoogleApiCl
             if(null!=listAddresses&&listAddresses.size()>0){
                 String address = listAddresses.get(0).getAddressLine(0);
                 locality.setText(address);
+                localityValidation = address;
             }
         } catch (IOException e) {
             e.printStackTrace();
