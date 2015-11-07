@@ -49,6 +49,10 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -217,7 +221,6 @@ public class CurrentOrderFragment extends Fragment {
         ImageView agentCall = (ImageView) cardView.findViewById(R.id.call_agent);
         TextView pickupTime = (TextView) cardView.findViewById(R.id.eta_pick);
         TextView deliveryTime = (TextView) cardView.findViewById(R.id.delivery_time);
-        TextView pickTime = (TextView) cardView.findViewById(R.id.pickup_time);
         TextView dropTime = (TextView) cardView.findViewById(R.id.eta_drop);
         WashingMachineView washingMachineView = (WashingMachineView) cardView.findViewById(R.id.wave_view);
         Button scheduleBooking = (Button) cardView.findViewById(R.id.schedule_booking);
@@ -411,7 +414,15 @@ public class CurrentOrderFragment extends Fragment {
 
         if (totalAmount != null && totalItems != null) {
             totalAmount.setText("₹ " + transaction.getNumber("amount").toString());
-            totalItems.setText(transaction.getJSONArray("clothes_data").length() + "");
+            JSONArray jsonArray = transaction.getJSONArray("clothes_data");
+            int itemCount = 0;
+            try{
+                for(int i = 0; i < jsonArray.length(); i++)
+                    itemCount += Integer.parseInt(jsonArray.getJSONObject(i).getString("cloth_qty"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            totalItems.setText(itemCount + "");
         }
 
 //        if (pickaddress != null) {
