@@ -193,6 +193,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dhodu.android.AboutActivity" />
         </activity>
+        <activity android:name=".NyanCatActivity" >
+        </activity>
     </application>
 
 </manifest>

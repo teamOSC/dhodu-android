@@ -45,6 +45,13 @@ public class AboutActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        version.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AboutActivity.this, NyanCatActivity.class));
+            }
+        });
+
         ParseQuery<ParseObject> query = new ParseQuery<>("App");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
