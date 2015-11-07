@@ -19,12 +19,15 @@ import com.parse.ParseQuery;
 
 public class AboutActivity extends AppCompatActivity {
 
+    private int clickTimer = 7;
+    private Toast toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("About Us");
@@ -48,7 +51,18 @@ public class AboutActivity extends AppCompatActivity {
         version.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AboutActivity.this, NyanCatActivity.class));
+                if(toast != null)
+                    toast.cancel();
+                if(clickTimer > 0) {
+                    clickTimer--;
+                    if (clickTimer == 0) {
+                        startActivity(new Intent(AboutActivity.this, NyanCatActivity.class));
+                        finish();
+                    } else if (clickTimer < 5) {
+                        toast = Toast.makeText(AboutActivity.this, clickTimer + "", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
             }
         });
 
