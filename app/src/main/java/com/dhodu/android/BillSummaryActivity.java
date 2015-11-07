@@ -59,22 +59,27 @@ public class BillSummaryActivity extends AppCompatActivity {
 
     private void setBillSummary(ParseObject transaction) {
         amount.setText("Total Amount : ₹ " + String.valueOf(transaction.getNumber("amount")));
-        setTaxAmount();
+        setTaxAmount(transaction);
         clothesRecyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         adpater = new ClothesDataAdpater(transaction.getJSONArray("clothes_data"));
         clothesRecyclerview.setAdapter(adpater);
 
     }
 
-    private void setTaxAmount() {
+    private void setTaxAmount(final ParseObject transaction) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("App");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    taxAmount.setText("including ₹ "
+                    if(transaction.getBoolean("shipping_cost"))
+                        taxAmount.setText("including ₹ "
                             + String.valueOf(object.getNumber("shipment")) + " delivery charges and "
                             + String.valueOf(object.getNumber("tax")) + "% tax");
+                    else{
+                        taxAmount.setText("including "
+                                + String.valueOf(object.getNumber("tax")) + "% tax");
+                    }
                 }
             }
         });
