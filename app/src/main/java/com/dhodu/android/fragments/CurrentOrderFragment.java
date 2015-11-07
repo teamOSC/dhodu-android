@@ -227,7 +227,6 @@ public class CurrentOrderFragment extends Fragment {
         Button rateCardButton = (Button) cardView.findViewById(R.id.rate_card);
         Button viewBill = (Button) cardView.findViewById(R.id.view_bill);
         Button payNow = (Button) cardView.findViewById(R.id.pay_now);
-        TextView totalAmount5 = (TextView) cardView.findViewById(R.id.total_amount_5);
         final LinearLayout slotWashPress = (LinearLayout) cardView.findViewById(R.id.slot1);
         final LinearLayout slotDryClean = (LinearLayout) cardView.findViewById(R.id.slot2);
         final ImageView noOrderImage = (ImageView) cardView.findViewById(R.id.imageView);
@@ -412,8 +411,14 @@ public class CurrentOrderFragment extends Fragment {
         if (transactionId != null)
             transactionId.setText(transaction.getObjectId().toUpperCase());
 
-        if (totalAmount != null && totalItems != null) {
-            totalAmount.setText("₹ " + transaction.getNumber("amount").toString());
+        if (totalAmount != null) {
+            if(transaction.getNumber("status") == 5)
+                totalAmount.setText("Total = ₹ " + transaction.getNumber("amount").toString());
+            else
+                totalAmount.setText("₹ " + transaction.getNumber("amount").toString());
+        }
+
+        if(totalItems != null){
             JSONArray jsonArray = transaction.getJSONArray("clothes_data");
             int itemCount = 0;
             try{
@@ -475,10 +480,6 @@ public class CurrentOrderFragment extends Fragment {
                 }
             });
 
-        }
-
-        if (totalAmount5 != null) {
-            totalAmount5.setText("Total = ₹ " + transaction.getNumber("amount").toString());
         }
 
         if (feedback != null && ratingBar != null) {
